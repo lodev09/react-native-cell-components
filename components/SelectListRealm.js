@@ -7,7 +7,10 @@ import theme from '../lib/theme';
 import Cell from './Cell';
 
 import {
-  ListView,
+  ListView
+} from 'realm/react-native';
+
+import {
   View,
   Text,
   TouchableHighlight,

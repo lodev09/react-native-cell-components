@@ -11,14 +11,12 @@ import {
 class CellDatePicker extends React.Component {
 
   static defaultProps = {
-    method: 'toString',
     mode: 'datetime'
   }
 
   static proptTypes = {
     onShow: React.PropTypes.func,
     onDateSelected: React.PropTypes.func.isRequired,
-    method: React.PropTypes.any,
     mode: React.PropTypes.string.isRequired
   }
 
@@ -52,7 +50,6 @@ class CellDatePicker extends React.Component {
         />
 
         <Cell
-          value={this.props.method(this.state.date)}
           onPress={this.handleDateOnPress}
           {...this.props}
         />

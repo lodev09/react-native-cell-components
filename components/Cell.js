@@ -73,7 +73,9 @@ class Cell extends React.Component {
               {this.renderTitle()}
               {this.renderValue()}
             </View>
-            {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
+            <View>
+              {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
+            </View>
           </View>
           <View style={styles.rightContainer} >
             {
@@ -105,8 +107,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: 25
+    alignItems: 'center'
   },
   valueText: {
     fontSize: theme.font.medium,
@@ -122,8 +123,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   subtitle: {
-    marginTop: theme.margin / 1.5,
-    fontSize: theme.font.xsmall,
+    marginTop: theme.margin / 2,
+    fontSize: theme.font.small,
     color: theme.color.muted
   },
   leftContainer: {

@@ -105,7 +105,7 @@ class ActionSheet extends React.Component {
       };
 
       const isFirstChild = i === 0;
-      const isLastChild = i === this.props.children.length -1;
+      const isLastChild = i === React.Children.count(this.props.children) -1;
 
       return (
         <View key={'action-item-' + i}>

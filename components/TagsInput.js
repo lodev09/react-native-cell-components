@@ -183,7 +183,6 @@ class TagsInput extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     padding: theme.padding,
     backgroundColor: 'transparent'

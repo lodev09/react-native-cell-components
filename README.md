@@ -22,8 +22,8 @@ awesome react-native cell components! As the package name says, components that 
 - TagsInput
 
 ## Dependencies
-[react-native-blur ^2.0.0](https://github.com/react-native-community/react-native-blur)
-[react-native-vector-icons ^4.0.0](https://github.com/oblador/react-native-vector-icons)
+- [react-native-blur ^2.0.0](https://github.com/react-native-community/react-native-blur)
+- [react-native-vector-icons ^4.0.0](https://github.com/oblador/react-native-vector-icons)
 
 ## Usage & Props
 _coming soon_

@@ -32,7 +32,6 @@ _coming soon_
 Feedback and PRs are welcome!
 
 ## License
-Released under the [Apache License, Version 2.0](http://opensource.org/licenses/Apache-2.0).
 See [LICENSE](LICENSE) file.
 
 [@lodev09](http://twitter.com/lodev09) / [www.lodev09.com](http://www.lodev09.com "www.lodev09.com")

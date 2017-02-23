@@ -1,0 +1,31 @@
+{
+  "name": "react-native-cell-components",
+  "version": "0.0.0",
+  "description": "awesome react-native cell components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "react": "15.4.2",
+    "react-native": "0.41.0",
+    "react-native-animatable": "^1.1.0",
+    "react-native-blur": "^2.0.0",
+    "react-native-vector-icons": "^4.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lodev09/react-native-cell-components.git"
+  },
+  "keywords": [
+    "react-native",
+    "cell",
+    "components"
+  ],
+  "author": "Jovanni Lo <lodev09@gmail.com> (http://www.lodev09.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lodev09/react-native-cell-components/issues"
+  },
+  "homepage": "https://github.com/lodev09/react-native-cell-components#readme"
+}

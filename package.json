@@ -16,7 +16,7 @@
     "components"
   ],
   "author": "Jovanni Lo <lodev09@gmail.com> (http://www.lodev09.com)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lodev09/react-native-cell-components/issues"
   },

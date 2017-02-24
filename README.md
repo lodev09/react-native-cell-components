@@ -10,7 +10,7 @@ Tested with redux and on **RN 0.40+**
 
 > This is currently on heavy development so expect rapid changes.
 
-![demo](demo.gif)
+![demo](https://raw.githubusercontent.com/lodev09/react-native-cell-components/master/demo.gif)
 
 ## Features/To-do
 - [x] Components are re-used

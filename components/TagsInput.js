@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     flexDirection: 'row',
     alignItems: 'center',
-    color: theme.color.silver,
+    color: theme.color.muted,
     paddingVertical: theme.padding / 2,
     paddingRight: theme.padding / 2
   },

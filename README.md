@@ -1,4 +1,6 @@
-# react-native-cell-components
+# RN Cell Components
+[![npm](https://img.shields.io/npm/v/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
+[![npm](https://img.shields.io/npm/dt/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 ```
 npm install react-native-cell-components --save
 ```

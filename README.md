@@ -24,9 +24,9 @@ Tested with redux and on **RN >=0.40**
 - ActionSheet
 - CellGroup
 - CellInput
-- CellListProvider / CellListProviderRealm
+- CellListProvider
 - DatePicker (ios atm)
-- SelectList / SelectListRealm
+- SelectList
 - TagsInput
 
 ## Dependencies

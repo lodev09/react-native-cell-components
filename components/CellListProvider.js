@@ -97,6 +97,8 @@ class CellListProvider extends React.Component {
         onItemPress={item => this.handleSelectListItemOnPress(item, listItemOnPress)}
         section={listSection}
         selected={listSelected}
+
+        {...this.props}
       />
     );
   }

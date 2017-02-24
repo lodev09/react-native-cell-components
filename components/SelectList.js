@@ -6,8 +6,10 @@ import theme from '../lib/theme';
 
 import Cell from './Cell';
 
+import RealmListView from '../lib/RealmListView.js';
+
 import {
-  ListView,
+  ListView as NativeListView,
   View,
   Text,
   TouchableHighlight,
@@ -19,14 +21,17 @@ import {
 } from 'react-native';
 
 const ANIM_DURATION = 200;
+let ListView = NativeListView;
 
 class SelectList extends React.Component {
+
   static defaultProps = {
     onItemPress: (obj, selected) => {},
     visible: false,
     animated: true,
     data: [],
-    modal: false
+    modal: false,
+    realm: false
   }
 
   static propTypes = {
@@ -40,11 +45,16 @@ class SelectList extends React.Component {
     icon: React.PropTypes.any,
     visible: React.PropTypes.bool,
     animated: React.PropTypes.bool,
-    modal: React.PropTypes.bool
+    modal: React.PropTypes.bool,
+    realm: React.PropTypes.bool
   }
 
   constructor(props) {
     super(props);
+
+    if (this.props.realm) {
+      ListView = RealmListView;
+    }
 
     const windowHeight = Dimensions.get('window').height;
     const withSections = this.props.section ? true : false;

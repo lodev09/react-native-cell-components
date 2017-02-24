@@ -195,7 +195,7 @@ export default class CellComponents extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9'
+    backgroundColor: '#f3f3f3'
   },
   header: {
     height: 40,
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   tagsInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.color.white,
+    backgroundColor: '#fff',
   }
 });
 

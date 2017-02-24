@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "react-native-blur": "^2.0.0",
+    "react-native-vector-icons": "^4.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lodev09/react-native-cell-components.git"

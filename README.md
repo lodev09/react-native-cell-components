@@ -2,7 +2,10 @@
 ```
 npm install react-native-cell-components --save
 ```
-awesome react-native cell components! As the package name says, components that revolves around a `Cell` component. From `ActionSheet` to modal `TagsInput` + `SelectList` -- supports redux as well! **RN 0.40**
+Awesome react-native cell components! As the package name says, components that are built around a the `Cell` component. From a simple `ActionSheet` to a more complex `TagsInput` + `SelectList` and much more!
+
+Tested with redux and on **RN 0.40+**
+
 > This is currently on heavy development so expect rapid changes.
 
 ![demo](demo.gif)

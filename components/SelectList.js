@@ -35,11 +35,11 @@ class SelectList extends React.Component {
   }
 
   static propTypes = {
-    data: React.PropTypes.any.isRequired,
+    data: React.PropTypes.any,
     selected: React.PropTypes.any,
     onItemPress: React.PropTypes.func,
     section: React.PropTypes.any,
-    itemTitle: React.PropTypes.any.isRequired,
+    itemTitle: React.PropTypes.any,
     itemSelectedValidator: React.PropTypes.any.isRequired,
     itemSubtitle: React.PropTypes.any,
     icon: React.PropTypes.any,

@@ -37,7 +37,7 @@ class CellInput extends React.Component {
 
     if (this.props.autoResize) {
       this.setState({
-        multiLineHeight: contentHeight - 5
+        multiLineHeight: contentHeight
       })
     }
   }

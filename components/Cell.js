@@ -19,7 +19,7 @@ class Cell extends React.Component {
   }
 
   static propTypes = {
-    title: React.PropTypes.any.isRequired,
+    title: React.PropTypes.any,
     subtitle: React.PropTypes.any,
     icon: React.PropTypes.string,
     disclosure: React.PropTypes.string,
@@ -33,9 +33,6 @@ class Cell extends React.Component {
         break;
       case 'string':
         return <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;
-        break;
-      default:
-        throw Error('Title prop is required');
         break;
     }
   }
@@ -120,7 +117,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: theme.font.medium,
     color: theme.color.black,
-    flex: 1
+    flex: 1,
+    marginRight: theme.margin
   },
   subtitle: {
     marginTop: theme.margin / 2,

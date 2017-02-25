@@ -9,32 +9,63 @@ import {
   TextInput
 } from 'react-native';
 
+const MULTILINE_BASE_HEIGHT = 20;
+
 class CellInput extends React.Component {
+  static defaultProps = {
+    rows: 1,
+    autoResize: false
+  }
 
   static propTypes = {
+    rows: React.PropTypes.number,
+    autoResize: React.PropTypes.bool
+  }
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      rows: this.props.rows,
+      multiLineHeight: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows
+    }
+  }
+
+  handleOnContentSizeChange = (e) => {
+    const contentHeight = e.nativeEvent.contentSize.height;
+
+    if (this.props.autoResize) {
+      this.setState({
+        multiLineHeight: contentHeight
+      })
+    }
   }
 
   renderTextInput() {
+    const style = this.props.multiline ? { height: Math.min(MULTILINE_BASE_HEIGHT * this.props.rows, this.state.multiLineHeight) } : { flex: 1 };
     return (
       <TextInput
-        style={styles.textInput}
+        ref={component => this._textInput = component}
+        style={[ styles.textInput, style ]}
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
+        onContentSizeChange={this.handleOnContentSizeChange}
+        placeholder={this.props.title || this.props.placeholder}
         {...this.props}
       />
     );
   }
 
   render() {
-    return <Cell title={this.props.title} value={this.renderTextInput()} />;
+    return <Cell title={!this.props.multiline && this.props.title} value={this.renderTextInput()} />;
   }
 }
 
 const styles = StyleSheet.create({
   textInput: {
-    flex: 1,
-    fontSize: theme.font.medium
+    fontSize: theme.font.medium,
+    /*justifyContent: 'flex-start',
+    alignItems: 'flex-start'*/
   }
 });
 

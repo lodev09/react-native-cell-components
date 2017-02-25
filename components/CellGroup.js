@@ -68,10 +68,12 @@ const styles = StyleSheet.create({
     ...theme.separator
   },
   header: {
-    padding: theme.padding
+    paddingVertical: theme.padding,
+    paddingHorizontal: theme.padding * 1.5
   },
   headerText: {
-    color: theme.color.mutedLighten,
+    color: theme.color.muted,
+    fontWeight: '500',
     fontSize: theme.font.xsmall
   }
 });

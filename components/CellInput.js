@@ -18,6 +18,7 @@ class CellInput extends React.Component {
   }
 
   static propTypes = {
+    ...TextInput.propTypes,
     rows: React.PropTypes.number,
     autoResize: React.PropTypes.bool
   }

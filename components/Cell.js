@@ -66,7 +66,7 @@ class Cell extends React.Component {
             }
           </View>
           <View style={{ flex: 1 }} >
-            <View style={styles.titleContainer} >
+            <View style={styles.titleValueContainer} >
               {this.renderTitle()}
               {this.renderValue()}
             </View>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     minHeight: CELL_MIN_HEIGHT,
     paddingVertical: theme.padding
   },
-  titleContainer: {
+  titleValueContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     fontSize: theme.font.medium,
     color: theme.color.black,
     flex: 1,
-    marginRight: theme.margin
+    marginRight: theme.margin / 1.5
   },
   subtitle: {
     marginTop: theme.margin / 2,
@@ -131,9 +131,12 @@ const styles = StyleSheet.create({
     minWidth: 15
   },
   icon: {
-    width: theme.iconWidth * 1.5,
-    marginLeft: theme.margin / 2,
-    textAlign: 'center'
+    width: theme.iconWidth,
+    marginVertical: theme.margin / 2,
+    marginHorizontal: theme.margin / 1.5,
+    paddingLeft: theme.padding,
+    textAlign: 'center',
+    flex: 1
   },
   rightContainer: {
     minWidth: 15,

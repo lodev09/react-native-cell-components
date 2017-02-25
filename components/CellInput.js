@@ -37,17 +37,23 @@ class CellInput extends React.Component {
 
     if (this.props.autoResize) {
       this.setState({
-        multiLineHeight: contentHeight
+        multiLineHeight: contentHeight - 5
       })
     }
   }
 
   renderTextInput() {
-    const style = this.props.multiline ? { height: Math.min(MULTILINE_BASE_HEIGHT * this.props.rows, this.state.multiLineHeight) } : { flex: 1 };
+    const textInputStyle = this.props.multiline ?
+      {
+        paddingBottom: theme.padding,
+        height: Math.min(MULTILINE_BASE_HEIGHT * this.props.rows, this.state.multiLineHeight) 
+      } :
+      { flex: 1 };
+
     return (
       <TextInput
         ref={component => this._textInput = component}
-        style={[ styles.textInput, style ]}
+        style={[ styles.textInput, textInputStyle ]}
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
         onContentSizeChange={this.handleOnContentSizeChange}
@@ -58,15 +64,14 @@ class CellInput extends React.Component {
   }
 
   render() {
-    return <Cell title={!this.props.multiline && this.props.title} value={this.renderTextInput()} />;
+    return <Cell icon={this.props.icon} title={!this.props.multiline && this.props.title} value={this.renderTextInput()} />;
   }
 }
 
 const styles = StyleSheet.create({
   textInput: {
     fontSize: theme.font.medium,
-    /*justifyContent: 'flex-start',
-    alignItems: 'flex-start'*/
+    textAlign: 'left'
   }
 });
 

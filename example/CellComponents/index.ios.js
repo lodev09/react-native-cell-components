@@ -165,7 +165,8 @@ export default class CellComponents extends Component {
             </CellGroup>
             <CellGroup header="User info" >
               <CellInput title="Username" icon="person" placeholder="Enter username" />
-              <CellDatePicker title="Date" value={this.state.date.toDateString()} onDateSelected={this.handleOnDateSelected} />
+              <CellDatePicker title="Date" value={this.state.date.toLocaleString()} onDateSelected={this.handleOnDateSelected} />
+              <CellInput title="About" multiline autoResize rows={3} icon="person" />
             </CellGroup>
 
             <CellListProvider>

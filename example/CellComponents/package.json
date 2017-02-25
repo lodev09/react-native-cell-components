@@ -10,7 +10,7 @@
     "react": "15.4.2",
     "react-native": "0.41.2",
     "react-native-blur": "^2.0.0",
-    "react-native-cell-components": "0.0.10",
+    "react-native-cell-components": "https://github.com/lodev09/react-native-cell-components.git",
     "react-native-vector-icons": "^4.0.0"
   },
   "devDependencies": {

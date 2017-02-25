@@ -14,6 +14,7 @@ class CellGroup extends React.Component {
   }
 
   static propTypes = {
+    ...View.propsTypes,
     header: React.PropTypes.any,
     footer: React.PropTypes.any,
     bordered: React.PropTypes.bool

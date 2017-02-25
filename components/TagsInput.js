@@ -21,6 +21,7 @@ class TagsInput extends React.Component {
   }
 
   static propTypes = {
+    ...View.propTypes,
     tags: React.PropTypes.array.isRequired,
     autoFocus: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,

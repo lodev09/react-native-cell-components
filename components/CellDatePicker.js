@@ -15,6 +15,7 @@ class CellDatePicker extends React.Component {
   }
 
   static proptTypes = {
+    ...Cell.propTypes,
     onShow: React.PropTypes.func,
     onDateSelected: React.PropTypes.func.isRequired,
     mode: React.PropTypes.string.isRequired

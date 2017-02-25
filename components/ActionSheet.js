@@ -25,6 +25,10 @@ const ANIM_OPEN_DURATION = 250;
 const ANIM_CLOSE_DURATION = 400;
 
 class ActionSheet extends React.Component {
+  static propTypes = {
+    ...Modal.propTypes
+  }
+
   constructor(props) {
     super(props);
 

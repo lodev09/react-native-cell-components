@@ -9,13 +9,11 @@ import {
 class DatePicker extends React.Component {
   static defaultProps = {
     date: new Date(),
-    timeZoneOffset: -6, // CST
     mode: 'datetime'
   }
 
   static propTypes = {
     date: React.PropTypes.object.isRequired,
-    timeZoneOffset: React.PropTypes.number,
     onDateSelected: React.PropTypes.func
   }
 
@@ -24,7 +22,6 @@ class DatePicker extends React.Component {
 
     this.state = {
       date: this.props.date,
-      timeZoneOffset: this.props.timeZoneOffset,
       mode: this.props.mode
     }
   }
@@ -48,7 +45,6 @@ class DatePicker extends React.Component {
         <DatePickerIOS
           date={this.state.date}
           mode={this.state.mode}
-          // timeZoneOffsetInMinutes={this.state.timeZoneOffset * 60}
           onDateChange={this.handleOnDateChange}
         />
         <ActionItem title="Done" destructive />

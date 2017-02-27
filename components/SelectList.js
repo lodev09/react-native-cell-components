@@ -7,21 +7,15 @@ import theme from '../lib/theme';
 import Cell from './Cell';
 import ActionSheet from './ActionSheet';
 
-import RealmListView from '../lib/RealmListView.js';
+import RealmListView from '../lib/RealmListView';
 
 import {
   ListView as NativeListView,
   View,
   Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-  Dimensions,
-  Modal
+  StyleSheet
 } from 'react-native';
 
-const ANIM_DURATION = 200;
 let ListView = NativeListView;
 
 class SelectList extends React.Component {
@@ -29,7 +23,6 @@ class SelectList extends React.Component {
   static defaultProps = {
     onItemPress: (obj, selected) => {},
     visible: false,
-    animated: true,
     data: [],
     modal: false,
     realm: false
@@ -38,16 +31,17 @@ class SelectList extends React.Component {
   static propTypes = {
     data: React.PropTypes.any,
     selected: React.PropTypes.any,
-    onItemPress: React.PropTypes.func,
     section: React.PropTypes.any,
     itemTitle: React.PropTypes.any,
     itemSelectedValidator: React.PropTypes.any.isRequired,
     itemSubtitle: React.PropTypes.any,
     icon: React.PropTypes.any,
     visible: React.PropTypes.bool,
-    animated: React.PropTypes.bool,
     modal: React.PropTypes.bool,
-    realm: React.PropTypes.bool
+    realm: React.PropTypes.bool,
+    onItemPress: React.PropTypes.func,
+    onClose: React.PropTypes.func,
+    onOpen: React.PropTypes.func
   }
 
   constructor(props) {
@@ -57,7 +51,6 @@ class SelectList extends React.Component {
       ListView = RealmListView;
     }
 
-    const windowHeight = Dimensions.get('window').height;
     const dsOptions = {
       rowHasChanged: (oldRow, newRow) => oldRow !== newRow
     };
@@ -69,10 +62,8 @@ class SelectList extends React.Component {
     const datasource = new ListView.DataSource(dsOptions);
 
     this.state = {
-      animatedY: new Animated.Value(this.props.visible ? 0 : windowHeight),
-      animated: this.props.animated,
-      datasource,
-      windowHeight
+      visible: this.props.visible === true,
+      datasource
     };
   }
 
@@ -83,64 +74,26 @@ class SelectList extends React.Component {
     }
   }
 
-  close(callback, animated = this.props.animated) {
-    if (this.props.modal) {
-      this.animateToValue({
-        animated,
-        value: this.state.windowHeight,
-      }, () => {
-        this.setState({
-          visible: false
-        });
-
-        setTimeout(() => {
-          if (callback) callback();
-        }, 10);
-      });
-    } else {
-      this.setState({
-        visible: false
-      });
-
-      if (callback) callback();
-    }
-    
-  }
-
-  open(animated = this.props.animated) {
+  setVisibilityState(visible) {
     this.setState({
-      visible: true,
-      animated
+      visible
     });
   }
 
-  animateToValue({ animated, value }, callback) {
-    if (animated) {
-      Animated.timing(this.state.animatedY, {
-        toValue: value,
-        duration: ANIM_DURATION,
-        useNativeDriver: true
-      }).start(() => {
-        if (callback) callback();
-      });
+  close() {
+    if (this.props.modal === true) {
+      this._actionSheet.close();
     } else {
-      if (callback) callback();
+      this.setVisibilityState(false);
     }
   }
 
-  getContainerStyle() {
-    if (!this.props.modal) return styles.container;
-
-    return [
-      styles.container,
-      {
-        transform: [
-          {
-            translateY: this.state.animatedY
-          }
-        ]
-      }
-    ];
+  open() {
+    if (this.props.modal === true) {
+      this._actionSheet.open();
+    } else {
+      this.setVisibilityState(true);
+    }
   }
 
   renderTitle(obj) {
@@ -239,45 +192,43 @@ class SelectList extends React.Component {
     return <View key={'separator-' + sectionID + '-' + rowID} style={styles.separator} />;
   }
 
-  renderContent() {
+  renderListView() {
     return (
-      <Animated.View style={this.getContainerStyle()} >
-        { this.props.modal && <View style={{ height: 20, backgroundColor: 'transparent' }} /> }
-        <BlurView blurType="xlight" style={{ flex: 1 }} >
-          <ListView
-            dataSource={this.getDataSource()}
-            renderRow={this.props.renderRow || this.renderRow}
-            renderSectionHeader={this.props.section ? this.props.renderSectionHeader || this.renderSectionHeader : null}
-            renderSeparator={this.props.renderSeparator || this.renderSeparator}
-            keyboardShouldPersistTaps="handled"
-            enableEmptySections
-            {...this.props}
-          />
-        </BlurView>
-      </Animated.View>
+      <ListView
+        dataSource={this.getDataSource()}
+        renderRow={this.props.renderRow || this.renderRow}
+        renderSectionHeader={this.props.section ? this.props.renderSectionHeader || this.renderSectionHeader : null}
+        renderSeparator={this.props.renderSeparator || this.renderSeparator}
+        keyboardShouldPersistTaps="handled"
+        enableEmptySections
+        {...this.props}
+      />
     );
-  }
-
-  handleModalOnShow = () => {
-    this.animateToValue({
-      animated: this.props.animated && this.state.animated,
-      value: 0
-    });
   }
 
   render() {
     if (this.props.modal === true) {
       return (
-        <Modal
-          transparent
-          visible={this.props.visible}
-          onShow={this.handleModalOnShow}
+        <ActionSheet
+          ref={component => this._actionSheet = component}
+          onClose={this.props.onClose}
+          onOpen={this.props.onOpen}
+          mode="list"
         >
-          {this.renderContent()}
-        </Modal>
+          <BlurView blurType="xlight" >
+            {this.renderListView()}
+          </BlurView>
+        </ActionSheet>
       );
     } else {
-      return this.props.visible ? this.renderContent() : null;
+      return (
+        this.state.visible &&
+        <View style={styles.container} >
+          <BlurView blurType="xlight" style={{ flex: 1 }} >
+            {this.renderListView()}
+          </BlurView>
+        </View>
+      );
     }
   }
 }

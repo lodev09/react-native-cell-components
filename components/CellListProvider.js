@@ -65,13 +65,14 @@ class CellListProvider extends React.Component {
 
   handleSelectListItemOnPress = (selectedItem, onPressCallback) => {
     if (!this.state.source) return;
-    
-    this._selectList.close(() => {
-      onPressCallback(selectedItem);
-      this.setState({
-        selecting: false,
-        source: null
-      });
+    onPressCallback(selectedItem);
+    this._selectList.close();
+  }
+
+  handleSelectListOnClose = () => {
+    this.setState({
+      selecting: false,
+      source: null
     });
   }
 
@@ -100,6 +101,7 @@ class CellListProvider extends React.Component {
         onItemPress={item => this.handleSelectListItemOnPress(item, listItemOnPress)}
         section={listSection}
         selected={listSelected}
+        onClose={this.handleSelectListOnClose}
 
         {...this.props}
       />

@@ -21,12 +21,24 @@ export const ActionItem = function(props) {
   return <View {...props} />
 }
 
-const ANIM_OPEN_DURATION = 250;
-const ANIM_CLOSE_DURATION = 400;
+const ANIM_OPEN_DURATION = 200;
+const ANIM_CLOSE_DURATION = 250;
+const TOP_OFFSET = 20;
 
 class ActionSheet extends React.Component {
+  static defaultProps = {
+    animated: true,
+    mode: 'default'
+  }
+
   static propTypes = {
-    ...Modal.propTypes
+    onClose: React.PropTypes.func,
+    onOpen: React.PropTypes.func,
+    animated: React.PropTypes.bool,
+    mode: React.PropTypes.oneOf([
+      'default', // default
+      'list'
+    ])
   }
 
   constructor(props) {
@@ -36,18 +48,23 @@ class ActionSheet extends React.Component {
 
     this.state = {
       visible: false,
-      animatedY: new Animated.Value(this.windowHeight)
+      animatedY: new Animated.Value(this.windowHeight),
+      openCallback: null
     };
   }
 
   animateToValue(toValue, callback) {
-    Animated.timing(this.state.animatedY, {
-      toValue: toValue,
-      duration: toValue === 0 ? ANIM_OPEN_DURATION : ANIM_CLOSE_DURATION,
-      useNativeDriver: true
-    }).start(() => {
-      if (callback) callback();
-    });
+    if (this.props.animated) {
+      Animated.timing(this.state.animatedY, {
+        toValue: toValue,
+        duration: toValue === 0 ? ANIM_OPEN_DURATION : ANIM_CLOSE_DURATION,
+        useNativeDriver: true
+      }).start(() => {
+        if (callback) callback();
+      });
+    } else {
+      this.state.animatedY.setValue(toValue);
+    }
   }
 
   getActionsContainerStyle() {
@@ -87,15 +104,20 @@ class ActionSheet extends React.Component {
         visible: false
       });
 
-      // https://github.com/facebook/react-native/issues/10471
       setTimeout(() => {
         if (callback) callback();
+        if (this.props.onClose) this.props.onClose();
       }, 10);
     });
   }
 
   handleContainerOnPress = () => {
     this.close();
+  }
+
+  handleModalOnShow = () => {
+    // animated open
+    this.animateToValue(0, this.props.onOpen);
   }
 
   renderActionItems() {
@@ -130,24 +152,19 @@ class ActionSheet extends React.Component {
     });
   }
 
-  handleModalOnShow = () => {
-    this.animateToValue(0);
-  }
-
   render() {
     return (
       <Modal
         transparent
         visible={this.state.visible}
         onShow={this.handleModalOnShow}
-        {...this.props}
       >
         <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>
           <View style={{ flex: 1 }} >
             <Animated.View style={this.getBackdropStyle()} />
             <Animated.View style={this.getActionsContainerStyle()} >
               <View
-                style={styles.actions}
+                style={this.props.mode === 'default' && styles.actionsItems}
               >
                 {this.renderActionItems()}
               </View>
@@ -167,17 +184,17 @@ const styles = StyleSheet.create({
 
   actionsContainer: {
     position: 'absolute',
-    top: 0,
+    top: TOP_OFFSET,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'flex-end'
   },
 
-  actions: {
+  actionsItems: {
     margin: theme.margin,
-    backgroundColor: theme.color.white,
-    borderRadius: theme.radius
+    borderRadius: theme.radius,
+    backgroundColor: theme.color.white
   },
 
   actionDestructive: {

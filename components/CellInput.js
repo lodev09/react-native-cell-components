@@ -57,7 +57,8 @@ class CellInput extends React.Component {
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
         onContentSizeChange={this.handleOnContentSizeChange}
-        placeholder={this.props.title || this.props.placeholder}
+        title={this.props.multiline === true ? null : this.props.title}
+        placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
         {...this.props}
       />
     );

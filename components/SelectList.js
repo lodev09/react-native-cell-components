@@ -5,6 +5,7 @@ import { BlurView } from 'react-native-blur';
 import theme from '../lib/theme';
 
 import Cell from './Cell';
+import ActionSheet from './ActionSheet';
 
 import RealmListView from '../lib/RealmListView.js';
 
@@ -57,12 +58,11 @@ class SelectList extends React.Component {
     }
 
     const windowHeight = Dimensions.get('window').height;
-    const withSections = this.props.section ? true : false;
     const dsOptions = {
       rowHasChanged: (oldRow, newRow) => oldRow !== newRow
     };
 
-    if (withSections) {
+    if (this.props.section) {
       dsOptions.sectionHeaderHasChanged = (s1, s2) => s1 !== s2;
     }
 
@@ -71,9 +71,7 @@ class SelectList extends React.Component {
     this.state = {
       animatedY: new Animated.Value(this.props.visible ? 0 : windowHeight),
       animated: this.props.animated,
-      visible: this.props.visible === true,
       datasource,
-      withSections,
       windowHeight
     };
   }
@@ -205,7 +203,7 @@ class SelectList extends React.Component {
   }
 
   getDataSource() {
-    if (this.state.withSections) {
+    if (this.props.section) {
       const data = {};
 
       if (this.props.data) {
@@ -249,7 +247,7 @@ class SelectList extends React.Component {
           <ListView
             dataSource={this.getDataSource()}
             renderRow={this.props.renderRow || this.renderRow}
-            renderSectionHeader={this.state.withSections ? this.props.renderSectionHeader || this.renderSectionHeader : null}
+            renderSectionHeader={this.props.section ? this.props.renderSectionHeader || this.renderSectionHeader : null}
             renderSeparator={this.props.renderSeparator || this.renderSeparator}
             keyboardShouldPersistTaps="handled"
             enableEmptySections
@@ -272,14 +270,14 @@ class SelectList extends React.Component {
       return (
         <Modal
           transparent
-          visible={this.state.visible}
+          visible={this.props.visible}
           onShow={this.handleModalOnShow}
         >
           {this.renderContent()}
         </Modal>
       );
     } else {
-      return this.state.visible ? this.renderContent() : null;
+      return this.props.visible ? this.renderContent() : null;
     }
   }
 }
@@ -310,9 +308,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.padding / 2,
   },
   sectionHeader: {
-    backgroundColor: 'transparent',
-    // ...theme.border.bottom,
-    // ...theme.border.top
+    backgroundColor: 'transparent'
   },
   separator: {
     ...theme.separator

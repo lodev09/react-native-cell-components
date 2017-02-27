@@ -16,8 +16,8 @@ Tested with redux and on **RN >=0.40**
 - [x] Components are re-used
 - [x] Supports redux
 - [x] [Realm](https://github.com/realm/realm-js) support for ListView
-- [ ] Android support (PRs welcome)
-- [ ] Custom user theme
+- [ ] Full Android support, _specifically `DatePicker` support and exclusive UX style for android. PRs are always welcome!_
+- [ ] Custom user theme/styles
 
 ## Components
 - Cell

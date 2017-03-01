@@ -24,7 +24,8 @@ class SelectList extends React.Component {
     onItemPress: (obj, selected) => {},
     visible: false,
     modal: false,
-    realm: false
+    realm: false,
+    itemSelectedIcon: 'check'
   }
 
   static propTypes = {
@@ -34,6 +35,7 @@ class SelectList extends React.Component {
     itemTitle: React.PropTypes.any,
     itemSelectedValidator: React.PropTypes.any.isRequired,
     itemSubtitle: React.PropTypes.any,
+    itemSelectedIcon: React.PropTypes.any,
     icon: React.PropTypes.any,
     visible: React.PropTypes.bool,
     modal: React.PropTypes.bool,
@@ -142,13 +144,19 @@ class SelectList extends React.Component {
       this.props.onItemPress(obj, !selected);
     };
 
+    const selectedIcon = Object.assign({},
+      { name: 'check' },
+      typeof this.props.itemSelectedIcon === 'string' ?
+      { name: this.props.itemSelectedIcon } :
+      this.props.itemSelectedIcon || {}
+    );
+
     return (
       <Cell
         onPress={onItemPress}
         title={this.renderTitle(obj)}
         subtitle={this.renderSubtitle(obj)}
-        disclosure={selected ? 'check' : null}
-        disclosureColor={theme.color.info}
+        disclosure={selected ? selectedIcon : null}
         icon={this.props.icon}
       />
     );

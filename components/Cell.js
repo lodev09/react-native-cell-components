@@ -62,7 +62,7 @@ class Cell extends React.Component {
       { size: ICON_DEFAULT_SIZE },
       typeof this.props.icon === 'string' ?
         { name: this.props.icon } :
-        this.props.icon
+        this.props.icon || {}
     );
 
     return (
@@ -84,7 +84,7 @@ class Cell extends React.Component {
       { size: ICON_DEFAULT_SIZE },
       typeof this.props.disclosure === 'string' ?
         { name: this.props.disclosure } :
-        this.props.disclosure
+        this.props.disclosure || {}
     );
     
     return (
@@ -129,11 +129,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.color.white,
     flexDirection: 'row',
-    // alignItems: 'flex-start',
-    // minHeight: CELL_MIN_HEIGHT
+    minHeight: CELL_MIN_HEIGHT
   },
   infoContainer: {
-    paddingVertical: theme.padding * 1.5
+    paddingVertical: theme.padding
   },
   infoContainerSubtitled: {
     paddingVertical: theme.padding
@@ -164,6 +163,7 @@ const styles = StyleSheet.create({
   icon: {
     width: theme.iconWidth,
     marginHorizontal: theme.margin / 1.5,
+    marginVertical: theme.margin / 2,
     paddingLeft: theme.padding / 2,
     textAlign: 'center',
   },

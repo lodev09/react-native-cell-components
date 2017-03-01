@@ -1,29 +1,34 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Octicons';
-
 import theme from '../lib/theme';
+import Icon from '../lib/Icon';
 
 import {
   View,
   TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
   Text
 } from 'react-native';
 
-const CELL_MIN_HEIGHT = 49;
+const CELL_MIN_HEIGHT = 50;
+const ICON_DEFAULT_SIZE = 19;
 
 class Cell extends React.Component {
   static defaultProps = {
-    iconColor: theme.color.muted,
-    disclosureColor: theme.color.muted
+    tintColor: theme.color.black
   }
 
   static propTypes = {
     title: React.PropTypes.any,
     subtitle: React.PropTypes.any,
-    icon: React.PropTypes.string,
-    disclosure: React.PropTypes.string,
-    value: React.PropTypes.any
+    icon: React.PropTypes.any,
+    disclosure: React.PropTypes.any,
+    value: React.PropTypes.any,
+    tintColor: React.PropTypes.string
+  }
+
+  constructor(props) {
+    super(props);
   }
 
   renderTitle() {
@@ -32,40 +37,77 @@ class Cell extends React.Component {
         return this.props.title;
         break;
       case 'string':
-        return <Text style={styles.title} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;
+        return <Text style={[ styles.title, { color: this.props.tintColor } ]} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;
         break;
     }
   }
 
   renderValue() {
+    if (React.Children.count(this.props.children) > 0) {
+      return this.props.children;
+    }
+
+    if (!this.props.value) return;
+
     switch (typeof this.props.value) {
       case 'string':
-        return <Text style={[ styles.value, styles.valueText ]} numberOfLines={1} >{this.props.value}</Text>
-        break;
+        return <Text style={[ styles.value, styles.valueText, { color: this.props.tintColor, opacity: 0.8 } ]} numberOfLines={1} >{this.props.value}</Text>
       case 'object':
         return <View style={styles.value} >{this.props.value}</View>;
-        break;
     }
   }
 
+  renderIcon() {
+    const iconProps = Object.assign(
+      { size: ICON_DEFAULT_SIZE },
+      typeof this.props.icon === 'string' ?
+        { name: this.props.icon } :
+        this.props.icon
+    );
+
+    return (
+      <Icon
+        {...iconProps}
+        style={[
+          styles.icon,
+          {
+            color: iconProps.color || this.props.tintColor,
+            opacity: iconProps.opacity || 0.8
+          }
+        ]}
+      />
+    );
+  }
+
+  renderDisclosure() {
+    const iconProps = Object.assign(
+      { size: ICON_DEFAULT_SIZE },
+      typeof this.props.disclosure === 'string' ?
+        { name: this.props.disclosure } :
+        this.props.disclosure
+    );
+    
+    return (
+      <Icon
+        {...iconProps}
+        style={[
+          styles.disclosure,
+          { color: iconProps.color || theme.color.muted }
+        ]}
+      />
+    );
+  }
+
   render() {
+    const infoContainerStyle = this.props.subtitle ? styles.infoContainerSubtitled : styles.infoContainer;
+
     return (
       <TouchableHighlight {...this.props} >
-        <View style={[ styles.row, this.props.style ]} >
-          <View style={styles.leftContainer} >
-            {
-              this.props.icon &&
-              <Icon
-                size={18}
-                name={this.props.icon}
-                style={[
-                  styles.icon,
-                  { color: this.props.iconColor }
-                ]}
-              />
-            }
+        <View style={[ styles.container, this.props.style ]} >
+          <View style={[infoContainerStyle, styles.leftContainer ]} >
+            {this.props.icon && this.renderIcon()}
           </View>
-          <View style={{ flex: 1 }} >
+          <View style={[ infoContainerStyle, styles.middleContainer ]} >
             <View style={styles.titleValueContainer} >
               {this.renderTitle()}
               {this.renderValue()}
@@ -74,18 +116,8 @@ class Cell extends React.Component {
               {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
             </View>
           </View>
-          <View style={styles.rightContainer} >
-            {
-              this.props.disclosure &&
-              <Icon
-                size={18}
-                name="check"
-                style={[
-                  styles.disclosure,
-                  { color: this.props.disclosureColor }
-                ]}
-              />
-            }
+          <View style={[infoContainerStyle, styles.rightContainer ]} >
+            {this.props.disclosure && this.renderDisclosure()}
           </View>
         </View>
       </TouchableHighlight>
@@ -94,16 +126,21 @@ class Cell extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  row: {
+  container: {
     backgroundColor: theme.color.white,
     flexDirection: 'row',
-    alignItems: 'center',
-    minHeight: CELL_MIN_HEIGHT,
+    // alignItems: 'flex-start',
+    // minHeight: CELL_MIN_HEIGHT
+  },
+  infoContainer: {
+    paddingVertical: theme.padding * 1.5
+  },
+  infoContainerSubtitled: {
     paddingVertical: theme.padding
   },
   titleValueContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center'
   },
   valueText: {
@@ -116,7 +153,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: theme.font.medium,
-    color: theme.color.black,
     flex: 1,
     marginRight: theme.margin / 1.5
   },
@@ -125,27 +161,29 @@ const styles = StyleSheet.create({
     fontSize: theme.font.small,
     color: theme.color.muted
   },
+  icon: {
+    width: theme.iconWidth,
+    marginHorizontal: theme.margin / 1.5,
+    paddingLeft: theme.padding / 2,
+    textAlign: 'center',
+  },
   leftContainer: {
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     minWidth: 15
   },
-  icon: {
-    width: theme.iconWidth,
-    marginVertical: theme.margin / 2,
-    marginHorizontal: theme.margin / 1.5,
-    paddingLeft: theme.padding,
-    textAlign: 'center',
-    flex: 1
+  middleContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   rightContainer: {
     minWidth: 15,
     alignItems: 'center',
-      justifyContent: 'center'
+    justifyContent: 'center'
   },
   disclosure: {
-    width: theme.iconWidth * 1.5,
-    marginLeft: theme.margin / 2,
+    width: theme.iconWidth,
+    marginHorizontal: theme.margin / 1.5,
     textAlign: 'center'
   }
 });

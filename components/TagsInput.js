@@ -22,7 +22,7 @@ class TagsInput extends React.Component {
 
   static propTypes = {
     ...View.propTypes,
-    tags: React.PropTypes.array.isRequired,
+    tags: React.PropTypes.array,
     autoFocus: React.PropTypes.bool,
     onChangeText: React.PropTypes.func,
     onFocus: React.PropTypes.func,
@@ -124,7 +124,7 @@ class TagsInput extends React.Component {
   }
 
   renderTags() {
-    return this.props.tags.map((tag, i) => {
+    return this.props.tags ? this.props.tags.map((tag, i) => {
       const selected = this.state.selectedTagIndex === i;
       return (
         <TouchableWithoutFeedback onPress={(e) => this.handleTagOnPress(tag, i, e)} key={'tag-' + i} >
@@ -133,7 +133,7 @@ class TagsInput extends React.Component {
           </View>
         </TouchableWithoutFeedback>
       );
-    })
+    }) : null;
   }
 
   render() {
@@ -142,7 +142,8 @@ class TagsInput extends React.Component {
         {...this.props}
         style={[
           styles.container,
-          { backgroundColor: this.props.backgroundColor }
+          { backgroundColor: this.props.backgroundColor },
+          this.props.style
         ]}
       >
         {this.props.label && <Text style={styles.labelText} >{this.props.label}</Text>}

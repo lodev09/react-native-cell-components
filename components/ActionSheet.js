@@ -122,33 +122,48 @@ class ActionSheet extends React.Component {
 
   renderActionItems() {
     return React.Children.map(this.props.children, (item, i) => {
-      if (item.type !== ActionItem) return item;
-
-      const title = item.props.destructive ? <Text style={styles.actionDestructiveText} >{item.props.title.toUpperCase()}</Text> : item.props.title;
-
-      const itemOnPress = () => {
-        this.close(item.props.onPress);
-      };
-
       const isFirstChild = i === 0;
       const isLastChild = i === React.Children.count(this.props.children) -1;
 
-      return (
-        <View key={'action-item-' + i}>
-          <Cell
-            title={title}
-            onPress={itemOnPress}
-            icon={item.props.icon}
+      const separator = !isLastChild && <View style={{ ...theme.separator }} />;
+
+      if (item.type !== ActionItem) {
+        return (
+          <View key={'action-item-' + i}
             style={[
+              { backgroundColor: item.props.backgroundColor },
               isFirstChild ? styles.borderTopRadius : null,
-              isLastChild ? styles.borderBottomRadius : null,
-              item.props.destructive ? styles.actionDestructive : null
+              isLastChild ? styles.borderBottomRadius : null
             ]}
-          />
-          {!isLastChild && <View style={{ ...theme.separator }} />}
-        </View>
-        
-      );
+          >
+            {item}
+            {separator}
+          </View>
+        );
+      } else {
+        const title = item.props.destructive ? <Text style={styles.actionDestructiveText} >{item.props.title.toUpperCase()}</Text> : item.props.title;
+
+        const itemOnPress = () => {
+          this.close(item.props.onPress);
+        };
+
+        return (
+          <View key={'action-item-' + i}>
+            <Cell
+              {...item.props}
+              title={item.props.destructive ? null : title}
+              value={item.props.destructive ? title : null}
+              onPress={item.props.destructive || item.props.onPress ? itemOnPress : null}
+              style={[
+                item.props.destructive ? styles.actionDestructive : item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
+                isFirstChild ? styles.borderTopRadius : null,
+                isLastChild ? styles.borderBottomRadius : null
+              ]}
+            />
+            {separator}
+          </View>
+        );
+      }
     });
   }
 
@@ -164,6 +179,7 @@ class ActionSheet extends React.Component {
             <Animated.View style={this.getBackdropStyle()} />
             <Animated.View style={this.getActionsContainerStyle()} >
               <View
+                onStartShouldSetResponder={e => true}
                 style={this.props.mode === 'default' && styles.actionsItems}
               >
                 {this.renderActionItems()}

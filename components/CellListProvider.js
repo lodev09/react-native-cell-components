@@ -42,6 +42,7 @@ class CellListProvider extends React.Component {
     return React.Children.map(children, (component, i) => {
       // null child
       if (!component) return component;
+      if (React.isValidElement(component) === false) return component;
 
       if (component.type !== CellListItem) {
         if (React.Children.count(component.props.children) === 0) return component;
@@ -82,28 +83,30 @@ class CellListProvider extends React.Component {
     const {
       listData,
       listItemTitle,
+      listItemSubtitle,
       listItemIcon,
       listItemValidator,
       listSection,
       listSelected,
-      listItemOnPress
+      listItemOnPress,
+      icon
     } = this.state.source;
 
     return (
       <SelectList
+        {...this.props}
+
         modal
         ref={component => this._selectList = component}
         data={listData}
         itemTitle={listItemTitle}
-        icon={listItemIcon}
+        itemSubtitle={listItemSubtitle}
+        icon={listItemIcon || icon}
         itemSelectedValidator={listItemValidator}
-        isRealm
         onItemPress={item => this.handleSelectListItemOnPress(item, listItemOnPress)}
         section={listSection}
         selected={listSelected}
         onClose={this.handleSelectListOnClose}
-
-        {...this.props}
       />
     );
   }

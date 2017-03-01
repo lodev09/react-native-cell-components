@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ActionSheet from './ActionSheet';
 import DatePicker from './DatePicker';
 import Cell from './Cell';
 
@@ -38,6 +37,7 @@ class CellDatePicker extends React.Component {
   }
 
   handleDateOnPress = () => {
+    if (this.props.onPress) this.props.onPress();
     this._datePicker.open();
   }
 

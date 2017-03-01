@@ -5,19 +5,21 @@ import CellInput from './components/CellInput';
 import CellGroup from './components/CellGroup';
 import CellDatePicker from './components/CellDatePicker';
 import CellListProvider, { CellListItem } from './components/CellListProvider';
+import CellSheet from './components/CellSheet';
 import ActionSheet, { ActionItem } from './components/ActionSheet';
 import DatePicker from './components/DatePicker';
 
 module.exports = {
   TagsInput,
   SelectList,
-  CellGroup,
-  Cell,
-  CellListProvider,
-  CellListItem,
-  CellDatePicker,
   ActionSheet,
   ActionItem,
   DatePicker,
-  CellInput
+  CellInput,
+  Cell,
+  CellGroup,
+  CellListProvider,
+  CellListItem,
+  CellDatePicker,
+  CellSheet
 }

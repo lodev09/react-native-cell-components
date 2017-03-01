@@ -52,7 +52,10 @@ class CellGroup extends React.Component {
 
   render() {
     return (
-      <View style={[ { marginBottom: theme.margin }, this.props.style ]} {...this.props} >
+      <View
+        {...this.props}
+        style={[ { marginBottom: theme.margin }, this.props.style ]}
+      >
         {this.renderHeader()}
         {this.props.bordered && <View style={styles.separator} />}
         {this.renderChildren()}

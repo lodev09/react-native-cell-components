@@ -23,7 +23,6 @@ class SelectList extends React.Component {
   static defaultProps = {
     onItemPress: (obj, selected) => {},
     visible: false,
-    data: [],
     modal: false,
     realm: false
   }
@@ -192,16 +191,34 @@ class SelectList extends React.Component {
     return <View key={'separator-' + sectionID + '-' + rowID} style={styles.separator} />;
   }
 
+  renderHeader = () => {
+    if (this.props.section) return;
+    return (
+      <View style={{ ...theme.border.top, ...theme.border.bottom, height: 5, backgroundColor: theme.color.light }} >
+        <View blurType="xlight" />
+      </View>
+    );
+  }
+
   renderListView() {
+    if (!this.props.data) {
+      const title = <Text style={styles.placeholder}>Sorry, we have nothing :(</Text>;
+      return (
+        <Cell title={title} />
+      );
+    }
+
     return (
       <ListView
-        dataSource={this.getDataSource()}
-        renderRow={this.props.renderRow || this.renderRow}
-        renderSectionHeader={this.props.section ? this.props.renderSectionHeader || this.renderSectionHeader : null}
-        renderSeparator={this.props.renderSeparator || this.renderSeparator}
         keyboardShouldPersistTaps="handled"
         enableEmptySections
+        renderHeader={this.renderHeader}
         {...this.props}
+
+        dataSource={this.getDataSource()}
+        renderRow={this.props.renderRow || this.renderRow}
+        renderSectionHeader={this.props.section && (this.props.renderSectionHeader || this.renderSectionHeader)}
+        renderSeparator={this.props.renderSeparator || this.renderSeparator}
       />
     );
   }
@@ -242,6 +259,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'transparent',
     zIndex: 10
+  },
+  placeholder: {
+    flex: 1,
+    textAlign: 'center',
+    fontSize: theme.font.small,
+    fontWeight: '500',
+    color: theme.color.muted
   },
   headerControl: {
     flex: 1,

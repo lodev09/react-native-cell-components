@@ -9,7 +9,7 @@ import {
   TextInput
 } from 'react-native';
 
-const MULTILINE_BASE_HEIGHT = 20;
+const MULTILINE_BASE_HEIGHT = 23;
 
 class CellInput extends React.Component {
   static defaultProps = {
@@ -27,8 +27,7 @@ class CellInput extends React.Component {
     super(props);
 
     this.state = {
-      rows: this.props.rows,
-      multiLineHeight: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows
+      rows: this.props.rows
     }
   }
 
@@ -36,9 +35,11 @@ class CellInput extends React.Component {
     const contentHeight = e.nativeEvent.contentSize.height;
 
     if (this.props.autoResize) {
-      this.setState({
-        multiLineHeight: contentHeight
-      })
+      if ((contentHeight - contentHeight % MULTILINE_BASE_HEIGHT) / MULTILINE_BASE_HEIGHT < this.props.rows) {
+        this._textInput.setNativeProps({
+          height: contentHeight
+        });
+      }
     }
   }
 
@@ -46,26 +47,29 @@ class CellInput extends React.Component {
     const textInputStyle = this.props.multiline ?
       {
         paddingBottom: theme.padding,
-        height: Math.min(MULTILINE_BASE_HEIGHT * this.props.rows, this.state.multiLineHeight) 
-      } :
-      { flex: 1 };
+        height: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows,
+        flex: 3
+      } : { flex: 3 };
 
     return (
       <TextInput
         ref={component => this._textInput = component}
-        style={[ styles.textInput, textInputStyle ]}
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
-        onContentSizeChange={this.handleOnContentSizeChange}
-        title={this.props.multiline === true ? null : this.props.title}
-        placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
         {...this.props}
+        style={[ styles.textInput, textInputStyle, this.props.style ]}
+        onContentSizeChange={this.handleOnContentSizeChange}
+        placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
       />
     );
   }
 
   render() {
-    return <Cell icon={this.props.icon} title={!this.props.multiline && this.props.title} value={this.renderTextInput()} />;
+    return (
+      <Cell icon={this.props.icon} title={!this.props.multiline && this.props.title} >
+        {this.renderTextInput()}
+      </Cell>
+    );
   }
 }
 

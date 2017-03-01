@@ -25,6 +25,7 @@ Tested with redux and on **RN >=0.40**
 - CellGroup
 - CellInput
 - CellListProvider
+- CellSheet
 - DatePicker (ios atm)
 - SelectList
 - TagsInput

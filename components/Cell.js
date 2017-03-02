@@ -10,8 +10,8 @@ import {
   Text
 } from 'react-native';
 
-const CELL_MIN_HEIGHT = 50;
-const ICON_DEFAULT_SIZE = 19;
+const CELL_MIN_HEIGHT = 48;
+const ICON_DEFAULT_SIZE = 20;
 
 class Cell extends React.Component {
   static defaultProps = {
@@ -99,15 +99,13 @@ class Cell extends React.Component {
   }
 
   render() {
-    const infoContainerStyle = this.props.subtitle ? styles.infoContainerSubtitled : styles.infoContainer;
-
     return (
       <TouchableHighlight {...this.props} >
         <View style={[ styles.container, this.props.style ]} >
-          <View style={[infoContainerStyle, styles.leftContainer ]} >
+          <View style={[ styles.sectionContainer, styles.leftContainer, this.props.subtitle ? styles.leftContainerSubtitled : null ]} >
             {this.props.icon && this.renderIcon()}
           </View>
-          <View style={[ infoContainerStyle, styles.middleContainer ]} >
+          <View style={[ styles.sectionContainer, styles.middleContainer ]} >
             <View style={styles.titleValueContainer} >
               {this.renderTitle()}
               {this.renderValue()}
@@ -116,7 +114,7 @@ class Cell extends React.Component {
               {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
             </View>
           </View>
-          <View style={[infoContainerStyle, styles.rightContainer ]} >
+          <View style={[styles.sectionContainer, styles.rightContainer ]} >
             {this.props.disclosure && this.renderDisclosure()}
           </View>
         </View>
@@ -131,11 +129,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     minHeight: CELL_MIN_HEIGHT
   },
-  infoContainer: {
-    paddingVertical: theme.padding
-  },
-  infoContainerSubtitled: {
-    paddingVertical: theme.padding
+  sectionContainer: {
+    paddingVertical: theme.padding / 2
   },
   titleValueContainer: {
     flexDirection: 'row',
@@ -156,30 +151,33 @@ const styles = StyleSheet.create({
     marginRight: theme.margin / 1.5
   },
   subtitle: {
-    marginTop: theme.margin / 2,
-    fontSize: theme.font.small,
+    marginTop: theme.margin / 5,
+    fontSize: theme.font.xsmall,
     color: theme.color.muted
   },
   icon: {
     width: theme.iconWidth,
     marginHorizontal: theme.margin / 1.5,
-    marginVertical: theme.margin / 2,
+    marginVertical: theme.margin / 5,
     paddingLeft: theme.padding / 2,
     textAlign: 'center',
   },
+  rightContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: 15,
+  },
   leftContainer: {
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     minWidth: 15
+  },
+  leftContainerSubtitled: {
+    justifyContent: 'flex-start',
   },
   middleContainer: {
     flex: 1,
     justifyContent: 'center',
-  },
-  rightContainer: {
-    minWidth: 15,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   disclosure: {
     width: theme.iconWidth,

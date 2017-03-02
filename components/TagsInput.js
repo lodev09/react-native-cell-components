@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Octicons';
 import theme from '../lib/theme';
 
 import {

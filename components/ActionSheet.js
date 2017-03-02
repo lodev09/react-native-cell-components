@@ -121,13 +121,11 @@ class ActionSheet extends React.Component {
   }
 
   renderActionItems() {
-    return React.Children.map(this.props.children, (item, i) => {
-      // null child
-      if (!item) return item;
-      if (React.isValidElement(item) === false) return item;
+    const children = React.Children.toArray(this.props.children);
+    return children.map((item, i) => {
 
       const isFirstChild = i === 0;
-      const isLastChild = i === React.Children.count(this.props.children) -1;
+      const isLastChild = i === children.length - 1;
 
       const separator = !isLastChild && <View style={{ ...theme.separator }} />;
 

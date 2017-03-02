@@ -41,7 +41,6 @@ class CellListProvider extends React.Component {
   renderChildren(children) {
     return React.Children.map(children, (component, i) => {
       // null child
-      if (!component) return component;
       if (React.isValidElement(component) === false) return component;
 
       if (component.type !== CellListItem) {

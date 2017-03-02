@@ -1,5 +1,4 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Octicons';
 import { BlurView } from 'react-native-blur';
 
 import theme from '../lib/theme';

@@ -153,8 +153,7 @@ class ActionSheet extends React.Component {
           <View key={'action-item-' + i}>
             <Cell
               {...item.props}
-              title={item.props.destructive ? null : title}
-              value={item.props.destructive ? title : null}
+              title={title}
               onPress={item.props.destructive || item.props.onPress ? itemOnPress : null}
               style={[
                 item.props.destructive ? styles.actionDestructive : item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
@@ -222,7 +221,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: theme.font.small,
     fontWeight: '600',
-    color: theme.color.muted
+    color: theme.color.muted,
+    flex: 1
   },
   borderTopRadius: {
     borderTopRightRadius: theme.radius,

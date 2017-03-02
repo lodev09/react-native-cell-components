@@ -32,13 +32,15 @@ class Cell extends React.Component {
   }
 
   renderTitle() {
+    if (!this.props.title) return;
+
     switch (typeof this.props.title) {
       case 'object':
         return this.props.title;
-        break;
-      case 'string':
+      case 'function':
+        return this.props.title();
+      default:
         return <Text style={[ styles.title, { color: this.props.tintColor } ]} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;
-        break;
     }
   }
 
@@ -50,10 +52,12 @@ class Cell extends React.Component {
     if (!this.props.value) return;
 
     switch (typeof this.props.value) {
-      case 'string':
-        return <Text style={[ styles.value, styles.valueText, { color: this.props.tintColor, opacity: 0.8 } ]} numberOfLines={1} >{this.props.value}</Text>
       case 'object':
         return <View style={styles.value} >{this.props.value}</View>;
+      case 'function':
+        return this.props.value();
+      default:
+        return <Text style={[ styles.value, styles.valueText, { color: this.props.tintColor, opacity: 0.8 } ]} numberOfLines={1} >{this.props.value}</Text>
     }
   }
 
@@ -138,12 +142,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   valueText: {
-    fontSize: theme.font.medium,
-    color: theme.color.muted,
+    fontSize: theme.font.small,
     textAlign: 'right'
   },
   value: {
-    flex: 3
+    // flex: 3
   },
   title: {
     fontSize: theme.font.medium,

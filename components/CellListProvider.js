@@ -82,6 +82,7 @@ class CellListProvider extends React.Component {
     const {
       listData,
       listItemTitle,
+      listItemValue,
       listItemSubtitle,
       listItemIcon,
       listItemValidator,
@@ -99,6 +100,7 @@ class CellListProvider extends React.Component {
         ref={component => this._selectList = component}
         data={listData}
         itemTitle={listItemTitle}
+        itemValue={listItemValue}
         itemSubtitle={listItemSubtitle}
         icon={listItemIcon || icon}
         itemSelectedValidator={listItemValidator}

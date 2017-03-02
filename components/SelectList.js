@@ -32,6 +32,7 @@ class SelectList extends React.Component {
     selected: React.PropTypes.any,
     section: React.PropTypes.any,
     itemTitle: React.PropTypes.any,
+    itemValue: React.PropTypes.any,
     itemSelectedValidator: React.PropTypes.any.isRequired,
     itemSubtitle: React.PropTypes.any,
     itemSelectedIcon: React.PropTypes.any,
@@ -96,27 +97,30 @@ class SelectList extends React.Component {
     }
   }
 
+  renderValue(obj) {
+    switch (typeof this.props.itemValue) {
+      case 'function':
+        return this.props.itemValue(obj);
+      default:
+        return obj[this.props.itemValue];
+    }
+  }
+
   renderTitle(obj) {
     switch (typeof this.props.itemTitle) {
-      case 'string':
-        return obj[this.props.itemTitle];
       case 'function':
         return this.props.itemTitle(obj);
-        break;
       default:
-        return <Text style={styles.title}>XXX</Text>;
-        break;
+        return obj[this.props.itemTitle];
     }
   }
 
   renderSubtitle(obj) {
     switch (typeof this.props.itemSubtitle) {
-      case 'string':
-        return obj[this.props.itemSubtitle];
-        break;
       case 'function':
         return this.props.itemSubtitle(obj);
-        break;
+      default:
+        return obj[this.props.itemSubtitle];
     }
   }
 
@@ -153,9 +157,10 @@ class SelectList extends React.Component {
     return (
       <Cell
         onPress={onItemPress}
-        title={this.renderTitle(obj)}
-        subtitle={this.renderSubtitle(obj)}
-        disclosure={selected ? selectedIcon : null}
+        title={this.props.itemTitle && this.renderTitle(obj)}
+        value={this.props.itemValue && this.renderValue(obj)}
+        subtitle={this.props.itemSubtitle && this.renderSubtitle(obj)}
+        disclosure={selected && selectedIcon}
         icon={this.props.icon}
       />
     );

@@ -3,7 +3,8 @@ import React from 'react';
 import ActionSheet, { ActionItem } from './ActionSheet';
 
 import {
-  DatePickerIOS
+  DatePickerIOS,
+  Platform
 } from 'react-native';
 
 class DatePicker extends React.Component {
@@ -42,11 +43,14 @@ class DatePicker extends React.Component {
   render() {
     return (
       <ActionSheet ref={component => this._actionSheet = component} >
-        <DatePickerIOS
-          date={this.state.date}
-          mode={this.state.mode}
-          onDateChange={this.handleOnDateChange}
-        />
+        {
+          Platform === 'ios' &&
+          <DatePickerIOS
+            date={this.state.date}
+            mode={this.state.mode}
+            onDateChange={this.handleOnDateChange}
+          />
+        }
         <ActionItem title="Done" destructive />
       </ActionSheet>
     );

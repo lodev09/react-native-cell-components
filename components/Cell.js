@@ -40,7 +40,18 @@ class Cell extends React.Component {
       case 'function':
         return this.props.title();
       default:
-        return <Text style={[ styles.title, { color: this.props.tintColor } ]} ellipsizeMode="tail" numberOfLines={1} >{this.props.title}</Text>;
+        return (
+          <Text
+            style={[
+              styles.title,
+              { color: this.props.tintColor || theme.color.black }
+            ]}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+          >
+            {this.props.title}
+          </Text>
+        );
     }
   }
 
@@ -57,7 +68,20 @@ class Cell extends React.Component {
       case 'function':
         return this.props.value();
       default:
-        return <Text style={[ styles.value, styles.valueText, { color: this.props.tintColor, opacity: 0.8 } ]} numberOfLines={1} >{this.props.value}</Text>
+        return (
+          <Text
+            style={[
+              styles.value, styles.valueText,
+              {
+                color: this.props.tintColor || theme.color.black,
+                opacity: 0.8
+              }
+            ]}
+            numberOfLines={1}
+          >
+            {this.props.value}
+          </Text>
+        );
     }
   }
 
@@ -75,7 +99,7 @@ class Cell extends React.Component {
         style={[
           styles.icon,
           {
-            color: iconProps.color || this.props.tintColor,
+            color: iconProps.color || (this.props.tintColor || theme.color.black),
             opacity: iconProps.opacity || 0.8
           }
         ]}

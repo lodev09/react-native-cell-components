@@ -26,13 +26,13 @@ class DatePicker extends React.Component {
     }
   }
 
-  /*componentWillReceiveProps(nextProps) {
-    if (nextProps.date && nextProps.date.getTime() === this.props.date) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.date && nextProps.date.getTime() !== this.props.date.getTime()) {
       this.setState({
         date: nextProps.date
       })
     }
-  }*/
+  }
 
   open() {
     // for ios, we use actionsheet

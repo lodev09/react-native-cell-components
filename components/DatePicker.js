@@ -44,7 +44,7 @@ class DatePicker extends React.Component {
     return (
       <ActionSheet ref={component => this._actionSheet = component} >
         {
-          Platform === 'ios' &&
+          Platform.OS === 'ios' &&
           <DatePickerIOS
             date={this.state.date}
             mode={this.state.mode}

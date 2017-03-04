@@ -10,30 +10,20 @@ import {
 class CellDatePicker extends React.Component {
 
   static defaultProps = {
-    mode: 'datetime'
+    mode: 'datetime',
+    date: new Date()
   }
 
   static proptTypes = {
     ...Cell.propTypes,
     onShow: React.PropTypes.func,
     onDateSelected: React.PropTypes.func.isRequired,
-    mode: React.PropTypes.string.isRequired
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      date: new Date()
-    };
+    mode: React.PropTypes.string.isRequired,
+    date: React.PropTypes.object
   }
 
   handleOnDateSelected = (date) => {
-    this.setState({
-      date
-    }, () => {
-      this.props.onDateSelected(date);
-    });
+    this.props.onDateSelected(date);
   }
 
   handleDateOnPress = () => {
@@ -46,6 +36,7 @@ class CellDatePicker extends React.Component {
       <View>
         <DatePicker
           ref={component => this._datePicker = component}
+          date={this.props.date}
           mode={this.props.mode}
           onDateSelected={this.handleOnDateSelected}
         />

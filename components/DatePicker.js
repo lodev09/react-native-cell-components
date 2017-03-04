@@ -22,10 +22,17 @@ class DatePicker extends React.Component {
     super(props);
 
     this.state = {
-      date: this.props.date,
-      mode: this.props.mode
+      date: this.props.date
     }
   }
+
+  /*componentWillReceiveProps(nextProps) {
+    if (nextProps.date && nextProps.date.getTime() === this.props.date) {
+      this.setState({
+        date: nextProps.date
+      })
+    }
+  }*/
 
   open() {
     // for ios, we use actionsheet
@@ -47,7 +54,7 @@ class DatePicker extends React.Component {
           Platform.OS === 'ios' &&
           <DatePickerIOS
             date={this.state.date}
-            mode={this.state.mode}
+            mode={this.props.mode}
             onDateChange={this.handleOnDateChange}
           />
         }

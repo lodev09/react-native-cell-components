@@ -38,7 +38,8 @@ class ActionSheet extends React.Component {
     mode: React.PropTypes.oneOf([
       'default', // default
       'list'
-    ])
+    ]),
+    title: React.PropTypes.any
   }
 
   constructor(props) {
@@ -122,6 +123,17 @@ class ActionSheet extends React.Component {
 
   renderActionItems() {
     const children = React.Children.toArray(this.props.children);
+
+    if (this.props.title) {
+      const title = (
+        <View style={styles.titleContainer} >
+          <Text style={styles.title} >{this.props.title}</Text>
+        </View>
+      );
+
+      children.unshift(title);
+    }
+
     return children.map((item, i) => {
 
       const isFirstChild = i === 0;
@@ -198,7 +210,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-
+  titleContainer: {
+    padding: theme.padding * 1.5
+  },
+  title: {
+    fontSize: theme.font.xsmall,
+    color: theme.color.muted
+  },
   actionsContainer: {
     position: 'absolute',
     top: TOP_OFFSET,

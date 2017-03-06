@@ -12,6 +12,7 @@ import {
 
 const CELL_MIN_HEIGHT = 48;
 const ICON_DEFAULT_SIZE = 20;
+const TITLE_MIN_WIDTH = 98;
 
 class Cell extends React.Component {
   static defaultProps = {
@@ -34,13 +35,16 @@ class Cell extends React.Component {
   renderTitle() {
     if (!this.props.title) return;
 
+    let value = null;
     switch (typeof this.props.title) {
       case 'object':
-        return this.props.title;
+        value = this.props.title;
+        break;
       case 'function':
-        return this.props.title();
+        value = this.props.title();
+        break;
       default:
-        return (
+        value = (
           <Text
             style={[
               styles.title,
@@ -53,6 +57,8 @@ class Cell extends React.Component {
           </Text>
         );
     }
+
+    return <View style={styles.titleContainer} >{value}</View>;
   }
 
   renderValue() {
@@ -64,14 +70,16 @@ class Cell extends React.Component {
 
     switch (typeof this.props.value) {
       case 'object':
-        return <View style={styles.value} >{this.props.value}</View>;
+        return this.props.value;
+        break;
       case 'function':
         return this.props.value();
+        break;
       default:
         return (
           <Text
             style={[
-              styles.value, styles.valueText,
+              styles.value,
               {
                 color: this.props.tintColor || theme.color.black,
                 opacity: 0.8
@@ -136,7 +144,7 @@ class Cell extends React.Component {
           <View style={[ styles.sectionContainer, styles.middleContainer ]} >
             <View style={styles.titleValueContainer} >
               {this.renderTitle()}
-              {this.renderValue()}
+              <View style={styles.valueContainer} >{this.renderValue()}</View>
             </View>
             <View>
               {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
@@ -165,16 +173,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  valueText: {
+  valueContainer: {
+    flex: 1
+  },
+  value: {
     fontSize: theme.font.small,
     textAlign: 'right'
   },
-  value: {
-    // flex: 3
+  titleContainer: {
+    minWidth: TITLE_MIN_WIDTH,
+    // flex: 1,
   },
   title: {
-    fontSize: theme.font.medium,
-    flex: 1,
+    fontSize: theme.font.medium, 
     marginRight: theme.margin / 1.5
   },
   subtitle: {

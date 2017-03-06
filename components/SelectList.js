@@ -15,7 +15,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-let ListView = NativeListView;
+DEFAULT_PLACEHOLDER = 'No data';
 
 class SelectList extends React.Component {
 
@@ -24,7 +24,8 @@ class SelectList extends React.Component {
     visible: false,
     modal: false,
     realm: false,
-    itemSelectedIcon: 'check'
+    itemSelectedIcon: 'check',
+    placeholder: DEFAULT_PLACEHOLDER
   }
 
   static propTypes = {
@@ -42,15 +43,14 @@ class SelectList extends React.Component {
     realm: React.PropTypes.bool,
     onItemPress: React.PropTypes.func,
     onClose: React.PropTypes.func,
-    onOpen: React.PropTypes.func
+    onOpen: React.PropTypes.func,
+    placeholder: React.PropTypes.string
   }
 
   constructor(props) {
     super(props);
 
-    if (this.props.realm) {
-      ListView = RealmListView;
-    }
+    this.ListView = this.props.realm ? NativeListView : RealmListView;
 
     const dsOptions = {
       rowHasChanged: (oldRow, newRow) => oldRow !== newRow
@@ -60,7 +60,7 @@ class SelectList extends React.Component {
       dsOptions.sectionHeaderHasChanged = (s1, s2) => s1 !== s2;
     }
 
-    const datasource = new ListView.DataSource(dsOptions);
+    const datasource = new this.ListView.DataSource(dsOptions);
 
     this.state = {
       visible: this.props.visible === true,
@@ -81,9 +81,9 @@ class SelectList extends React.Component {
     });
   }
 
-  close() {
+  close(callback) {
     if (this.props.modal === true) {
-      this._actionSheet.close();
+      this._actionSheet.close(callback);
     } else {
       this.setVisibilityState(false);
     }
@@ -158,7 +158,7 @@ class SelectList extends React.Component {
       <Cell
         onPress={onItemPress}
         title={this.props.itemTitle && this.renderTitle(obj)}
-        value={this.props.itemValue && this.renderValue(obj)}
+        value={(!selected && this.props.itemValue) && this.renderValue(obj)}
         subtitle={this.props.itemSubtitle && this.renderSubtitle(obj)}
         disclosure={selected && selectedIcon}
         icon={this.props.icon}
@@ -204,7 +204,12 @@ class SelectList extends React.Component {
   }
 
   renderHeader = () => {
-    if (this.props.section) return;
+    if (this.props.section && !this.props.renderHeader) return;
+
+    if (this.props.renderHeader) {
+      return this.props.renderHeader;
+    }
+
     return (
       <View style={{ ...theme.border.top, ...theme.border.bottom, height: 5, backgroundColor: theme.color.light }} >
         <View blurType="xlight" />
@@ -214,19 +219,25 @@ class SelectList extends React.Component {
 
   renderListView() {
     if (!this.props.data) {
-      const title = <Text style={styles.placeholder}>Sorry, we have nothing :(</Text>;
+      const title = <Text style={styles.placeholder}>{this.props.placeholder ? this.props.placeholder : DEFAULT_PLACEHOLDER }</Text>;
       return (
-        <Cell title={title} />
+        <View>
+          {this.renderHeader()}
+          <Cell title={title} />
+          <View style={styles.separator} />
+          {this.props.renderFooter && this.props.renderFooter()}
+        </View>
       );
     }
 
     return (
-      <ListView
+      <this.ListView
         keyboardShouldPersistTaps="handled"
         enableEmptySections
-        renderHeader={this.renderHeader}
+
         {...this.props}
 
+        renderHeader={this.renderHeader}
         dataSource={this.getDataSource()}
         renderRow={this.props.renderRow || this.renderRow}
         renderSectionHeader={this.props.section && (this.props.renderSectionHeader || this.renderSectionHeader)}
@@ -274,7 +285,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     flex: 1,
-    textAlign: 'center',
+    // textAlign: 'center',
     fontSize: theme.font.small,
     fontWeight: '500',
     color: theme.color.muted

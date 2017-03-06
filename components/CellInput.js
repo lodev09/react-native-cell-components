@@ -44,12 +44,11 @@ class CellInput extends React.Component {
   }
 
   renderTextInput() {
-    const textInputStyle = this.props.multiline ?
+    const textInputStyle = this.props.multiline &&
       {
         paddingBottom: theme.padding,
-        height: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows,
-        flex: 3
-      } : { flex: 3 };
+        height: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows
+      };
 
     return (
       <TextInput
@@ -66,7 +65,11 @@ class CellInput extends React.Component {
 
   render() {
     return (
-      <Cell icon={this.props.icon} title={!this.props.multiline && this.props.title} >
+      <Cell
+        icon={this.props.icon}
+        tintColor={this.props.tintColor}
+        title={!this.props.multiline && this.props.title}
+      >
         {this.renderTextInput()}
       </Cell>
     );
@@ -76,7 +79,8 @@ class CellInput extends React.Component {
 const styles = StyleSheet.create({
   textInput: {
     fontSize: theme.font.medium,
-    textAlign: 'left'
+    textAlign: 'left',
+    flex: 1
   }
 });
 

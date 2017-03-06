@@ -100,11 +100,15 @@ class TagsInput extends React.Component {
         this.setState({ text: ' ' })
       }
     } else {
-      this.setState({ text }, () => {
-        // don't trigger change if selected index is not null
-        if (this.state.selectedTagIndex === null)
+      if (this.state.selectedTagIndex === null) {
+        this.setState({ text }, () => {
           this.props.onChangeText(text.slice(1));
-      });
+        });
+      } else {
+        this._textInput.setNativeProps({
+          text: ' '
+        });
+      }
     }
   }
 
@@ -186,7 +190,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: theme.padding,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    flex: 1
   },
   labelText: {
     fontSize: theme.font.small,

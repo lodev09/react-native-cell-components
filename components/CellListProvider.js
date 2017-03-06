@@ -26,7 +26,7 @@ class CellListProvider extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.state.selecting !== prevState.selecting) {
       if (this.state.source && this.state.selecting === true) {
-        this._selectList.open();
+        this.open();
       }
     }
   }
@@ -63,10 +63,18 @@ class CellListProvider extends React.Component {
     });
   }
 
+  close(callback) {
+    this._selectList.close(callback);
+  }
+
+  open() {
+    this._selectList.open();
+  }
+
   handleSelectListItemOnPress = (selectedItem, onPressCallback) => {
     if (!this.state.source) return;
     onPressCallback(selectedItem);
-    this._selectList.close();
+    this.close();
   }
 
   handleSelectListOnClose = () => {
@@ -81,6 +89,9 @@ class CellListProvider extends React.Component {
 
     const {
       listData,
+      listHeader,
+      listFooter,
+      listPlaceholder,
       listItemTitle,
       listItemValue,
       listItemSubtitle,
@@ -97,6 +108,8 @@ class CellListProvider extends React.Component {
         {...this.props}
 
         modal
+        renderHeader={listHeader}
+        renderFooter={listFooter}
         ref={component => this._selectList = component}
         data={listData}
         itemTitle={listItemTitle}
@@ -108,6 +121,7 @@ class CellListProvider extends React.Component {
         section={listSection}
         selected={listSelected}
         onClose={this.handleSelectListOnClose}
+        placeholder={listPlaceholder}
       />
     );
   }

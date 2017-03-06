@@ -43,6 +43,10 @@ class CellInput extends React.Component {
     }
   }
 
+  focus() {
+    this._textInput.focus();
+  }
+
   renderTextInput() {
     const textInputStyle = this.props.multiline &&
       {

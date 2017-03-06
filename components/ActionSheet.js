@@ -28,7 +28,9 @@ const TOP_OFFSET = 20;
 class ActionSheet extends React.Component {
   static defaultProps = {
     animated: true,
-    mode: 'default'
+    mode: 'default',
+    cancelText: 'Cancel',
+    destructive: false
   }
 
   static propTypes = {
@@ -39,7 +41,10 @@ class ActionSheet extends React.Component {
       'default', // default
       'list'
     ]),
-    title: React.PropTypes.any
+    title: React.PropTypes.any,
+    cancelText: React.PropTypes.string,
+    onCancelPress: React.PropTypes.func,
+    destructive: React.PropTypes.bool
   }
 
   constructor(props) {
@@ -121,6 +126,10 @@ class ActionSheet extends React.Component {
     this.animateToValue(0, this.props.onOpen);
   }
 
+  handleCancelOnPress = () => {
+    this.close(this.props.onCancelPress);
+  }
+
   renderActionItems() {
     const children = React.Children.toArray(this.props.children);
 
@@ -132,6 +141,14 @@ class ActionSheet extends React.Component {
       );
 
       children.unshift(title);
+    }
+
+    if (this.props.cancelText) {
+      children.push(
+        <ActionItem backgroundColor={theme.color.light} onPress={this.handleCancelOnPress} >
+          <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
+        </ActionItem>
+      );
     }
 
     return children.map((item, i) => {
@@ -155,8 +172,6 @@ class ActionSheet extends React.Component {
           </View>
         );
       } else {
-        const title = item.props.destructive ? <Text style={styles.actionDestructiveText} >{item.props.title.toUpperCase()}</Text> : item.props.title;
-
         const itemOnPress = () => {
           this.close(item.props.onPress);
         };
@@ -165,13 +180,13 @@ class ActionSheet extends React.Component {
           <View key={'action-item-' + i}>
             <Cell
               {...item.props}
-              title={title}
-              onPress={item.props.destructive || item.props.onPress ? itemOnPress : null}
+              onPress={item.props.onPress && itemOnPress}
               style={[
-                item.props.destructive ? styles.actionDestructive : item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
+                item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
                 isFirstChild ? styles.borderTopRadius : null,
                 isLastChild ? styles.borderBottomRadius : null
               ]}
+              tintColor={item.props.destructive && theme.color.danger}
             />
             {separator}
           </View>
@@ -232,15 +247,14 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
 
-  actionDestructive: {
+  cancelContainer: {
     backgroundColor: theme.color.light
   },
-  actionDestructiveText: {
+  cancelText: {
     textAlign: 'center',
     fontSize: theme.font.small,
     fontWeight: '600',
-    color: theme.color.muted,
-    flex: 1
+    color: theme.color.muted
   },
   borderTopRadius: {
     borderTopRightRadius: theme.radius,

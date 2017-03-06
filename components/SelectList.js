@@ -219,11 +219,12 @@ class SelectList extends React.Component {
 
   renderListView() {
     if (!this.props.data) {
-      const title = <Text style={styles.placeholder}>{this.props.placeholder ? this.props.placeholder : DEFAULT_PLACEHOLDER }</Text>;
       return (
         <View>
           {this.renderHeader()}
-          <Cell title={title} />
+          <Cell>
+            <Text style={styles.placeholder}>{this.props.placeholder ? this.props.placeholder : DEFAULT_PLACEHOLDER }</Text>
+          </Cell>
           <View style={styles.separator} />
           {this.props.renderFooter && this.props.renderFooter()}
         </View>
@@ -254,6 +255,7 @@ class SelectList extends React.Component {
           onClose={this.props.onClose}
           onOpen={this.props.onOpen}
           mode="list"
+          cancelText={null}
         >
           <BlurView blurType="xlight" >
             {this.renderListView()}

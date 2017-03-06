@@ -181,8 +181,7 @@ const styles = StyleSheet.create({
     textAlign: 'right'
   },
   titleContainer: {
-    minWidth: TITLE_MIN_WIDTH,
-    // flex: 1,
+    minWidth: TITLE_MIN_WIDTH
   },
   title: {
     fontSize: theme.font.medium, 

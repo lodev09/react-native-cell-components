@@ -49,7 +49,10 @@ class DatePicker extends React.Component {
 
   render() {
     return (
-      <ActionSheet ref={component => this._actionSheet = component} >
+      <ActionSheet
+        ref={component => this._actionSheet = component}
+        cancelText="Done"
+      >
         {
           Platform.OS === 'ios' &&
           <DatePickerIOS
@@ -58,7 +61,6 @@ class DatePicker extends React.Component {
             onDateChange={this.handleOnDateChange}
           />
         }
-        <ActionItem title="Done" destructive />
       </ActionSheet>
     );
   }

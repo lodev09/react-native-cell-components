@@ -146,9 +146,8 @@ class App extends Component {
           <ScrollView>
             <CellGroup>
               <Cell title="Package" icon="code" value="react-native-cell-components" />
-              <CellSheet title="Version" icon="label" value={this.state.version} >
+              <CellSheet title="Version" icon="label" value={this.state.version} cancelText="Close" >
                 {this.renderActionSheetItems()}
-                <ActionItem title="Close" destructive />
               </CellSheet>
             </CellGroup>
             <CellGroup header="User info" >

@@ -77,18 +77,20 @@ class Cell extends React.Component {
         break;
       default:
         return (
-          <Text
-            style={[
-              styles.value,
-              {
-                color: this.props.tintColor || theme.color.black,
-                opacity: 0.8
-              }
-            ]}
-            numberOfLines={1}
-          >
-            {this.props.value}
-          </Text>
+          <View style={styles.valueContainer} >
+            <Text
+              style={[
+                styles.value,
+                {
+                  color: this.props.tintColor || theme.color.black,
+                  opacity: 0.8
+                }
+              ]}
+              numberOfLines={1}
+            >
+              {this.props.value}
+            </Text>
+          </View>
         );
     }
   }
@@ -144,7 +146,7 @@ class Cell extends React.Component {
           <View style={[ styles.sectionContainer, styles.middleContainer ]} >
             <View style={styles.titleValueContainer} >
               {this.renderTitle()}
-              <View style={styles.valueContainer} >{this.renderValue()}</View>
+              {this.renderValue()}
             </View>
             <View>
               {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}

@@ -246,15 +246,12 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius,
     backgroundColor: theme.color.white
   },
-
-  cancelContainer: {
-    backgroundColor: theme.color.light
-  },
   cancelText: {
     textAlign: 'center',
     fontSize: theme.font.small,
     fontWeight: '600',
-    color: theme.color.muted
+    color: theme.color.muted,
+    flex: 1
   },
   borderTopRadius: {
     borderTopRightRadius: theme.radius,

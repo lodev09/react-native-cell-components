@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: theme.padding,
     backgroundColor: 'transparent',
-    flex: 1
+    // flex: 1
   },
   labelText: {
     fontSize: theme.font.small,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     paddingRight: theme.padding / 2
   },
   tagViewsContainer: {
-    // flex: 1,
+    flex: 1,
     flexWrap: 'wrap',
     flexDirection: 'row',
     alignItems: 'center'

@@ -1,10 +1,12 @@
 import React from 'react';
 
 import ActionSheet, { ActionItem } from './ActionSheet';
+import theme from '../lib/theme';
 
 import {
   DatePickerIOS,
-  Platform
+  Platform,
+  StyleSheet
 } from 'react-native';
 
 class DatePicker extends React.Component {
@@ -53,6 +55,7 @@ class DatePicker extends React.Component {
         ref={component => this._actionSheet = component}
         cancelText="Done"
       >
+
         {
           Platform.OS === 'ios' &&
           <DatePickerIOS
@@ -61,6 +64,7 @@ class DatePicker extends React.Component {
             onDateChange={this.handleOnDateChange}
           />
         }
+
       </ActionSheet>
     );
   }

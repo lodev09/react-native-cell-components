@@ -54,6 +54,10 @@ class TagsInput extends React.Component {
     this._textInput.focus();
   }
 
+  blur() {
+    this._textInput.blur();
+  }
+
   updateSelectedTag(i, callback) {
     this.setState({
       selectedTagIndex: i,

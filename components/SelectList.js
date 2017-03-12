@@ -25,7 +25,8 @@ class SelectList extends React.Component {
     modal: false,
     realm: false,
     itemSelectedIcon: 'check',
-    placeholder: DEFAULT_PLACEHOLDER
+    placeholder: DEFAULT_PLACEHOLDER,
+    cancelText: 'Close'
   }
 
   static propTypes = {
@@ -44,7 +45,8 @@ class SelectList extends React.Component {
     onItemPress: React.PropTypes.func,
     onClose: React.PropTypes.func,
     onOpen: React.PropTypes.func,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    cancelText: React.PropTypes.string
   }
 
   constructor(props) {
@@ -217,6 +219,15 @@ class SelectList extends React.Component {
     );
   }
 
+  renderFooter = () => {
+    return (
+      <View>
+        {this.props.renderFooter()}
+        <View style={styles.separator} />
+      </View>
+    );
+  }
+
   renderListView() {
     if (!this.props.data) {
       return (
@@ -226,7 +237,7 @@ class SelectList extends React.Component {
             <Text style={styles.placeholder}>{this.props.placeholder ? this.props.placeholder : DEFAULT_PLACEHOLDER }</Text>
           </Cell>
           <View style={styles.separator} />
-          {this.props.renderFooter && this.props.renderFooter()}
+          {this.props.renderFooter && this.renderFooter()}
         </View>
       );
     }
@@ -238,6 +249,7 @@ class SelectList extends React.Component {
 
         {...this.props}
 
+        renderFooter={this.props.renderFooter && this.renderFooter}
         renderHeader={this.renderHeader}
         dataSource={this.getDataSource()}
         renderRow={this.props.renderRow || this.renderRow}
@@ -254,8 +266,8 @@ class SelectList extends React.Component {
           ref={component => this._actionSheet = component}
           onClose={this.props.onClose}
           onOpen={this.props.onOpen}
+          cancelText={this.props.cancelText}
           mode="list"
-          cancelText={null}
         >
           <BlurView blurType="xlight" >
             {this.renderListView()}
@@ -287,7 +299,6 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     flex: 1,
-    // textAlign: 'center',
     fontSize: theme.font.small,
     fontWeight: '500',
     color: theme.color.muted

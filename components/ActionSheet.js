@@ -21,16 +21,15 @@ export const ActionItem = function(props) {
   return <View {...props} />
 }
 
-const ANIM_OPEN_DURATION = 200;
-const ANIM_CLOSE_DURATION = 250;
-const TOP_OFFSET = 20;
+const TOP_OFFSET = 70;
 
 class ActionSheet extends React.Component {
   static defaultProps = {
     animated: true,
     mode: 'default',
     cancelText: 'Cancel',
-    destructive: false
+    destructive: false,
+    separator: true
   }
 
   static propTypes = {
@@ -44,17 +43,18 @@ class ActionSheet extends React.Component {
     title: React.PropTypes.any,
     cancelText: React.PropTypes.string,
     onCancelPress: React.PropTypes.func,
-    destructive: React.PropTypes.bool
+    destructive: React.PropTypes.bool,
+    separator: React.PropTypes.bool
   }
 
   constructor(props) {
     super(props);
 
-    this.windowHeight = Dimensions.get('window').height;
+    this._windowHeight = Dimensions.get('window').height;
 
     this.state = {
       visible: false,
-      animatedY: new Animated.Value(this.windowHeight),
+      animatedY: new Animated.Value(this._windowHeight),
       openCallback: null
     };
   }
@@ -63,7 +63,7 @@ class ActionSheet extends React.Component {
     if (this.props.animated) {
       Animated.timing(this.state.animatedY, {
         toValue: toValue,
-        duration: toValue === 0 ? ANIM_OPEN_DURATION : ANIM_CLOSE_DURATION,
+        duration: toValue === 0 ? 200 : 250,
         useNativeDriver: true
       }).start(() => {
         if (callback) callback();
@@ -76,6 +76,7 @@ class ActionSheet extends React.Component {
   getActionsContainerStyle() {
     return [
       styles.actionsContainer,
+      { top: this.props.cancelText ? TOP_OFFSET : TOP_OFFSET - 50 },
       {
         transform: [
           {
@@ -91,7 +92,7 @@ class ActionSheet extends React.Component {
       styles.container,
       {
         opacity: this.state.animatedY.interpolate({
-          inputRange: [0, this.windowHeight],
+          inputRange: [0, this._windowHeight],
           outputRange: [1, 0]
         })
       }
@@ -105,7 +106,7 @@ class ActionSheet extends React.Component {
   }
 
   close(callback) {
-    this.animateToValue(this.windowHeight, () => {
+    this.animateToValue(this._windowHeight, () => {
       this.setState({
         visible: false
       });
@@ -135,7 +136,7 @@ class ActionSheet extends React.Component {
 
     if (this.props.title) {
       const title = (
-        <View style={styles.titleContainer} >
+        <View style={[ styles.titleContainer, this.props.mode === 'default' && styles.borderTopRadius ]} >
           <Text style={styles.title} >{this.props.title}</Text>
         </View>
       );
@@ -143,32 +144,24 @@ class ActionSheet extends React.Component {
       children.unshift(title);
     }
 
-    if (this.props.cancelText) {
-      children.push(
-        <ActionItem backgroundColor={theme.color.light} onPress={this.handleCancelOnPress} >
-          <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
-        </ActionItem>
-      );
-    }
-
     return children.map((item, i) => {
 
       const isFirstChild = i === 0;
       const isLastChild = i === children.length - 1;
 
-      const separator = !isLastChild && <View style={{ ...theme.separator }} />;
+      const separator = this.props.separator === true && <View style={{ ...theme.separator }} />;
 
       if (item.type !== ActionItem) {
         return (
           <View key={'action-item-' + i}
             style={[
               { backgroundColor: item.props.backgroundColor },
-              isFirstChild ? styles.borderTopRadius : null,
-              isLastChild ? styles.borderBottomRadius : null
+              isFirstChild && styles.borderTopRadius,
+              !this.props.cancelText && styles.borderBottomRadius
             ]}
           >
             {item}
-            {separator}
+            {!isLastChild && separator}
           </View>
         );
       } else {
@@ -183,16 +176,29 @@ class ActionSheet extends React.Component {
               onPress={item.props.onPress && itemOnPress}
               style={[
                 item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
-                isFirstChild ? styles.borderTopRadius : null,
-                isLastChild ? styles.borderBottomRadius : null
+                isFirstChild && styles.borderTopRadius,
+                !this.props.cancelText && styles.borderBottomRadius
               ]}
               tintColor={item.props.destructive && theme.color.danger}
             />
-            {separator}
+            {(this.props.cancelText || !isLastChild) && separator}
           </View>
         );
       }
     });
+  }
+
+  renderCancelCell() {
+    return (
+      <View style={this.props.mode === 'default' && styles.cancelContainer} >
+        <Cell
+          style={[ styles.cancelCell, this.props.mode === 'default' && styles.borderBottomRadius ]}
+          onPress={this.handleCancelOnPress}
+        >
+          <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
+        </Cell>
+      </View>
+    );
   }
 
   render() {
@@ -208,10 +214,11 @@ class ActionSheet extends React.Component {
             <Animated.View style={this.getActionsContainerStyle()} >
               <View
                 onStartShouldSetResponder={e => true}
-                style={this.props.mode === 'default' && styles.actionsItems}
+                style={[ this.props.mode === 'default' && styles.actionsItems, this.props.style ]}
               >
                 {this.renderActionItems()}
               </View>
+              {this.props.cancelText && this.renderCancelCell()}
             </Animated.View>
           </View>
         </TouchableWithoutFeedback>
@@ -225,8 +232,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
+  cancelContainer: {
+    marginHorizontal: theme.margin,
+    marginBottom: theme.margin
+  },
+  cancelCell: {
+    backgroundColor: theme.color.light
+  },
   titleContainer: {
-    padding: theme.padding * 1.5
+    padding: theme.padding * 1.5,
+    backgroundColor: theme.color.white
   },
   title: {
     fontSize: theme.font.xsmall,
@@ -234,16 +249,16 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     position: 'absolute',
-    top: TOP_OFFSET,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: 'flex-end'
   },
-
   actionsItems: {
-    margin: theme.margin,
-    borderRadius: theme.radius,
+    marginHorizontal: theme.margin,
+    marginTop: theme.margin,
+    borderTopRightRadius: theme.radius,
+    borderTopLeftRadius: theme.radius,
     backgroundColor: theme.color.white
   },
   cancelText: {

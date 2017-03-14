@@ -63,7 +63,7 @@ class ActionSheet extends React.Component {
     if (this.props.animated) {
       Animated.timing(this.state.animatedY, {
         toValue: toValue,
-        duration: toValue === 0 ? 200 : 250,
+        duration: toValue === 0 ? 250 : 200,
         useNativeDriver: true
       }).start(() => {
         if (callback) callback();
@@ -169,6 +169,8 @@ class ActionSheet extends React.Component {
           this.close(item.props.onPress);
         };
 
+        const tintColor = item.props.destructive ? theme.color.danger : item.props.tintColor;
+
         return (
           <View key={'action-item-' + i}>
             <Cell
@@ -179,7 +181,7 @@ class ActionSheet extends React.Component {
                 isFirstChild && styles.borderTopRadius,
                 !this.props.cancelText && styles.borderBottomRadius
               ]}
-              tintColor={item.props.destructive && theme.color.danger}
+              tintColor={tintColor}
             />
             {(this.props.cancelText || !isLastChild) && separator}
           </View>

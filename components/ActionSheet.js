@@ -12,7 +12,8 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Animated,
-  Dimensions
+  Dimensions,
+  Easing
 } from 'react-native';
 
 const AnimatdCellGroup = Animated.createAnimatedComponent(CellGroup);
@@ -54,16 +55,16 @@ class ActionSheet extends React.Component {
 
     this.state = {
       visible: false,
-      animatedY: new Animated.Value(this._windowHeight),
-      openCallback: null
+      animatedY: new Animated.Value(this._windowHeight)
     };
   }
 
   animateToValue(toValue, callback) {
     if (this.props.animated) {
       Animated.timing(this.state.animatedY, {
-        toValue: toValue,
-        duration: toValue === 0 ? 250 : 200,
+        toValue,
+        duration: toValue === 0 ? 400 : 300,
+        easing: Easing.bezier(.36,.66,.04,1),
         useNativeDriver: true
       }).start(() => {
         if (callback) callback();
@@ -76,7 +77,12 @@ class ActionSheet extends React.Component {
   getActionsContainerStyle() {
     return [
       styles.actionsContainer,
-      { top: this.props.cancelText ? TOP_OFFSET : TOP_OFFSET - 50 },
+      this.props.mode !== 'default' && {
+        top: this.props.cancelText ? TOP_OFFSET : TOP_OFFSET - 50,
+        bottom: 0,
+        left: 0,
+        right: 0
+      },
       {
         transform: [
           {
@@ -192,14 +198,23 @@ class ActionSheet extends React.Component {
 
   renderCancelCell() {
     return (
-      <View style={this.props.mode === 'default' && styles.cancelContainer} >
-        <Cell
-          style={[ styles.cancelCell, this.props.mode === 'default' && styles.borderBottomRadius ]}
-          onPress={this.handleCancelOnPress}
-        >
-          <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
-        </Cell>
-      </View>
+      <Cell
+        style={[ styles.cancelCell, this.props.mode === 'default' && styles.borderBottomRadius ]}
+        onPress={this.handleCancelOnPress}
+      >
+        <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
+      </Cell>
+    );
+  }
+
+  renderActionContainer() {
+    return (
+      <Animated.View style={this.getActionsContainerStyle()} >
+        <View style={[ this.props.mode === 'default' && styles.actionsItems, this.props.style ]} >
+          {this.renderActionItems()}
+        </View>
+        {this.props.cancelText && this.renderCancelCell()}
+      </Animated.View>
     );
   }
 
@@ -213,17 +228,18 @@ class ActionSheet extends React.Component {
         <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>
           <View style={{ flex: 1 }} >
             <Animated.View style={this.getBackdropStyle()} />
-            <Animated.View style={this.getActionsContainerStyle()} >
-              <View
-                onStartShouldSetResponder={e => true}
-                style={[ this.props.mode === 'default' && styles.actionsItems, this.props.style ]}
-              >
-                {this.renderActionItems()}
-              </View>
-              {this.props.cancelText && this.renderCancelCell()}
-            </Animated.View>
           </View>
         </TouchableWithoutFeedback>
+
+        {
+          this.props.mode === 'default' ?
+          this.renderActionContainer() :
+
+          <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>
+            {this.renderActionContainer()}
+          </TouchableWithoutFeedback>
+        }
+
       </Modal>
     );
   }
@@ -233,10 +249,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  cancelContainer: {
-    marginHorizontal: theme.margin,
-    marginBottom: theme.margin
   },
   cancelCell: {
     backgroundColor: theme.color.light
@@ -251,14 +263,12 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
+    left: theme.margin,
+    right: theme.margin,
+    bottom: theme.margin,
     justifyContent: 'flex-end'
   },
   actionsItems: {
-    marginHorizontal: theme.margin,
-    marginTop: theme.margin,
     borderTopRightRadius: theme.radius,
     borderTopLeftRadius: theme.radius,
     backgroundColor: theme.color.white

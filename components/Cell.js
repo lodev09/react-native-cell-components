@@ -13,6 +13,7 @@ import {
 const CELL_MIN_HEIGHT = 48;
 const ICON_DEFAULT_SIZE = 20;
 const TITLE_MIN_WIDTH = 98;
+const CORDER_MIN_WIDTH = 10;
 
 class Cell extends React.Component {
   static defaultProps = {
@@ -204,12 +205,12 @@ const styles = StyleSheet.create({
   rightContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 15,
+    minWidth: CORDER_MIN_WIDTH,
   },
   leftContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: 15
+    minWidth: CORDER_MIN_WIDTH
   },
   leftContainerSubtitled: {
     justifyContent: 'flex-start',

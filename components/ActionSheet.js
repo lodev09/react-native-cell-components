@@ -63,7 +63,7 @@ class ActionSheet extends React.Component {
     if (this.props.animated) {
       Animated.timing(this.state.animatedY, {
         toValue,
-        duration: toValue === 0 ? 400 : 300,
+        duration: toValue === 0 ? 400 : 350,
         easing: Easing.bezier(.36,.66,.04,1),
         useNativeDriver: true
       }).start(() => {

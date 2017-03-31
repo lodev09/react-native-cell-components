@@ -210,7 +210,7 @@ class SelectList extends React.Component {
     }
 
     return (
-      <View style={{ ...theme.border.top, ...theme.border.bottom, height: 5, backgroundColor: theme.color.light }} >
+      <View style={styles.headerView} >
         <View blurType="xlight" />
       </View>
     );
@@ -298,9 +298,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: theme.color.muted
   },
-  headerControl: {
-    flex: 1,
-    margin: theme.margin
+  headerView: {
+    ...theme.border.top,
+    ...theme.border.bottom,
+    height: 5,
+    backgroundColor: theme.color.light
   },
   headerText: {
     fontSize: theme.font.xsmall,
@@ -309,12 +311,11 @@ const styles = StyleSheet.create({
   },
   sectionHeaderText: {
     color: theme.color.mutedDarken,
-    backgroundColor: 'transparent',
     paddingHorizontal: theme.padding,
     paddingVertical: theme.padding / 2,
   },
   sectionHeader: {
-    backgroundColor: 'transparent'
+
   },
   separator: {
     ...theme.separator

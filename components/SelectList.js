@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 DEFAULT_PLACEHOLDER = 'No data';
+BACKGROUND_COLOR = theme.color.light;
 
 class SelectList extends React.Component {
 
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: theme.color.light,
+    backgroundColor: BACKGROUND_COLOR,
     zIndex: 10
   },
   placeholder: {
@@ -302,7 +303,7 @@ const styles = StyleSheet.create({
     ...theme.border.top,
     ...theme.border.bottom,
     height: 5,
-    backgroundColor: theme.color.light
+    backgroundColor: BACKGROUND_COLOR
   },
   headerText: {
     fontSize: theme.font.xsmall,
@@ -315,7 +316,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.padding / 2,
   },
   sectionHeader: {
-
+    backgroundColor: BACKGROUND_COLOR
   },
   separator: {
     ...theme.separator

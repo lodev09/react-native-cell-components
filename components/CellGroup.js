@@ -22,6 +22,10 @@ class CellGroup extends React.Component {
 
   renderChildren() {
     return React.Children.map(this.props.children, (component, i) => {
+      if (React.isValidElement(component) === false) {
+        return;
+      }
+
       return (
         <View key={'cell-group-child-' + i} >
           {component}
@@ -31,6 +35,27 @@ class CellGroup extends React.Component {
         </View>
       );
     });
+  }
+
+  renderFooter() {
+    if (!this.props.footer) {
+      return;
+    }
+
+    switch (this.props.footer) {
+      case 'object':
+        return this.props.footer;
+        break;
+      default:
+        return (
+          <View style={styles.footer} >
+            {
+              this.props.footer &&
+              <Text style={styles.footerText} >{this.props.footer}</Text>
+            }
+          </View>
+        );
+    }
   }
 
   renderHeader() {
@@ -59,6 +84,7 @@ class CellGroup extends React.Component {
         {this.renderHeader()}
         {this.props.bordered && <View style={styles.separator} />}
         {this.renderChildren()}
+        {this.renderFooter()}
       </View>
     );
   }
@@ -78,6 +104,14 @@ const styles = StyleSheet.create({
   headerText: {
     color: theme.color.muted,
     fontWeight: '500',
+    fontSize: theme.font.xsmall
+  },
+  footer: {
+    paddingVertical: theme.padding,
+    paddingHorizontal: theme.padding * 1.5
+  },
+  footerText: {
+    color: theme.color.muted,
     fontSize: theme.font.xsmall
   }
 });

@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
   title: {
-    fontSize: theme.font.xsmall,
+    fontSize: theme.font.small,
     color: theme.color.muted
   },
   actionsContainer: {

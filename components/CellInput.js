@@ -47,6 +47,10 @@ class CellInput extends React.Component {
     this._textInput.focus();
   }
 
+  blur() {
+    this._textInput.blur();
+  }
+
   renderTextInput() {
     const textInputStyle = this.props.multiline &&
       {

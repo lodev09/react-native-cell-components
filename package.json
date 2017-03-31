@@ -9,7 +9,6 @@
   "peerDependencies": {
     "react": ">=15.4.0",
     "react-native": ">=0.40",
-    "react-native-blur": "^2.0.0",
     "react-native-vector-icons": "^4.0.0"
   },
   "repository": {

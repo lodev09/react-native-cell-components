@@ -1,5 +1,4 @@
 import React from 'react';
-import { BlurView } from 'react-native-blur';
 
 import theme from '../lib/theme';
 
@@ -194,9 +193,7 @@ class SelectList extends React.Component {
   renderSectionHeader = (sdata, section) => {
     return (
       <View style={styles.sectionHeader}>
-        <BlurView blurType="xlight">
-          <Text style={styles.sectionHeaderText} >{section}</Text>
-        </BlurView>
+        <Text style={styles.sectionHeaderText} >{section}</Text>
       </View>
     );
   }
@@ -269,18 +266,16 @@ class SelectList extends React.Component {
           cancelText={this.props.cancelText}
           mode="list"
         >
-          <BlurView blurType="xlight" >
+          <View>
             {this.renderListView()}
-          </BlurView>
+          </View>
         </ActionSheet>
       );
     } else {
       return (
         this.state.visible &&
         <View style={styles.container} >
-          <BlurView blurType="xlight" style={{ flex: 1 }} >
-            {this.renderListView()}
-          </BlurView>
+          {this.renderListView()}
         </View>
       );
     }
@@ -294,7 +289,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'transparent',
+    backgroundColor: theme.color.light,
     zIndex: 10
   },
   placeholder: {

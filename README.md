@@ -34,7 +34,6 @@ Tested with redux and on **RN >=0.40**
 - TagsInput
 
 ## Dependencies
-- [react-native-blur ^2.0.0](https://github.com/react-native-community/react-native-blur) - follow their README for android installation
 - [react-native-vector-icons ^4.0.0](https://github.com/oblador/react-native-vector-icons)
 
 ## Usage & Props

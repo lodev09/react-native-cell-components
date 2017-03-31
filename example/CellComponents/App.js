@@ -9,7 +9,8 @@ import {
   ActionItem,
   CellDatePicker,
   CellListProvider,
-  CellListItem
+  CellListItem,
+  CellSlider
 } from 'react-native-cell-components';
 
 import {
@@ -154,6 +155,18 @@ class App extends Component {
               <CellInput title="Username" icon="person" placeholder="Enter username" />
               <CellDatePicker tintColor="#e74c3c" icon={{ name: 'calendar', source: 'octicons' }} title="Date" value={this.state.date.toLocaleString()} onDateSelected={this.handleOnDateSelected} />
               <CellInput title="About" multiline autoResize rows={5} />
+            </CellGroup>
+
+            <CellGroup
+              header="Slider Stuff"
+              footer="Use the slider cell to slide it left to right"
+            >
+              <CellSlider
+                icon="arrow-forward"
+                minimumValue={1}
+                maximumValue={10}
+                step={1}
+              />
             </CellGroup>
 
             <CellListProvider>

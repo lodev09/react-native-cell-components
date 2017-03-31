@@ -13,30 +13,13 @@ import {
 class CellSlider extends React.Component {
 
 	render() {
-		let margins = null;
-
-		if (this.props.renderMinView && this.props.renderMaxView) {
-			margins = { marginHorizontal: theme.margin };
-		} else if (this.props.renderMinView) {
-			margins = { marginLeft: theme.margin };
-		} else if (this.props.renderMaxView) {
-			margins = { marginRight: theme.margin };
-		}
-
 		return (
-			<Cell>
+			<Cell
+				icon={this.props.icon}
+				disclosure={this.props.disclosure}
+			>
 				<View style={styles.container}>
-					{
-						this.props.renderMinView &&
-						this.props.renderMinView()
-					}
-
-					<Slider style={[{ flex: 1 }, margins ]} {...this.props} />
-
-					{
-						this.props.renderMaxView &&
-						this.props.renderMaxView()
-					}
+					<Slider style={{ flex: 1 }} {...this.props} />
 				</View>
 			</Cell>
 		);
@@ -47,9 +30,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		flexDirection: 'row'
-	},
-	titleContainer: {
-		justifyContent: 'center'
 	}
 });
 

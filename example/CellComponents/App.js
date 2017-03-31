@@ -153,7 +153,7 @@ class App extends Component {
             </CellGroup>
             <CellGroup header="User info" >
               <CellInput title="Username" icon="person" placeholder="Enter username" />
-              <CellDatePicker tintColor="#e74c3c" icon={{ name: 'calendar', source: 'octicons' }} title="Date" value={this.state.date.toLocaleString()} onDateSelected={this.handleOnDateSelected} />
+              <CellDatePicker tintColor="#3498db" icon={{ name: 'calendar', source: 'octicons' }} title="Date" value={this.state.date.toLocaleString()} onDateSelected={this.handleOnDateSelected} />
               <CellInput title="About" multiline autoResize rows={5} />
             </CellGroup>
 
@@ -163,6 +163,7 @@ class App extends Component {
             >
               <CellSlider
                 icon="arrow-forward"
+                disclosure="check"
                 minimumValue={1}
                 maximumValue={10}
                 step={1}

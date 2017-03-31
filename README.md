@@ -1,9 +1,8 @@
+# Android Development is in progress!
+
 # RN Cell Components
 [![npm version](https://badge.fury.io/js/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 [![npm](https://img.shields.io/npm/dt/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
-
-## Android In-Progress!
-I'll be following material design guidelines as much as I could :)
 
 ```
 npm install react-native-cell-components --save

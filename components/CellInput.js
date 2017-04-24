@@ -9,7 +9,7 @@ import {
   TextInput
 } from 'react-native';
 
-const MULTILINE_BASE_HEIGHT = 23;
+const BASE_HEIGHT = 23;
 
 class CellInput extends React.Component {
   static defaultProps = {
@@ -35,7 +35,7 @@ class CellInput extends React.Component {
     const contentHeight = e.nativeEvent.contentSize.height;
 
     if (this.props.autoResize) {
-      if ((contentHeight - contentHeight % MULTILINE_BASE_HEIGHT) / MULTILINE_BASE_HEIGHT < this.props.rows) {
+      if ((contentHeight - contentHeight % BASE_HEIGHT) / BASE_HEIGHT < this.props.rows) {
         this._textInput.setNativeProps({
           height: contentHeight
         });
@@ -52,11 +52,14 @@ class CellInput extends React.Component {
   }
 
   renderTextInput() {
-    const textInputStyle = this.props.multiline &&
+    const textInputStyle = this.props.multiline ?
       {
         paddingBottom: theme.padding,
-        height: this.props.autoResize ? MULTILINE_BASE_HEIGHT : MULTILINE_BASE_HEIGHT * this.props.rows
-      };
+        height: this.props.autoResize ? BASE_HEIGHT : BASE_HEIGHT * this.props.rows
+      } :
+      {
+        height: BASE_HEIGHT
+      }
 
     return (
       <TextInput

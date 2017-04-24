@@ -22,7 +22,8 @@ export const ActionItem = function(props) {
   return <View {...props} />
 }
 
-const TOP_OFFSET = 70;
+const BORDER_RADIUS = theme.isIOS ? theme.radius : 0;
+const MARGIN = theme.isIOS ? theme.margin : 0;
 
 class ActionSheet extends React.Component {
   static defaultProps = {
@@ -65,7 +66,7 @@ class ActionSheet extends React.Component {
         toValue,
         duration: toValue === 0 ? 400 : 350,
         easing: Easing.bezier(.36,.66,.04,1),
-        useNativeDriver: true
+        useNativeDriver: theme.isIOS
       }).start(() => {
         if (callback) callback();
       });
@@ -78,7 +79,7 @@ class ActionSheet extends React.Component {
     return [
       styles.actionsContainer,
       this.props.mode !== 'default' && {
-        top: this.props.cancelText ? TOP_OFFSET : TOP_OFFSET - 50,
+        top: 0,
         bottom: 0,
         left: 0,
         right: 0
@@ -131,6 +132,10 @@ class ActionSheet extends React.Component {
   handleModalOnShow = () => {
     // animated open
     this.animateToValue(0, this.props.onOpen);
+  }
+
+  handleModalOnRequestClose = () => {
+    this.close();
   }
 
   handleCancelOnPress = () => {
@@ -210,7 +215,7 @@ class ActionSheet extends React.Component {
   renderActionContainer() {
     return (
       <Animated.View style={this.getActionsContainerStyle()} >
-        <View style={[ this.props.mode === 'default' && styles.actionsItems, this.props.style ]} >
+        <View style={[ this.props.mode === 'default' ? styles.actionItemsDefault : this.props.cancelText && styles.actionItemsList, this.props.style ]} >
           {this.renderActionItems()}
         </View>
         {this.props.cancelText && this.renderCancelCell()}
@@ -224,6 +229,7 @@ class ActionSheet extends React.Component {
         transparent
         visible={this.state.visible}
         onShow={this.handleModalOnShow}
+        onRequestClose={this.handleModalOnRequestClose}
       >
         <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>
           <View style={{ flex: 1 }} >
@@ -254,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.light
   },
   titleContainer: {
-    padding: theme.padding * 1.5,
+    padding: theme.padding,
     backgroundColor: theme.color.white
   },
   title: {
@@ -263,15 +269,18 @@ const styles = StyleSheet.create({
   },
   actionsContainer: {
     position: 'absolute',
-    left: theme.margin,
-    right: theme.margin,
-    bottom: theme.margin,
+    left: MARGIN,
+    right: MARGIN,
+    bottom: MARGIN,
     justifyContent: 'flex-end'
   },
-  actionsItems: {
-    borderTopRightRadius: theme.radius,
-    borderTopLeftRadius: theme.radius,
+  actionItemsDefault: {
+    borderTopRightRadius: BORDER_RADIUS,
+    borderTopLeftRadius: BORDER_RADIUS,
     backgroundColor: theme.color.white
+  },
+  actionItemsList: {
+    marginTop: theme.isIOS ? 68 : 48
   },
   cancelText: {
     textAlign: 'center',
@@ -281,12 +290,12 @@ const styles = StyleSheet.create({
     flex: 1
   },
   borderTopRadius: {
-    borderTopRightRadius: theme.radius,
-    borderTopLeftRadius: theme.radius,
+    borderTopRightRadius: BORDER_RADIUS,
+    borderTopLeftRadius: BORDER_RADIUS,
   },
   borderBottomRadius: {
-    borderBottomRightRadius: theme.radius,
-    borderBottomLeftRadius: theme.radius
+    borderBottomRightRadius: BORDER_RADIUS,
+    borderBottomLeftRadius: BORDER_RADIUS
   }
 });
 

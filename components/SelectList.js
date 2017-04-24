@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: BACKGROUND_COLOR,
-    zIndex: 10
+    elevation: 10
   },
   placeholder: {
     flex: 1,

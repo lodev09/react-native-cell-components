@@ -67,6 +67,7 @@ class CellInput extends React.Component {
         style={[ styles.textInput, textInputStyle, this.props.style ]}
         onContentSizeChange={this.handleOnContentSizeChange}
         placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
+        underlineColorAndroid="transparent"
       />
     );
   }

@@ -153,7 +153,12 @@ class TagsInput extends React.Component {
           this.props.style
         ]}
       >
-        {this.props.label && <Text style={styles.labelText} >{this.props.label}</Text>}
+        {
+          this.props.label &&
+          <View style={styles.labelTextContainer} >
+            <Text style={styles.labelText} >{this.props.label}</Text>
+          </View>
+        }
         <View style={styles.tagViewsContainer} >
           {this.renderTags()}
           
@@ -169,6 +174,7 @@ class TagsInput extends React.Component {
               selectionColor={theme.color.info}
               autoFocus={this.props.autoFocus}
               onSelectionChange={this.handleOnSelectionChange}
+              underlineColorAndroid="transparent"
             />
 
             {
@@ -193,18 +199,20 @@ class TagsInput extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    padding: theme.padding,
-    backgroundColor: 'transparent',
-    // flex: 1
+    // paddingHorizontal: theme.padding,
+    height: 48,
+    backgroundColor: 'transparent'
+  },
+  labelTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: theme.padding,
+    width: theme.isIOS ? theme.padding * 6 : theme.padding * 4.5
   },
   labelText: {
     fontSize: theme.font.small,
     fontWeight: 'bold',
-    flexDirection: 'row',
-    alignItems: 'center',
-    color: theme.color.muted,
-    paddingVertical: theme.padding / 2,
-    paddingRight: theme.padding / 2
+    color: theme.color.muted
   },
   tagViewsContainer: {
     flex: 1,
@@ -217,7 +225,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius / 2
   },
   tagContainer: {
-    padding: theme.padding / 3
+    padding: theme.margin / 2
   },
   tagSelected: {
     color: theme.color.white,
@@ -231,7 +239,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: theme.font.medium,
-    height: 22
+    height: 18,
+    padding: 0
   },
   textInputFocus: {
     position: 'absolute',

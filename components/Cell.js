@@ -5,15 +5,16 @@ import Icon from '../lib/Icon';
 import {
   View,
   TouchableHighlight,
-  TouchableOpacity,
+  TouchableNativeFeedback,
   StyleSheet,
   Text
 } from 'react-native';
 
 const CELL_MIN_HEIGHT = 48;
-const ICON_DEFAULT_SIZE = 20;
+const ICON_DEFAULT_SIZE = 24;
 const TITLE_MIN_WIDTH = 98;
-const CORDER_MIN_WIDTH = 10;
+const CORDER_MIN_WIDTH = theme.padding;
+const Touchable = theme.isIOS ? TouchableHighlight : TouchableNativeFeedback;
 
 class Cell extends React.Component {
   static defaultProps = {
@@ -139,7 +140,10 @@ class Cell extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight {...this.props} >
+      <Touchable
+        background={theme.isAndroid && TouchableNativeFeedback.Ripple(theme.color.mutedLighten)}
+        {...this.props}
+      >
         <View style={[ styles.container, this.props.style ]} >
           <View style={[ styles.sectionContainer, styles.leftContainer, this.props.subtitle ? styles.leftContainerSubtitled : null ]} >
             {this.props.icon && this.renderIcon()}
@@ -153,11 +157,11 @@ class Cell extends React.Component {
               {this.props.subtitle && <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>}
             </View>
           </View>
-          <View style={[styles.sectionContainer, styles.rightContainer ]} >
+          <View style={[ styles.rightContainer ]} >
             {this.props.disclosure && this.renderDisclosure()}
           </View>
         </View>
-      </TouchableHighlight>
+      </Touchable>
     );
   }
 }
@@ -196,11 +200,9 @@ const styles = StyleSheet.create({
     color: theme.color.muted
   },
   icon: {
-    width: theme.iconWidth,
-    marginHorizontal: theme.margin / 1.5,
-    marginVertical: theme.margin / 5,
-    paddingLeft: theme.padding / 2,
-    textAlign: 'center',
+    paddingLeft: theme.padding,
+    width: theme.padding * 4.5,
+    textAlign: 'left',
   },
   rightContainer: {
     justifyContent: 'center',
@@ -210,7 +212,8 @@ const styles = StyleSheet.create({
   leftContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    minWidth: CORDER_MIN_WIDTH
+    minWidth: CORDER_MIN_WIDTH,
+    // width: theme.padding * 4.5
   },
   leftContainerSubtitled: {
     justifyContent: 'flex-start',
@@ -221,7 +224,7 @@ const styles = StyleSheet.create({
   },
   disclosure: {
     width: theme.iconWidth,
-    marginHorizontal: theme.margin / 1.5,
+    margin: theme.margin,
     textAlign: 'center'
   }
 });

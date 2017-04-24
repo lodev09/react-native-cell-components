@@ -1,5 +1,3 @@
-# Android Development is in progress!
-
 # RN Cell Components
 [![npm version](https://badge.fury.io/js/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 [![npm](https://img.shields.io/npm/dt/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
@@ -19,7 +17,7 @@ Tested with redux and on **RN >=0.40**
 - [x] Components are re-used
 - [x] Supports redux
 - [x] [Realm](https://github.com/realm/realm-js) support for ListView
-- [ ] Full Android support, _specifically `DatePicker` support and exclusive UX style for android. PRs are always welcome!_
+- [x] Full Android support
 - [ ] Custom user theme/styles
 
 ## Components
@@ -29,9 +27,10 @@ Tested with redux and on **RN >=0.40**
 - CellInput
 - CellListProvider
 - CellSheet
-- DatePicker (ios atm)
+- DatePicker
 - SelectList
 - TagsInput
+- CellSlider
 
 ## Dependencies
 - [react-native-vector-icons ^4.0.0](https://github.com/oblador/react-native-vector-icons)

@@ -52,13 +52,10 @@ class CellInput extends React.Component {
   }
 
   renderTextInput() {
-    const textInputStyle = this.props.multiline ?
+    const textInputStyle = this.props.multiline &&
       {
         paddingBottom: theme.padding,
         height: this.props.autoResize ? BASE_HEIGHT : BASE_HEIGHT * this.props.rows
-      } :
-      {
-        height: BASE_HEIGHT
       }
 
     return (
@@ -92,7 +89,9 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: theme.font.medium,
     textAlign: 'left',
-    flex: 1
+    flex: 1,
+    height: BASE_HEIGHT,
+    padding: 0
   }
 });
 

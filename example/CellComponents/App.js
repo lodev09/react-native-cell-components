@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Moment from 'moment';
 import {
   Cell,
   CellGroup,
@@ -126,24 +127,12 @@ class App extends Component {
         <View style={styles.header} />
         <TagsInput
           ref={component => this._tagsInput = component}
-          label="To:"
+          label="TO:"
           tags={this.state.selectedUsers.map((user) => user.name)}
           onChangeText={this.handleUsersOnChangeText}
           onRemoveTag={this.handleUsersOnRemoveTag}
         />
         <View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#eee' }} >
-          <SelectList
-            visible={this.state.selectingUsers || this.state.selectedUsers.length === 0}
-            animated={false}
-            data={this.state.users}
-            selected={this.state.selectedUsers}
-            icon="person"
-            itemTitle="name"
-            itemSubtitle="email"
-            onItemPress={this.handleUserItemOnPress}
-            itemSelectedValidator="id"
-            section="country"
-          />
           <ScrollView>
             <CellGroup>
               <Cell title="Package" icon="code" value="react-native-cell-components" />
@@ -153,7 +142,24 @@ class App extends Component {
             </CellGroup>
             <CellGroup header="User info" >
               <CellInput title="Username" icon="person" placeholder="Enter username" />
-              <CellDatePicker tintColor="#3498db" icon={{ name: 'calendar', source: 'octicons' }} title="Date" value={this.state.date.toLocaleString()} onDateSelected={this.handleOnDateSelected} />
+              <CellDatePicker
+                tintColor="#3498db"
+                icon="date-range"
+                title="Date"
+                mode="date"
+                date={this.state.date}
+                value={Moment(this.state.date).format('L')}
+                onDateSelected={this.handleOnDateSelected}
+              />
+              <CellDatePicker
+                tintColor="#3498db"
+                icon="access-time"
+                title="Time"
+                mode="time"
+                date={this.state.date}
+                value={Moment(this.state.date).format('LT')}
+                onDateSelected={this.handleOnDateSelected}
+              />
               <CellInput title="About" multiline autoResize rows={5} />
             </CellGroup>
 
@@ -188,6 +194,18 @@ class App extends Component {
               </CellGroup>
             </CellListProvider>
           </ScrollView>
+          <SelectList
+            visible={this.state.selectingUsers || this.state.selectedUsers.length === 0}
+            animated={false}
+            data={this.state.users}
+            selected={this.state.selectedUsers}
+            icon="person"
+            itemTitle="name"
+            itemSubtitle="email"
+            onItemPress={this.handleUserItemOnPress}
+            itemSelectedValidator="id"
+            section="country"
+          />
         </View>
       </View>
     );

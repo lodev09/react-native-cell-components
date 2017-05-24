@@ -7,9 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react": ">=15.4.0",
-    "react-native": ">=0.40",
-    "react-native-vector-icons": "^4.0.0"
+    "react": "*",
+    "react-native": "*",
+    "react-native-vector-icons": "*"
   },
   "repository": {
     "type": "git",

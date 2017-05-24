@@ -7,7 +7,8 @@ import {
 	StyleSheet
 } from 'react-native';
 
-import SwipeableRow from 'fbjs/lib/SwipeableRow';
+// https://raw.githubusercontent.com/facebook/react-native/master/Libraries/Experimental/SwipeableRow/SwipeableRow.js
+import SwipeableRow from '../lib/SwipeableRow';
 
 class CellSwipeable extends React.Component {
 	static defaultProps = {

@@ -7,10 +7,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "15.4.2",
-    "react-native": "0.41.2",
+    "react": "^16.0.0-alpha.6",
+    "react-native": "^0.44.0",
     "react-native-cell-components": "https://github.com/lodev09/react-native-cell-components.git",
-    "react-native-vector-icons": "^4.0.0"
+    "react-native-vector-icons": "^4.1.1"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

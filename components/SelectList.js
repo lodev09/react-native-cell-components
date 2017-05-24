@@ -20,7 +20,7 @@ BACKGROUND_COLOR = theme.color.light;
 class SelectList extends React.Component {
 
   static defaultProps = {
-    onItemPress: (obj, selected) => {},
+    onItemPress: () => null,
     visible: false,
     modal: false,
     realm: false,
@@ -35,7 +35,8 @@ class SelectList extends React.Component {
     section: React.PropTypes.any,
     itemTitle: React.PropTypes.any,
     itemValue: React.PropTypes.any,
-    itemSelectedValidator: React.PropTypes.any.isRequired,
+    itemValidator: React.PropTypes.string.isRequired,
+    itemIcon: React.PropTypes.any,
     itemSubtitle: React.PropTypes.any,
     itemSelectedIcon: React.PropTypes.any,
     icon: React.PropTypes.any,
@@ -49,31 +50,69 @@ class SelectList extends React.Component {
     cancelText: React.PropTypes.string
   }
 
+  _previousSelected = [];
+  _selected = [];
+
   constructor(props) {
     super(props);
 
     this.ListView = this.props.realm ? NativeListView : RealmListView;
+    this.setSelected(this.props.selected);
 
     const dsOptions = {
-      rowHasChanged: (oldRow, newRow) => oldRow !== newRow
+      rowHasChanged: (r1, r2) => {
+        const v1 = r1[this.props.itemValidator];
+        const v2 = r2[this.props.itemValidator];
+
+        const v1PreviousSelected = this._previousSelected.some(s => {
+          return typeof s === 'object' ? s[this.props.itemValidator] === v1 : s === v1;
+        }) ? true : false;
+
+        const v2Selected = this._selected.some(s => {
+          return typeof s === 'object' ? s[this.props.itemValidator] === v2 : s === v2;
+        }) ? true : false;
+
+        return v1 !== v2 || (!v1PreviousSelected && v2Selected) || (v1PreviousSelected && !v2Selected)
+      }
     };
 
     if (this.props.section) {
       dsOptions.sectionHeaderHasChanged = (s1, s2) => s1 !== s2;
     }
 
-    const datasource = new this.ListView.DataSource(dsOptions);
-
+    const dataSource = new this.ListView.DataSource(dsOptions);
     this.state = {
       visible: this.props.visible === true,
-      datasource
+      dataSource: this.getDataSource(dataSource, this.props.data)
     };
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        dataSource: this.getDataSource(this.state.dataSource, nextProps.data)
+      });
+    }
+
+    if (this.props.selected !== nextProps.selected) {
+      this.setSelected(nextProps.selected);
+      this.setState({
+        dataSource: this.getDataSource(this.state.dataSource, nextProps.data)
+      });
+    }
+
     if (this.props.visible !== nextProps.visible) {
       if (nextProps.visible) this.open();
       else this.close();
+    }
+  }
+
+  setSelected(selectedProp) {
+    this._previousSelected = this._selected;
+    if (selectedProp) {
+      this._selected = Array.isArray(selectedProp) ? selectedProp : [ selectedProp ];
+    } else {
+      this._selected = [];
     }
   }
 
@@ -88,6 +127,7 @@ class SelectList extends React.Component {
       this._actionSheet.close(callback);
     } else {
       this.setVisibilityState(false);
+      callback && callback();
     }
   }
 
@@ -117,6 +157,15 @@ class SelectList extends React.Component {
     }
   }
 
+  renderIcon(obj) {
+    switch (typeof this.props.itemIcon) {
+      case 'function':
+        return () => this.props.itemIcon(obj);
+      default:
+        return this.props.itemIcon;
+    }
+  }
+
   renderSubtitle(obj) {
     switch (typeof this.props.itemSubtitle) {
       case 'function':
@@ -131,23 +180,22 @@ class SelectList extends React.Component {
   }
 
   renderRow = (obj) => {
-    const validator = typeof this.props.itemSelectedValidator === 'function' ?
-      this.props.itemSelectedValidator :
-      (o) => {
-        if (!o) return false;
-
-        if (typeof o === 'object') return o[this.props.itemSelectedValidator] === obj[this.props.itemSelectedValidator];
-        else return o === obj[this.props.itemSelectedValidator];
-      };
-
-    let selected = false;
-    if (this.props.selected) {
-      selected = Array.isArray(this.props.selected) ? this.props.selected.find(validator) : validator(this.props.selected);
-    }
+    const selected = this._selected && this._selected.some((o) => {
+      return typeof o === 'object' ? o[this.props.itemValidator] === obj[this.props.itemValidator] : o === obj[this.props.itemValidator];
+    });
 
     const onItemPress = () => {
       this.props.onItemPress(obj, !selected);
     };
+
+    const itemIcon = () => {
+      const icon = this.props.itemIcon || this.props.icon;
+      if (typeof icon === 'function') {
+        return icon(obj);
+      } else {
+        return icon;
+      }
+    }
 
     const selectedIcon = Object.assign({},
       { name: 'check' },
@@ -163,30 +211,32 @@ class SelectList extends React.Component {
         value={(!selected && this.props.itemValue) && this.renderValue(obj)}
         subtitle={this.props.itemSubtitle && this.renderSubtitle(obj)}
         disclosure={selected && selectedIcon}
-        icon={this.props.icon}
+        icon={this.props.itemIcon ? this.renderIcon(obj) : this.props.icon}
       />
     );
   }
 
-  getDataSource() {
+  getDataSource(dataSource, propsData) {
     if (this.props.section) {
       const data = {};
 
-      if (this.props.data) {
-        this.props.data.forEach((obj) => {
+      if (propsData) {
+        for (var i in propsData) {
+          var obj = propsData[i];
+
           const section = typeof this.props.section === 'function' ? this.props.section(obj) : obj[this.props.section];
           if (!data[section]) {
             data[section] = [];
           }
 
           data[section].push(obj);
-        });
+        }
       }
 
-      return this.state.datasource.cloneWithRowsAndSections(data);
+      return dataSource.cloneWithRowsAndSections(data);
 
     } else {
-      return this.state.datasource.cloneWithRows(this.props.data || []);
+      return dataSource.cloneWithRows(propsData || []);
     }
     
   }
@@ -211,9 +261,7 @@ class SelectList extends React.Component {
     }
 
     return (
-      <View style={styles.headerView} >
-        <View blurType="xlight" />
-      </View>
+      <View style={this.props.modal === true ? styles.headerView : styles.separator} />
     );
   }
 
@@ -249,7 +297,7 @@ class SelectList extends React.Component {
 
         renderFooter={this.props.renderFooter && this.renderFooter}
         renderHeader={this.renderHeader}
-        dataSource={this.getDataSource()}
+        dataSource={this.state.dataSource}
         renderRow={this.props.renderRow || this.renderRow}
         renderSectionHeader={this.props.section && (this.props.renderSectionHeader || this.renderSectionHeader)}
         renderSeparator={this.props.renderSeparator || this.renderSeparator}
@@ -291,7 +339,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: BACKGROUND_COLOR,
-    elevation: 10
+    elevation: 5,
+    zIndex: 10
   },
   placeholder: {
     flex: 1,

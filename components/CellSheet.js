@@ -39,6 +39,7 @@ class CellSheet extends React.Component {
           onOpen={this.props.onOpen}
           mode={this.props.mode}
           cancelText={this.props.cancelText || 'Cancel'}
+          title={this.props.header}
         >
            {this.props.children /* children should go here, not to the Cell */}
         </ActionSheet>

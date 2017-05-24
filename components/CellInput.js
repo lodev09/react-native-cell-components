@@ -36,11 +36,15 @@ class CellInput extends React.Component {
 
     if (this.props.autoResize) {
       if ((contentHeight - contentHeight % BASE_HEIGHT) / BASE_HEIGHT < this.props.rows) {
-        this._textInput.setNativeProps({
+        this.setNativeProps({
           height: contentHeight
         });
       }
     }
+  }
+
+  setNativeProps(props) {
+    this._textInput.setNativeProps(props);
   }
 
   focus() {
@@ -54,7 +58,7 @@ class CellInput extends React.Component {
   renderTextInput() {
     const textInputStyle = this.props.multiline &&
       {
-        paddingBottom: theme.padding,
+        // paddingBottom: theme.padding,
         height: this.props.autoResize ? BASE_HEIGHT : BASE_HEIGHT * this.props.rows
       }
 
@@ -67,6 +71,7 @@ class CellInput extends React.Component {
         style={[ styles.textInput, textInputStyle, this.props.style ]}
         onContentSizeChange={this.handleOnContentSizeChange}
         placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
+        placeholderTextColor={theme.color.muted}
         underlineColorAndroid="transparent"
       />
     );
@@ -78,6 +83,7 @@ class CellInput extends React.Component {
         icon={this.props.icon}
         tintColor={this.props.tintColor}
         title={!this.props.multiline && this.props.title}
+        style={this.props.editable === false && styles.inputDisabled}
       >
         {this.renderTextInput()}
       </Cell>
@@ -92,6 +98,9 @@ const styles = StyleSheet.create({
     flex: 1,
     height: BASE_HEIGHT,
     padding: 0
+  },
+  inputDisabled: {
+    backgroundColor: theme.color.lightGrey
   }
 });
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import theme from '../lib/theme';
 
+import Cell from './Cell';
+
 import {
   View,
   TextInput,
@@ -16,7 +18,8 @@ class TagsInput extends React.Component {
     onChangeText: () => {},
     onRemoveTag: () => {},
     backgroundColor: theme.color.white,
-    tags: []
+    tags: [],
+    renderTag: () => null
   }
 
   static propTypes = {
@@ -26,7 +29,9 @@ class TagsInput extends React.Component {
     onChangeText: React.PropTypes.func,
     onFocus: React.PropTypes.func,
     onRemoveTag: React.PropTypes.func,
-    backgroundColor: React.PropTypes.string
+    backgroundColor: React.PropTypes.string,
+    control: React.PropTypes.object,
+    renderTag: React.PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -39,7 +44,7 @@ class TagsInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.tags.every((tag, i) => tag === nextProps.tags[i]) || this.props.tags.length !== nextProps.tags.length) {
+    if (this.props.tags !== nextProps.tags) {
       this.updateSelectedTag(null);
     }
 
@@ -136,29 +141,43 @@ class TagsInput extends React.Component {
       return (
         <TouchableWithoutFeedback onPress={(e) => this.handleTagOnPress(tag, i, e)} key={'tag-' + i} >
           <View style={[ styles.tagContainer, selected ? styles.tagContainerSelected : null ]}>
-            <Text style={ [styles.tag, selected ? styles.tagSelected : null ]} >{tag},</Text>
+            {this.props.renderTag(tag, selected)}
           </View>
         </TouchableWithoutFeedback>
       );
     }) : null;
   }
 
+  renderLabel = () => {
+    return this.props.label && <Text style={styles.labelText} >{this.props.label}</Text>;
+  }
+
+  renderControl = () => {
+    if (!this.props.control) {
+      return;
+    }
+
+    return {
+      ...this.props.control,
+      name: this.props.control.icon
+    }
+  }
+
   render() {
     return (
-      <View
+      <Cell
         {...this.props}
         style={[
           styles.container,
-          { backgroundColor: this.props.backgroundColor },
+          {
+            backgroundColor: this.props.backgroundColor
+          },
           this.props.style
         ]}
+        icon={this.props.label ? this.renderLabel : this.props.icon}
+        contentPosition="top"
+        disclosure={this.renderControl()}
       >
-        {
-          this.props.label &&
-          <View style={styles.labelTextContainer} >
-            <Text style={styles.labelText} >{this.props.label}</Text>
-          </View>
-        }
         <View style={styles.tagViewsContainer} >
           {this.renderTags()}
           
@@ -190,8 +209,7 @@ class TagsInput extends React.Component {
             }
           </View>
         </View>
-    
-      </View>
+      </Cell>
     );
   }
 }
@@ -199,20 +217,14 @@ class TagsInput extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    // paddingHorizontal: theme.padding,
-    height: 48,
+    minHeight: 48,
     backgroundColor: 'transparent'
   },
-  labelTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: theme.padding,
-    width: theme.isIOS ? theme.padding * 6 : theme.padding * 4.5
-  },
   labelText: {
-    fontSize: theme.font.small,
+    fontSize: theme.font.medium,
     fontWeight: 'bold',
-    color: theme.color.muted
+    color: theme.color.muted,
+    paddingVertical: theme.padding / 4
   },
   tagViewsContainer: {
     flex: 1,
@@ -225,21 +237,14 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius / 2
   },
   tagContainer: {
-    padding: theme.margin / 2
-  },
-  tagSelected: {
-    color: theme.color.white,
-  },
-  tag: {
-    color: theme.color.info,
-    fontSize: theme.font.medium
+    padding: theme.padding / 5
   },
   textInputContainer: {
     flex: 1
   },
   textInput: {
     fontSize: theme.font.medium,
-    height: 18,
+    height: theme.isIOS ? 20 : 25,
     padding: 0
   },
   textInputFocus: {

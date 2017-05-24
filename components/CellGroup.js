@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     ...theme.separator
   },
   header: {
-    paddingVertical: theme.padding,
+    paddingVertical: theme.isIOS ? theme.padding : theme.padding / 2,
     paddingHorizontal: theme.padding * 1.5
   },
   headerText: {

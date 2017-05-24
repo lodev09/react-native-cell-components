@@ -66,7 +66,7 @@ class ActionSheet extends React.Component {
         toValue,
         duration: toValue === 0 ? 400 : 350,
         easing: Easing.bezier(.36,.66,.04,1),
-        useNativeDriver: theme.isIOS
+        // useNativeDriver: true
       }).start(() => {
         if (callback) callback();
       });
@@ -119,8 +119,8 @@ class ActionSheet extends React.Component {
       });
 
       setTimeout(() => {
-        if (callback) callback();
-        if (this.props.onClose) this.props.onClose();
+        callback && callback();
+        this.props.onClose && this.props.onClose();
       }, 10);
     });
   }
@@ -186,7 +186,7 @@ class ActionSheet extends React.Component {
           <View key={'action-item-' + i}>
             <Cell
               {...item.props}
-              onPress={item.props.onPress && itemOnPress}
+              onPress={item.props.onPress ? itemOnPress : null}
               style={[
                 item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
                 isFirstChild && styles.borderTopRadius,
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
   title: {
-    fontSize: theme.font.small,
+    fontSize: theme.isIOS ? theme.font.xsmall : theme.font.small,
     color: theme.color.muted
   },
   actionsContainer: {

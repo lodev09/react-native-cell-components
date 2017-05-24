@@ -118,6 +118,15 @@ class App extends Component {
     });
   }
 
+  renderTag = (user, selected) => {
+    return (
+      <Text
+        style={ [styles.tag, selected ? styles.tagSelected : null ]} >
+        {user.name},
+      </Text>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container} >
@@ -127,8 +136,9 @@ class App extends Component {
         <View style={styles.header} />
         <TagsInput
           ref={component => this._tagsInput = component}
-          label="TO:"
-          tags={this.state.selectedUsers.map((user) => user.name)}
+          icon="group"
+          tags={this.state.selectedUsers}
+          renderTag={this.renderTag}
           onChangeText={this.handleUsersOnChangeText}
           onRemoveTag={this.handleUsersOnRemoveTag}
         />
@@ -203,7 +213,7 @@ class App extends Component {
             itemTitle="name"
             itemSubtitle="email"
             onItemPress={this.handleUserItemOnPress}
-            itemSelectedValidator="id"
+            itemValidator="id"
             section="country"
           />
         </View>
@@ -225,6 +235,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
+  },
+  tagSelected: {
+    color: theme.color.white,
+  },
+  tag: {
+    color: theme.color.info,
+    fontSize: theme.font.medium
   }
 });
 

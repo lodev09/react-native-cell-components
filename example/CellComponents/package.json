@@ -7,16 +7,16 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "^16.0.0-alpha.6",
-    "react-native": "^0.44.0",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.0",
     "react-native-cell-components": "https://github.com/lodev09/react-native-cell-components.git",
     "react-native-vector-icons": "^4.1.1"
   },
   "devDependencies": {
-    "babel-jest": "^19.0.0",
-    "babel-preset-react-native": "^1.9.1",
-    "jest": "^19.0.2",
-    "react-test-renderer": "15.4.2"
+    "babel-jest": "20.0.3",
+    "babel-preset-react-native": "1.9.2",
+    "jest": "20.0.4",
+    "react-test-renderer": "16.0.0-alpha.6"
   },
   "jest": {
     "preset": "react-native"

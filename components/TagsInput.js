@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     fontSize: theme.font.medium,
-    height: theme.isIOS ? 20 : 25,
+    height: theme.value(20, 25),
     padding: 0
   },
   textInputFocus: {

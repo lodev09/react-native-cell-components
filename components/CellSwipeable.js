@@ -3,8 +3,7 @@ import React from 'react';
 import Cell from './Cell';
 
 import {
-	View,
-	StyleSheet
+	View
 } from 'react-native';
 
 // https://raw.githubusercontent.com/facebook/react-native/master/Libraries/Experimental/SwipeableRow/SwipeableRow.js

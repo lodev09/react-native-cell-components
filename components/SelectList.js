@@ -261,7 +261,7 @@ class SelectList extends React.Component {
     }
 
     return (
-      <View style={this.props.modal === true ? styles.headerView : styles.separator} />
+      <View style={styles.separator} />
     );
   }
 
@@ -275,13 +275,14 @@ class SelectList extends React.Component {
   }
 
   renderListView() {
-    if (!this.props.data) {
+    if (!this.props.data || (this.props.realm && this.props.data && this.props.data.length === 0)) {
       return (
         <View>
           {this.renderHeader()}
-          <Cell>
-            <Text style={styles.placeholder}>{this.props.placeholder ? this.props.placeholder : DEFAULT_PLACEHOLDER }</Text>
-          </Cell>
+          <Cell
+            title={this.props.placeholder || DEFAULT_PLACEHOLDER }
+            tintColor={theme.color.muted}
+          />
           <View style={styles.separator} />
           {this.props.renderFooter && this.renderFooter()}
         </View>
@@ -339,20 +340,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     backgroundColor: BACKGROUND_COLOR,
-    elevation: 5,
-    zIndex: 10
-  },
-  placeholder: {
-    flex: 1,
-    fontSize: theme.font.small,
-    fontWeight: '500',
-    color: theme.color.muted
-  },
-  headerView: {
-    ...theme.border.top,
-    ...theme.border.bottom,
-    height: 5,
-    backgroundColor: BACKGROUND_COLOR
+    elevation: 5
   },
   headerText: {
     fontSize: theme.font.xsmall,

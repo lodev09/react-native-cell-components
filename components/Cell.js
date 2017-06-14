@@ -11,11 +11,11 @@ import {
   Platform
 } from 'react-native';
 
-const CELL_MIN_HEIGHT = 48;
+export const CELL_MIN_HEIGHT = 48;
 const ICON_DEFAULT_SIZE = 24;
 const TITLE_MIN_WIDTH = 98;
 const CORNER_MIN_WIDTH = theme.padding;
-const Touchable = theme.isIOS ? TouchableHighlight : TouchableNativeFeedback;
+const Touchable = theme.value(TouchableHighlight, TouchableNativeFeedback);
 let ANDROID_BACKGROUND = null;
 
 if (theme.isAndroid) {
@@ -42,6 +42,7 @@ class Cell extends React.Component {
     selected: false,
     iconSelected: 'check-box',
     iconUnSelected: 'check-box-outline-blank',
+    disabled: false,
     onSelect: () => null
   }
 
@@ -60,7 +61,8 @@ class Cell extends React.Component {
     iconUnSelected: React.PropTypes.string,
     onSelect: React.PropTypes.func,
     onPress: React.PropTypes.func,
-    onLongPress: React.PropTypes.func
+    onLongPress: React.PropTypes.func,
+    disabled: React.PropTypes.bool
   }
 
   constructor(props) {
@@ -273,9 +275,17 @@ class Cell extends React.Component {
       <Touchable
         background={theme.isAndroid && this.props.onPress ? ANDROID_BACKGROUND : null}
         onPress={this.props.onPress || isSelecting ? this.handleCellOnPress : null}
+        disabled={this.props.disabled}
         onLongPress={this.props.onLongPress}
       >
-        <View style={[ styles.container, this.props.style, this.props.selected && isSelecting ? styles.selectedContainer : null ]} >
+        <View
+          style={[
+            styles.container,
+            this.props.selected && isSelecting ? styles.selectedContainer : null,
+            this.props.disabled && { opacity: 0.5 },
+            this.props.style
+          ]}
+        >
           {this.renderSelect()}
           <View
             style={[

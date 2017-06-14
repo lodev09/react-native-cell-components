@@ -9,35 +9,46 @@ import {
   TextInput
 } from 'react-native';
 
-const BASE_HEIGHT = 23;
+const BASE_HEIGHT = 20;
+const OFFSET = theme.value(10, 4);
 
 class CellInput extends React.Component {
   static defaultProps = {
     rows: 1,
-    autoResize: false
+    autoResize: false,
+    minRows: 1
   }
 
   static propTypes = {
     ...TextInput.propTypes,
     rows: React.PropTypes.number,
+    minRows: React.PropTypes.number,
     autoResize: React.PropTypes.bool
   }
 
   constructor(props) {
     super(props);
 
+    let height = BASE_HEIGHT;
+
+    // autorize is not yet supported in android (?)
+    if (this.props.multiline && (!this.props.autoResize || theme.isAndroid)) {
+      height = Math.max(BASE_HEIGHT * this.props.rows, BASE_HEIGHT * this.props.minRows);
+    }
+
     this.state = {
-      rows: this.props.rows
+      height
     }
   }
 
   handleOnContentSizeChange = (e) => {
     const contentHeight = e.nativeEvent.contentSize.height;
 
-    if (this.props.autoResize) {
+    // autorize is not yet supported in android (?)
+    if (this.props.autoResize && theme.isIOS) {
       if ((contentHeight - contentHeight % BASE_HEIGHT) / BASE_HEIGHT < this.props.rows) {
-        this.setNativeProps({
-          height: contentHeight
+        this.setState({
+          height: Math.max(BASE_HEIGHT * this.props.minRows, contentHeight)
         });
       }
     }
@@ -56,22 +67,17 @@ class CellInput extends React.Component {
   }
 
   renderTextInput() {
-    const textInputStyle = this.props.multiline &&
-      {
-        // paddingBottom: theme.padding,
-        height: this.props.autoResize ? BASE_HEIGHT : BASE_HEIGHT * this.props.rows
-      }
-
     return (
       <TextInput
         ref={component => this._textInput = component}
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
+        placeholderTextColor={this.props.placeholderTextColor || theme.color.muted}
+        autoCapitalize="sentences"
         {...this.props}
-        style={[ styles.textInput, textInputStyle, this.props.style ]}
+        style={[ styles.textInput, { height: this.state.height + OFFSET } ]}
         onContentSizeChange={this.handleOnContentSizeChange}
         placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
-        placeholderTextColor={theme.color.muted}
         underlineColorAndroid="transparent"
       />
     );
@@ -82,8 +88,10 @@ class CellInput extends React.Component {
       <Cell
         icon={this.props.icon}
         tintColor={this.props.tintColor}
+        disclosure={this.props.disclosure}
+        contentPosition="top"
         title={!this.props.multiline && this.props.title}
-        style={this.props.editable === false && styles.inputDisabled}
+        style={[ this.props.editable === false && styles.inputDisabled, this.props.style ]}
       >
         {this.renderTextInput()}
       </Cell>
@@ -95,6 +103,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontSize: theme.font.medium,
     textAlign: 'left',
+    textAlignVertical: 'top',
     flex: 1,
     height: BASE_HEIGHT,
     padding: 0

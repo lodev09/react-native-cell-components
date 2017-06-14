@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Cell from './Cell';
+import Cell, { CELL_MIN_HEIGHT } from './Cell';
 import CellGroup from './CellGroup';
 
 import theme from '../lib/theme';
@@ -22,8 +22,9 @@ export const ActionItem = function(props) {
   return <View {...props} />
 }
 
-const BORDER_RADIUS = theme.isIOS ? theme.radius : 0;
-const MARGIN = theme.isIOS ? theme.margin : 0;
+const BORDER_RADIUS = theme.value(theme.radius, 0);
+const MARGIN = theme.value(theme.margin, 0);
+const STATUS_BAR_HEIGHT = 20;
 
 class ActionSheet extends React.Component {
   static defaultProps = {
@@ -180,13 +181,23 @@ class ActionSheet extends React.Component {
           this.close(item.props.onPress);
         };
 
+        let isDisabled = false;
         const tintColor = item.props.destructive ? theme.color.danger : item.props.tintColor;
+
+        if (item.props.disabled) {
+          if (typeof item.props.disabled === 'function') {
+            isDisabled = item.props.disabled();
+          } else {
+            isDisabled = item.props.disabled;
+          }
+        }
 
         return (
           <View key={'action-item-' + i}>
             <Cell
               {...item.props}
               onPress={item.props.onPress ? itemOnPress : null}
+              disabled={isDisabled}
               style={[
                 item.props.backgroundColor && { backgroundColor: item.props.backgroundColor },
                 isFirstChild && styles.borderTopRadius,
@@ -264,7 +275,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
   title: {
-    fontSize: theme.isIOS ? theme.font.xsmall : theme.font.small,
+    fontSize: theme.value(theme.font.xsmall, theme.font.small),
     color: theme.color.muted
   },
   actionsContainer: {
@@ -280,7 +291,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
   actionItemsList: {
-    marginTop: theme.isIOS ? 68 : 48
+    marginTop: theme.value(CELL_MIN_HEIGHT + STATUS_BAR_HEIGHT, CELL_MIN_HEIGHT)
   },
   cancelText: {
     textAlign: 'center',
@@ -290,12 +301,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   borderTopRadius: {
-    borderTopRightRadius: BORDER_RADIUS,
-    borderTopLeftRadius: BORDER_RADIUS,
+    ...theme.borderRadius.top
   },
   borderBottomRadius: {
-    borderBottomRightRadius: BORDER_RADIUS,
-    borderBottomLeftRadius: BORDER_RADIUS
+    ...theme.borderRadius.bottom
   }
 });
 

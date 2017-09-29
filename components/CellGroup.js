@@ -59,7 +59,7 @@ class CellGroup extends React.Component {
   }
 
   renderHeader() {
-    switch (this.props.header) {
+    switch (typeof this.props.header) {
       case 'object':
         return this.props.header;
         break;

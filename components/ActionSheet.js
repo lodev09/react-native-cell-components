@@ -15,6 +15,7 @@ import {
   Dimensions,
   Easing
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 const AnimatdCellGroup = Animated.createAnimatedComponent(CellGroup);
 
@@ -36,18 +37,18 @@ class ActionSheet extends React.Component {
   }
 
   static propTypes = {
-    onClose: React.PropTypes.func,
-    onOpen: React.PropTypes.func,
-    animated: React.PropTypes.bool,
-    mode: React.PropTypes.oneOf([
+    onClose: PropTypes.func,
+    onOpen: PropTypes.func,
+    animated: PropTypes.bool,
+    mode: PropTypes.oneOf([
       'default', // default
       'list'
     ]),
-    title: React.PropTypes.any,
-    cancelText: React.PropTypes.string,
-    onCancelPress: React.PropTypes.func,
-    destructive: React.PropTypes.bool,
-    separator: React.PropTypes.bool
+    title: PropTypes.any,
+    cancelText: PropTypes.string,
+    onCancelPress: PropTypes.func,
+    destructive: PropTypes.bool,
+    separator: PropTypes.bool
   }
 
   constructor(props) {

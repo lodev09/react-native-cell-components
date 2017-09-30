@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Cell from './Cell';
 import SelectList from './SelectList';

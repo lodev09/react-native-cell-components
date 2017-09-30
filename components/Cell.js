@@ -10,6 +10,7 @@ import {
   Text,
   Platform
 } from 'react-native';
+import PropTypes from 'prop-types';
 
 export const CELL_MIN_HEIGHT = 48;
 const ICON_DEFAULT_SIZE = 24;
@@ -47,22 +48,22 @@ class Cell extends React.Component {
   }
 
   static propTypes = {
-    title: React.PropTypes.any,
-    subtitle: React.PropTypes.any,
-    icon: React.PropTypes.any,
-    contentPosition: React.PropTypes.oneOf(Object.keys(positions)),
-    disclosure: React.PropTypes.any,
-    value: React.PropTypes.any,
-    tintColor: React.PropTypes.string,
-    contentOffset: React.PropTypes.number,
-    selectMode: React.PropTypes.oneOf([ 'none', 'check' ]),
-    selected: React.PropTypes.bool,
-    iconSelected: React.PropTypes.string,
-    iconUnSelected: React.PropTypes.string,
-    onSelect: React.PropTypes.func,
-    onPress: React.PropTypes.func,
-    onLongPress: React.PropTypes.func,
-    disabled: React.PropTypes.bool
+    title: PropTypes.any,
+    subtitle: PropTypes.any,
+    icon: PropTypes.any,
+    contentPosition: PropTypes.oneOf(Object.keys(positions)),
+    disclosure: PropTypes.any,
+    value: PropTypes.any,
+    tintColor: PropTypes.string,
+    contentOffset: PropTypes.number,
+    selectMode: PropTypes.oneOf([ 'none', 'check' ]),
+    selected: PropTypes.bool,
+    iconSelected: PropTypes.string,
+    iconUnSelected: PropTypes.string,
+    onSelect: PropTypes.func,
+    onPress: PropTypes.func,
+    onLongPress: PropTypes.func,
+    disabled: PropTypes.bool
   }
 
   constructor(props) {
@@ -200,7 +201,7 @@ class Cell extends React.Component {
           { size: ICON_DEFAULT_SIZE },
           typeof this.props.disclosure === 'string' ? { name: this.props.disclosure } : this.props.disclosure || {}
         );
-        
+
         return (
           <Icon
             {...iconProps}
@@ -357,7 +358,7 @@ const styles = StyleSheet.create({
     minWidth: TITLE_MIN_WIDTH
   },
   title: {
-    fontSize: theme.font.medium, 
+    fontSize: theme.font.medium,
     marginRight: theme.margin / 1.5
   },
   subtitle: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Cell from './Cell';
 
@@ -15,9 +16,9 @@ class CellGroup extends React.Component {
 
   static propTypes = {
     ...View.propsTypes,
-    header: React.PropTypes.any,
-    footer: React.PropTypes.any,
-    bordered: React.PropTypes.bool
+    header: PropTypes.any,
+    footer: PropTypes.any,
+    bordered: PropTypes.bool
   }
 
   renderChildren() {

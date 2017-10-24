@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Cell from './Cell';
 
@@ -22,13 +23,13 @@ class CellSwipeable extends React.Component {
 
 	static propTypes = {
 		...Cell.propTypes,
-		isOpen: React.PropTypes.bool,
-		onOpen: React.PropTypes.func,
-	    onClose: React.PropTypes.func,
-	    onSwipeEnd: React.PropTypes.func,
-	    onSwipeStart: React.PropTypes.func,
-	    swipeThreshold: React.PropTypes.number,
-	    shouldBounceOnMount: React.PropTypes.bool
+		isOpen: PropTypes.bool,
+		onOpen: PropTypes.func,
+	    onClose: PropTypes.func,
+	    onSwipeEnd: PropTypes.func,
+	    onSwipeStart: PropTypes.func,
+	    swipeThreshold: PropTypes.number,
+	    shouldBounceOnMount: PropTypes.bool
 	}
 
 	constructor(props) {

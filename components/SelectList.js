@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import theme from '../lib/theme';
 
@@ -30,24 +31,24 @@ class SelectList extends React.Component {
   }
 
   static propTypes = {
-    data: React.PropTypes.any,
-    selected: React.PropTypes.any,
-    section: React.PropTypes.any,
-    itemTitle: React.PropTypes.any,
-    itemValue: React.PropTypes.any,
-    itemValidator: React.PropTypes.string.isRequired,
-    itemIcon: React.PropTypes.any,
-    itemSubtitle: React.PropTypes.any,
-    itemSelectedIcon: React.PropTypes.any,
-    icon: React.PropTypes.any,
-    visible: React.PropTypes.bool,
-    modal: React.PropTypes.bool,
-    realm: React.PropTypes.bool,
-    onItemPress: React.PropTypes.func,
-    onClose: React.PropTypes.func,
-    onOpen: React.PropTypes.func,
-    placeholder: React.PropTypes.string,
-    cancelText: React.PropTypes.string
+    data: PropTypes.any,
+    selected: PropTypes.any,
+    section: PropTypes.any,
+    itemTitle: PropTypes.any,
+    itemValue: PropTypes.any,
+    itemValidator: PropTypes.string.isRequired,
+    itemIcon: PropTypes.any,
+    itemSubtitle: PropTypes.any,
+    itemSelectedIcon: PropTypes.any,
+    icon: PropTypes.any,
+    visible: PropTypes.bool,
+    modal: PropTypes.bool,
+    realm: PropTypes.bool,
+    onItemPress: PropTypes.func,
+    onClose: PropTypes.func,
+    onOpen: PropTypes.func,
+    placeholder: PropTypes.string,
+    cancelText: PropTypes.string
   }
 
   _previousSelected = [];
@@ -238,7 +239,7 @@ class SelectList extends React.Component {
     } else {
       return dataSource.cloneWithRows(propsData || []);
     }
-    
+
   }
 
   renderSectionHeader = (sdata, section) => {

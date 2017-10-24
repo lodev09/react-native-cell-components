@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import theme from '../lib/theme';
 
 import Cell from './Cell';
@@ -24,14 +26,14 @@ class TagsInput extends React.Component {
 
   static propTypes = {
     ...View.propTypes,
-    tags: React.PropTypes.array,
-    autoFocus: React.PropTypes.bool,
-    onChangeText: React.PropTypes.func,
-    onFocus: React.PropTypes.func,
-    onRemoveTag: React.PropTypes.func,
-    backgroundColor: React.PropTypes.string,
-    control: React.PropTypes.object,
-    renderTag: React.PropTypes.func.isRequired
+    tags: PropTypes.array,
+    autoFocus: PropTypes.bool,
+    onChangeText: PropTypes.func,
+    onFocus: PropTypes.func,
+    onRemoveTag: PropTypes.func,
+    backgroundColor: PropTypes.string,
+    control: PropTypes.object,
+    renderTag: PropTypes.func.isRequired
   }
 
   constructor(props) {
@@ -180,7 +182,7 @@ class TagsInput extends React.Component {
       >
         <View style={styles.tagViewsContainer} >
           {this.renderTags()}
-          
+
           <View style={styles.textInputContainer} >
             <TextInput
               ref={component => this._textInput = component}

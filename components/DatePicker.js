@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import ActionSheet, { ActionItem } from './ActionSheet';
 import theme from '../lib/theme';
@@ -19,8 +20,8 @@ class DatePicker extends React.Component {
   }
 
   static propTypes = {
-    date: React.PropTypes.object.isRequired,
-    onDateSelected: React.PropTypes.func
+    date: PropTypes.object.isRequired,
+    onDateSelected: PropTypes.func
   }
 
   constructor(props) {
@@ -66,7 +67,7 @@ class DatePicker extends React.Component {
           this.handleOnDateChange(this.state.date);
         }
       }
-      
+
     }
   }
 

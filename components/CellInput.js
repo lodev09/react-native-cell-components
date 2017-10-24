@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Cell from './Cell';
 import theme from '../lib/theme';
@@ -21,9 +22,9 @@ class CellInput extends React.Component {
 
   static propTypes = {
     ...TextInput.propTypes,
-    rows: React.PropTypes.number,
-    minRows: React.PropTypes.number,
-    autoResize: React.PropTypes.bool
+    rows: PropTypes.number,
+    minRows: PropTypes.number,
+    autoResize: PropTypes.bool
   }
 
   constructor(props) {

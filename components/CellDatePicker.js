@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DatePicker from './DatePicker';
 import Cell from './Cell';
@@ -16,10 +17,10 @@ class CellDatePicker extends React.Component {
 
   static proptTypes = {
     ...Cell.propTypes,
-    onShow: React.PropTypes.func,
-    onDateSelected: React.PropTypes.func.isRequired,
-    mode: React.PropTypes.string.isRequired,
-    date: React.PropTypes.object
+    onShow: PropTypes.func,
+    onDateSelected: PropTypes.func.isRequired,
+    mode: PropTypes.string.isRequired,
+    date: PropTypes.object
   }
 
   handleOnDateSelected = (date) => {

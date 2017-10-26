@@ -36,7 +36,7 @@ Tested with redux and on **RN >=0.40**
 - [react-native-vector-icons ^4.1.1](https://github.com/oblador/react-native-vector-icons)
 
 ## Usage & Props
-_coming soon, see [example](example/CellComponents) for now :)_
+_coming soon, see [example](example) for now :)_
 
 ## Credits
 Feedback and PRs are welcome!

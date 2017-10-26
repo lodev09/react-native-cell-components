@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 // https://raw.githubusercontent.com/facebook/react-native/master/Libraries/Experimental/SwipeableRow/SwipeableRow.js
-import SwipeableRow from 'SwipeableRow';
+import SwipeableRow from '../lib/SwipeableRow';
 
 class CellSwipeable extends React.Component {
 	static defaultProps = {

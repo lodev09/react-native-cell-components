@@ -10,7 +10,7 @@
     "react": "*",
     "react-native": "*",
     "react-native-vector-icons": "*",
-    "prop-types": "^15.6.0"
+    "prop-types": "*"
   },
   "repository": {
     "type": "git",

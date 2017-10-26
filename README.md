@@ -31,7 +31,6 @@ Tested with redux and on **RN >=0.40**
 - SelectList
 - TagsInput
 - CellSlider
-- CellSwipeable
 
 ## Dependencies
 - [react-native-vector-icons ^4.1.1](https://github.com/oblador/react-native-vector-icons)

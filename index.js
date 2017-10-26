@@ -9,7 +9,6 @@ import CellSheet from './components/CellSheet';
 import ActionSheet, { ActionItem } from './components/ActionSheet';
 import DatePicker from './components/DatePicker';
 import CellSlider from './components/CellSlider';
-import CellSwipeable from './components/CellSwipeable';
 
 module.exports = {
   TagsInput,
@@ -24,6 +23,5 @@ module.exports = {
   CellListItem,
   CellDatePicker,
   CellSheet,
-  CellSlider,
-  CellSwipeable
+  CellSlider
 }

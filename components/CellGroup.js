@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     ...theme.separator
   },
   header: {
-    paddingVertical: theme.value(theme.padding, theme.padding / 2),
+    paddingVertical: theme.padding / 2,
     paddingHorizontal: theme.padding * 1.5
   },
   headerText: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontSize: theme.font.xsmall
   },
   footer: {
-    paddingVertical: theme.padding,
+    paddingVertical: theme.value(theme.padding, theme.padding / 2),
     paddingHorizontal: theme.padding * 1.5
   },
   footerText: {

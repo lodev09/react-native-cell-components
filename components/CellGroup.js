@@ -39,10 +39,6 @@ class CellGroup extends React.Component {
   }
 
   renderFooter() {
-    if (!this.props.footer) {
-      return;
-    }
-
     switch (this.props.footer) {
       case 'object':
         return this.props.footer;
@@ -80,7 +76,6 @@ class CellGroup extends React.Component {
     return (
       <View
         {...this.props}
-        style={[ { marginBottom: theme.margin }, this.props.style ]}
       >
         {this.renderHeader()}
         {this.props.bordered && <View style={styles.separator} />}

@@ -26,6 +26,7 @@ export const ActionItem = function(props) {
 const BORDER_RADIUS = theme.value(theme.radius, 0);
 const MARGIN = theme.value(theme.margin, 0);
 const STATUS_BAR_HEIGHT = 20;
+const BOTTOM_OFFSET = theme.bottomOffset * 1.5;
 
 class ActionSheet extends React.Component {
   static defaultProps = {
@@ -216,7 +217,7 @@ class ActionSheet extends React.Component {
   renderCancelCell() {
     return (
       <Cell
-        style={[ styles.cancelCell, this.props.mode === 'default' && styles.borderBottomRadius ]}
+        style={[ styles.cancelCell, this.props.mode === 'default' ? styles.borderBottomRadius : { paddingBottom: BOTTOM_OFFSET } ]}
         onPress={this.handleCancelOnPress}
       >
         <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
@@ -283,7 +284,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: MARGIN,
     right: MARGIN,
-    bottom: MARGIN,
+    bottom: MARGIN + theme.bottomOffset,
     justifyContent: 'flex-end'
   },
   actionItemsDefault: {

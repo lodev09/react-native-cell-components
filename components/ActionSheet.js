@@ -25,7 +25,6 @@ export const ActionItem = function(props) {
 
 const BORDER_RADIUS = theme.value(theme.radius, 0);
 const MARGIN = theme.value(theme.margin, 0);
-const STATUS_BAR_HEIGHT = 20;
 const BOTTOM_OFFSET = theme.bottomOffset * 1.5;
 
 class ActionSheet extends React.Component {
@@ -293,7 +292,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.color.white
   },
   actionItemsList: {
-    marginTop: theme.value(CELL_MIN_HEIGHT + STATUS_BAR_HEIGHT, CELL_MIN_HEIGHT)
+    marginTop: theme.value(CELL_MIN_HEIGHT + theme.topOffset, CELL_MIN_HEIGHT)
   },
   cancelText: {
     textAlign: 'center',

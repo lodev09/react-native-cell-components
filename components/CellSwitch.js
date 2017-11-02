@@ -4,13 +4,10 @@ import Cell from './Cell';
 import theme from '../lib/theme';
 
 import {
-	Slider,
-	View,
-	Text,
-	StyleSheet
+	Switch
 } from 'react-native';
 
-class CellSlider extends React.Component {
+class CellSwitch extends React.Component {
 
 	render() {
 		return (
@@ -20,19 +17,10 @@ class CellSlider extends React.Component {
 				subtitle={this.props.subtitle}
 				disclosure={this.props.disclosure}
 			>
-				<View style={styles.container}>
-					<Slider style={{ flex: 1 }} {...this.props} />
-				</View>
+				<Switch {...this.props} />
 			</Cell>
 		);
 	}
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: 'row'
-	}
-});
-
-export default CellSlider;
+export default CellSwitch;

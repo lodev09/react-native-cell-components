@@ -172,6 +172,7 @@ class TagsInput extends React.Component {
         style={[
           styles.container,
           { backgroundColor: this.props.backgroundColor },
+          theme.isIOS && theme.border.bottom,
           this.props.style
         ]}
         icon={this.props.label ? this.renderLabel : this.props.icon}
@@ -218,8 +219,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     minHeight: 48,
-    backgroundColor: 'transparent',
-    ...theme.border.bottom
+    backgroundColor: 'transparent'
   },
   labelText: {
     fontSize: theme.font.medium,

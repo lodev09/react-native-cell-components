@@ -11,7 +11,8 @@ import {
   CellDatePicker,
   CellListProvider,
   CellListItem,
-  CellSlider
+  CellSlider,
+  CellSwitch
 } from 'react-native-cell-components';
 
 import {
@@ -183,6 +184,11 @@ class App extends Component {
                 minimumValue={1}
                 maximumValue={10}
                 step={1}
+              />
+              <CellSwitch
+                icon="settings"
+                value={true}
+                title="Toggle Switch"
               />
             </CellGroup>
 

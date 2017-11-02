@@ -281,7 +281,7 @@ class SelectList extends React.Component {
         <View>
           {this.renderHeader()}
           <Cell
-            title={this.props.placeholder || DEFAULT_PLACEHOLDER }
+            subtitle={this.props.placeholder || DEFAULT_PLACEHOLDER }
             tintColor={theme.color.muted}
           />
           <View style={styles.separator} />

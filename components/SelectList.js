@@ -62,8 +62,8 @@ class SelectList extends React.Component {
 
     const dsOptions = {
       rowHasChanged: (r1, r2) => {
-        const v1 = r1[this.props.itemValidator];
-        const v2 = r2[this.props.itemValidator];
+        const v1 = this.props.realm ? r1.isValid() && r1[this.props.itemValidator] : r1[this.props.itemValidator];
+        const v2 = this.props.realm ? r2.isValid() && r2[this.props.itemValidator] : r2[this.props.itemValidator];
 
         const v1PreviousSelected = this._previousSelected.some(s => {
           return typeof s === 'object' ? s[this.props.itemValidator] === v1 : s === v1;

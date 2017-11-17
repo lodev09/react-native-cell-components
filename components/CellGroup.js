@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Cell from './Cell';
+import CellFooter from './CellFooter';
 
 import {
   View,
@@ -45,12 +46,7 @@ class CellGroup extends React.Component {
         break;
       default:
         return (
-          <View style={styles.footer} >
-            {
-              this.props.footer &&
-              <Text style={styles.footerText} >{this.props.footer}</Text>
-            }
-          </View>
+          <CellFooter text={this.props.footer} />
         );
     }
   }
@@ -100,14 +96,6 @@ const styles = StyleSheet.create({
   headerText: {
     color: theme.color.muted,
     fontWeight: '500',
-    fontSize: theme.font.xsmall
-  },
-  footer: {
-    paddingVertical: theme.value(theme.padding, theme.padding / 2),
-    paddingHorizontal: theme.padding * 1.5
-  },
-  footerText: {
-    color: theme.color.muted,
     fontSize: theme.font.xsmall
   }
 });

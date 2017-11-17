@@ -19,6 +19,8 @@ class CellFooter extends React.Component
 
     renderFooterContent()
     {
+        if (!this.props.text) return null;
+
         switch(typeof this.props.text) {
             case 'function':
                 return this.props.text();
@@ -36,8 +38,6 @@ class CellFooter extends React.Component
 
     render()
     {
-        if (!this.props.text) return null;
-
         return (
             <View style={[styles.footer, this.props.style && this.props.stlye]}>
                 {this.renderFooterContent()}

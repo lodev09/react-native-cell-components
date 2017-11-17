@@ -38,6 +38,8 @@ class CellFooter extends React.Component
 
     render()
     {
+        if (this.props.text === false) return null;
+
         return (
             <View style={[styles.footer, this.props.style && this.props.stlye]}>
                 {this.renderFooterContent()}

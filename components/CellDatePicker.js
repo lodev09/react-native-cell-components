@@ -20,7 +20,8 @@ class CellDatePicker extends React.Component {
     onShow: PropTypes.func,
     onDateSelected: PropTypes.func.isRequired,
     mode: PropTypes.string.isRequired,
-    date: PropTypes.object
+    date: PropTypes.object,
+    cancelText: PropTypes.string
   }
 
   handleOnDateSelected = (date) => {
@@ -40,6 +41,7 @@ class CellDatePicker extends React.Component {
           date={this.props.date}
           mode={this.props.mode}
           onDateSelected={this.handleOnDateSelected}
+          cancelText={this.props.cancelText}
         />
 
         <Cell

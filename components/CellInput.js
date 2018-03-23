@@ -25,7 +25,7 @@ class CellInput extends React.Component {
     rows: PropTypes.number,
     minRows: PropTypes.number,
     autoResize: PropTypes.bool,
-    textRef: PropTypes.func
+    textInputRef: PropTypes.func
   }
 
   constructor(props) {
@@ -72,8 +72,8 @@ class CellInput extends React.Component {
     return (
       <TextInput
         ref={(component) => {
-          if (this.props.textRef) {
-              this.props.textRef(component);
+          if (this.props.textInputRef) {
+              this.props.textInputRef(component);
           }
           this._textInput = component
         }}

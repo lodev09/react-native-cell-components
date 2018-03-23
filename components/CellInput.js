@@ -24,7 +24,8 @@ class CellInput extends React.Component {
     ...TextInput.propTypes,
     rows: PropTypes.number,
     minRows: PropTypes.number,
-    autoResize: PropTypes.bool
+    autoResize: PropTypes.bool,
+    textRef: PropTypes.func
   }
 
   constructor(props) {
@@ -70,7 +71,12 @@ class CellInput extends React.Component {
   renderTextInput() {
     return (
       <TextInput
-        ref={component => this._textInput = component}
+        ref={(component) => {
+          if (this.props.textRef) {
+              this.props.textRef(component);
+          }
+          this._textInput = component
+        }}
         clearButtonMode="while-editing"
         selectionColor={theme.color.info}
         placeholderTextColor={this.props.placeholderTextColor || theme.color.muted}

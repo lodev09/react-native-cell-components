@@ -345,7 +345,8 @@ const styles = StyleSheet.create({
   titleValueContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   valueContainer: {
     flex: 1

@@ -15,18 +15,27 @@ const OFFSET = theme.value(10, 4);
 
 class CellInput extends React.Component {
   static defaultProps = {
-    rows: 1,
-    minRows: 1
+    rows: 1
   }
 
   static propTypes = {
     ...TextInput.propTypes,
-    rows: PropTypes.number,
-    minRows: PropTypes.number
+    rows: PropTypes.number
   }
 
   constructor(props) {
     super(props);
+
+    let height = BASE_HEIGHT;
+
+    // autorize is not yet supported in android (?)
+    if (this.props.multiline) {
+      height = Math.max(BASE_HEIGHT * this.props.rows, BASE_HEIGHT);
+    }
+
+    this.state = {
+      height
+    }
   }
 
   setNativeProps(props) {
@@ -49,12 +58,9 @@ class CellInput extends React.Component {
         selectionColor={theme.color.info}
         placeholderTextColor={this.props.placeholderTextColor || theme.color.muted}
         autoCapitalize="sentences"
-        autoGrow
         {...this.props}
-        style={[ styles.textInput, {
-          minHeight: Math.max(BASE_HEIGHT + OFFSET, BASE_HEIGHT * this.props.minRows),
-          maxHeight: Math.max(BASE_HEIGHT * this.props.rows, BASE_HEIGHT * this.props.minRows)
-        }]}
+        style={[ styles.textInput, { height: this.state.height + OFFSET } ]}
+        onContentSizeChange={this.handleOnContentSizeChange}
         placeholder={this.props.multiline === true ? this.props.title || this.props.placeholder : this.props.placeholder}
         underlineColorAndroid="transparent"
       />
@@ -82,8 +88,8 @@ const styles = StyleSheet.create({
     fontSize: theme.font.medium,
     textAlign: 'left',
     textAlignVertical: 'top',
-    // minHeight: BASE_HEIGHT + OFFSET,
     flex: 1,
+    height: BASE_HEIGHT,
     padding: 0
   },
   inputDisabled: {

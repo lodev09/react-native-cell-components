@@ -55,6 +55,7 @@ class ActionSheet extends React.Component {
     super(props);
 
     this._windowHeight = Dimensions.get('window').height;
+    this._onDismiss = null;
 
     this.state = {
       visible: false,
@@ -115,15 +116,15 @@ class ActionSheet extends React.Component {
   }
 
   close(callback) {
+    this._onDismiss = () => {
+      callback && callback();
+      this.props.onClose && this.props.onClose();
+    };
+
     this.animateToValue(this._windowHeight, () => {
       this.setState({
         visible: false
       });
-
-      setTimeout(() => {
-        callback && callback();
-        this.props.onClose && this.props.onClose();
-      }, 10);
     });
   }
 
@@ -134,6 +135,12 @@ class ActionSheet extends React.Component {
   handleModalOnShow = () => {
     // animated open
     this.animateToValue(0, this.props.onOpen);
+  }
+
+  handleModalOnDismiss = () => {
+    if (typeof this._onDismiss === 'function') {
+      this._onDismiss();
+    }
   }
 
   handleModalOnRequestClose = () => {
@@ -241,6 +248,7 @@ class ActionSheet extends React.Component {
         transparent
         visible={this.state.visible}
         onShow={this.handleModalOnShow}
+        onDismiss={this.handleModalOnDismiss}
         onRequestClose={this.handleModalOnRequestClose}
       >
         <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>

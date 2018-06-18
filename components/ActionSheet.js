@@ -55,7 +55,7 @@ class ActionSheet extends React.Component {
     super(props);
 
     this._windowHeight = Dimensions.get('window').height;
-    this._onDismiss = null;
+    this._onDismiss = () => null;
 
     this.state = {
       visible: false,
@@ -125,6 +125,10 @@ class ActionSheet extends React.Component {
       this.setState({
         visible: false
       });
+
+      // Modal.onDismiss prop is not supported in android
+      // https://facebook.github.io/react-native/docs/modal.html#ondismiss
+      theme.isAndroid && this._onDismiss();
     });
   }
 
@@ -138,9 +142,7 @@ class ActionSheet extends React.Component {
   }
 
   handleModalOnDismiss = () => {
-    if (typeof this._onDismiss === 'function') {
-      this._onDismiss();
-    }
+    this._onDismiss();
   }
 
   handleModalOnRequestClose = () => {

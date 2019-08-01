@@ -44,16 +44,22 @@ class Cell extends React.Component {
     iconSelected: 'check-box',
     iconUnSelected: 'check-box-outline-blank',
     disabled: false,
+    subtitleWrap: true,
+    titleWrap: true,
+    valueWrap: true,
     onSelect: () => null
   }
 
   static propTypes = {
     title: PropTypes.any,
+    titleWrap: PropTypes.bool,
     subtitle: PropTypes.any,
+    subtitleWrap: PropTypes.bool,
+    value: PropTypes.any,
+    valueWrap: PropTypes.bool,
     icon: PropTypes.any,
     contentPosition: PropTypes.oneOf(Object.keys(positions)),
     disclosure: PropTypes.any,
-    value: PropTypes.any,
     tintColor: PropTypes.string,
     contentOffset: PropTypes.number,
     selectMode: PropTypes.oneOf([ 'none', 'check' ]),
@@ -82,6 +88,7 @@ class Cell extends React.Component {
         value = this.props.title();
         break;
       default:
+        const numberOfLines = this.props.titleWrap ? 1 : null;
         value = (
           <Text
             style={[
@@ -89,7 +96,7 @@ class Cell extends React.Component {
               { color: this.props.tintColor || theme.color.black }
             ]}
             ellipsizeMode="tail"
-            numberOfLines={1}
+            numberOfLines={numberOfLines}
           >
             {this.props.title}
           </Text>
@@ -110,7 +117,8 @@ class Cell extends React.Component {
         return this.props.subtitle();
         break;
       default:
-        return <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={1} >{this.props.subtitle}</Text>;
+        const numberOfLines = this.props.subtitleWrap ? 1 : null;
+        return <Text style={styles.subtitle} ellipsizeMode="tail" numberOfLines={numberOfLines} >{this.props.subtitle}</Text>;
         break;
     }
   }
@@ -130,6 +138,7 @@ class Cell extends React.Component {
         return this.props.value();
         break;
       default:
+        const numberOfLines = this.props.valueWrap ? 1 : null;
         return (
           <View style={styles.valueContainer} >
             <Text
@@ -140,7 +149,7 @@ class Cell extends React.Component {
                   opacity: 0.8
                 }
               ]}
-              numberOfLines={1}
+              numberOfLines={numberOfLines}
             >
               {this.props.value}
             </Text>

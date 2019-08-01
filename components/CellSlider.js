@@ -3,6 +3,7 @@ import React from 'react';
 import Cell from './Cell';
 import theme from '../lib/theme';
 
+// slider is deprecated, will move to @react-native-community/slider package in the future
 import {
   Slider,
   View,

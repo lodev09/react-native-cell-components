@@ -36,6 +36,7 @@ class App extends Component {
       version: '0.0.0',
       selectingUsers: false,
       selectedUsers: [],
+      switch: false,
       date: new Date()
     };
   }
@@ -104,7 +105,7 @@ class App extends Component {
     ];
 
     return versions.map((version, i) => {
-      return <ActionItem key={'version-' + i} icon="label" title={version} onPress={() => this.handleSelectedVersionOnPress(version)} />
+      return <ActionItem key={'version-' + i} icon="code" title={version} onPress={() => this.handleSelectedVersionOnPress(version)} />
     })
   }
 
@@ -129,6 +130,12 @@ class App extends Component {
     );
   }
 
+  handleSwitchOnValueChange = (value) => {
+    this.setState({
+      switch: value
+    });
+  }
+
   render() {
     return (
       <View style={styles.container} >
@@ -138,7 +145,7 @@ class App extends Component {
         <View style={styles.header} />
         <TagsInput
           ref={component => this._tagsInput = component}
-          icon="group"
+          icon="people"
           tags={this.state.selectedUsers}
           renderTag={this.renderTag}
           onChangeText={this.handleUsersOnChangeText}
@@ -147,8 +154,8 @@ class App extends Component {
         <View style={{ flex: 1, borderTopWidth: 1, borderTopColor: '#eee' }} >
           <ScrollView>
             <CellGroup>
-              <Cell title="Package" icon="code" value="react-native-cell-components" />
-              <CellSheet title="Version" icon="label" value={this.state.version} cancelText="Close" >
+              <Cell title="Package" icon="information-circle-outline" value="react-native-cell-components" />
+              <CellSheet title="Version" icon="code" value={this.state.version} cancelText="Close" >
                 {this.renderActionSheetItems()}
               </CellSheet>
             </CellGroup>
@@ -156,7 +163,7 @@ class App extends Component {
               <CellInput title="Username" icon="person" placeholder="Enter username" />
               <CellDatePicker
                 tintColor="#3498db"
-                icon="date-range"
+                icon="calendar"
                 title="Date"
                 mode="date"
                 date={this.state.date}
@@ -165,7 +172,7 @@ class App extends Component {
               />
               <CellDatePicker
                 tintColor="#3498db"
-                icon="access-time"
+                icon="time"
                 title="Time"
                 mode="time"
                 date={this.state.date}
@@ -181,15 +188,16 @@ class App extends Component {
             >
               <CellSlider
                 icon="arrow-forward"
-                disclosure="check"
+                disclosure="checkmark"
                 minimumValue={1}
                 maximumValue={10}
                 step={1}
               />
               <CellSwitch
                 icon="settings"
-                value={true}
+                value={this.state.switch}
                 title="Toggle Switch"
+                onValueChange={this.handleSwitchOnValueChange}
               />
             </CellGroup>
 

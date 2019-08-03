@@ -41,8 +41,8 @@ class Cell extends React.Component {
     contentOffset: theme.padding,
     selectMode: 'none',
     selected: false,
-    iconSelected: 'check-box',
-    iconUnSelected: 'check-box-outline-blank',
+    iconSelected: 'checkmark-circle',
+    iconUnSelected: 'radio-button-off',
     disabled: false,
     subtitleWrap: true,
     titleWrap: true,
@@ -254,7 +254,7 @@ class Cell extends React.Component {
         <Icon
           {...iconProps}
           style={{
-            color: iconProps.color || theme.color.info,
+            color: iconProps.color || theme.color.primary,
             textAlign: 'center',
             paddingLeft: theme.padding
           }}

@@ -25,7 +25,7 @@ class SelectList extends React.Component {
     visible: false,
     modal: false,
     realm: false,
-    itemSelectedIcon: 'check',
+    itemSelectedIcon: { name: 'checkmark-circle', color: theme.color.primary },
     placeholder: DEFAULT_PLACEHOLDER,
     cancelText: 'Close'
   }
@@ -176,10 +176,6 @@ class SelectList extends React.Component {
     }
   }
 
-  renderSelectedIcon(selected) {
-    return selected ? 'check' : null;
-  }
-
   renderRow = (obj) => {
     const selected = this._selected && this._selected.some((o) => {
       return typeof o === 'object' ? o[this.props.itemValidator] === obj[this.props.itemValidator] : o === obj[this.props.itemValidator];
@@ -199,10 +195,8 @@ class SelectList extends React.Component {
     }
 
     const selectedIcon = Object.assign({},
-      { name: 'check' },
-      typeof this.props.itemSelectedIcon === 'string' ?
-      { name: this.props.itemSelectedIcon } :
-      this.props.itemSelectedIcon || {}
+      { name: 'checkmark-circle', color: theme.color.primary },
+      typeof this.props.itemSelectedIcon === 'string' ? { name: this.props.itemSelectedIcon } : this.props.itemSelectedIcon || {}
     );
 
     return (

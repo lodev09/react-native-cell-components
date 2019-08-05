@@ -219,7 +219,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     minHeight: 48,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   labelText: {
     fontSize: theme.font.medium,

@@ -7,6 +7,8 @@ Support for RN 0.60 is limited as the moment due to compatibility issues special
 
 This package will only support RN 0.59 and lower at this time. Thank you!
 
+## Installation
+
 ```
 npm install react-native-cell-components --save
 ```

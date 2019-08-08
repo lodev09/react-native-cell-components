@@ -178,6 +178,7 @@ class TagsInput extends React.Component {
         icon={this.props.label ? this.renderLabel : this.props.icon}
         contentPosition="top"
         disclosure={this.renderControl()}
+        selectable={false}
       >
         <View style={styles.tagViewsContainer} >
           {this.renderTags()}

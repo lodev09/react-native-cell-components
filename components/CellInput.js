@@ -72,6 +72,7 @@ class CellInput extends React.Component {
       <Cell
         icon={this.props.icon}
         tintColor={this.props.tintColor}
+        selectable={false}
         disclosure={this.props.disclosure}
         contentPosition="top"
         title={!this.props.multiline && this.props.title}
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     padding: 0
   },
   inputDisabled: {
-    backgroundColor: theme.color.lightGrey
+    backgroundColor: theme.color.lightest
   }
 });
 

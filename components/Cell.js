@@ -13,19 +13,14 @@ import {
 import PropTypes from 'prop-types';
 
 export const CELL_MIN_HEIGHT = 48;
+export const SELECT_MODE_NONE = 'none';
+export const SELECT_MODE_CHECK = 'check';
+
 const ICON_DEFAULT_SIZE = 24;
 const TITLE_MIN_WIDTH = 98;
 const CORNER_MIN_WIDTH = theme.padding;
 const Touchable = theme.value(TouchableHighlight, TouchableNativeFeedback);
-let ANDROID_BACKGROUND = null;
-
-if (theme.isAndroid) {
-  if (Platform.Version >= 21) {
-    ANDROID_BACKGROUND = TouchableNativeFeedback.Ripple(theme.color.mutedLighten);
-  } else {
-    ANDROID_BACKGROUND = TouchableNativeFeedback.SelectableBackground();
-  }
-}
+const ANDROID_BACKGROUND = TouchableNativeFeedback.SelectableBackground();
 
 const positions = {
   auto: 'center',
@@ -39,7 +34,7 @@ class Cell extends React.Component {
     tintColor: theme.color.black,
     contentPosition: 'auto',
     contentOffset: theme.padding,
-    selectMode: 'none',
+    selectMode: SELECT_MODE_NONE,
     selected: false,
     iconSelected: 'checkmark-circle',
     iconUnSelected: 'radio-button-off',
@@ -47,6 +42,7 @@ class Cell extends React.Component {
     subtitleWrap: true,
     titleWrap: true,
     valueWrap: true,
+    selectable: true,
     onSelect: () => null
   }
 
@@ -62,14 +58,15 @@ class Cell extends React.Component {
     disclosure: PropTypes.any,
     tintColor: PropTypes.string,
     contentOffset: PropTypes.number,
-    selectMode: PropTypes.oneOf([ 'none', 'check' ]),
+    selectMode: PropTypes.oneOf([ SELECT_MODE_NONE, SELECT_MODE_CHECK ]),
     selected: PropTypes.bool,
     iconSelected: PropTypes.string,
     iconUnSelected: PropTypes.string,
     onSelect: PropTypes.func,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    selectable: PropTypes.bool
   }
 
   constructor(props) {
@@ -254,7 +251,7 @@ class Cell extends React.Component {
         <Icon
           {...iconProps}
           style={{
-            color: iconProps.color || theme.color.primary,
+            color: this.props.disabled ? theme.color.muted : iconProps.color || theme.color.primary,
             textAlign: 'center',
             paddingLeft: theme.padding
           }}
@@ -264,7 +261,7 @@ class Cell extends React.Component {
   }
 
   isSelecting() {
-    return this.props.selectMode && this.props.selectMode !== 'none'
+    return this.props.selectMode && this.props.selectMode !== SELECT_MODE_NONE
   }
 
   isSelected() {
@@ -279,65 +276,76 @@ class Cell extends React.Component {
     }
   }
 
-  render() {
+  renderComponents() {
     const isSelecting = this.isSelecting();
+
     return (
-      <Touchable
-        background={theme.isAndroid && this.props.onPress ? ANDROID_BACKGROUND : null}
-        onPress={this.props.onPress || isSelecting ? this.handleCellOnPress : null}
-        disabled={this.props.disabled}
-        onLongPress={this.props.onLongPress}
+      <View
+        style={[
+          styles.container,
+          this.props.selected && isSelecting ? styles.selectedContainer : null,
+          this.props.disabled && { opacity: 0.8 },
+          this.props.style
+        ]}
       >
+        {this.renderSelect()}
         <View
           style={[
-            styles.container,
-            this.props.selected && isSelecting ? styles.selectedContainer : null,
-            this.props.disabled && { opacity: 0.5 },
-            this.props.style
+            styles.sectionContainer,
+            {
+              paddingVertical: this.props.contentOffset,
+              justifyContent: positions[this.props.subtitle && this.props.contentPosition === 'auto' ? 'top' : this.props.contentPosition]
+            }
           ]}
         >
-          {this.renderSelect()}
-          <View
-            style={[
-              styles.sectionContainer,
-              {
-                paddingVertical: this.props.contentOffset,
-                justifyContent: positions[this.props.subtitle && this.props.contentPosition === 'auto' ? 'top' : this.props.contentPosition]
-              }
-            ]}
-          >
-            {this.renderIcon()}
-          </View>
+          {this.renderIcon()}
+        </View>
 
-          <View
-            style={[
-              styles.middleContainer,
-              {
-                paddingVertical: this.props.contentOffset,
-                justifyContent: positions[this.props.contentPosition]
-              }
-            ]}
-          >
-            <View style={styles.titleValueContainer} >
-              {this.renderTitle()}
-              {this.renderValue()}
-            </View>
-            <View>
-              {this.renderSubtitle()}
-            </View>
+        <View
+          style={[
+            styles.middleContainer,
+            {
+              paddingVertical: this.props.contentOffset,
+              justifyContent: positions[this.props.contentPosition]
+            }
+          ]}
+        >
+          <View style={styles.titleValueContainer} >
+            {this.renderTitle()}
+            {this.renderValue()}
           </View>
-          <View
-            style={[
-              styles.sectionContainer,
-              {
-                justifyContent: positions[this.props.subtitle && this.props.contentPosition === 'auto' ? 'top' : this.props.contentPosition]
-              }
-            ]}
-          >
-            {this.renderDisclosure()}
+          <View>
+            {this.renderSubtitle()}
           </View>
         </View>
-      </Touchable>
+        <View
+          style={[
+            styles.sectionContainer,
+            {
+              justifyContent: positions[this.props.subtitle && this.props.contentPosition === 'auto' ? 'top' : this.props.contentPosition]
+            }
+          ]}
+        >
+          {this.renderDisclosure()}
+        </View>
+      </View>
+    )
+  }
+
+  render() {
+    const isSelecting = this.isSelecting();
+
+    return (
+        this.props.selectable ?
+        <Touchable
+          background={theme.isAndroid && this.props.onPress ? ANDROID_BACKGROUND : null}
+          onPress={this.props.onPress || isSelecting ? this.handleCellOnPress : null}
+          disabled={this.props.disabled}
+          onLongPress={this.props.onLongPress}
+        >
+          {this.renderComponents()}
+        </Touchable> :
+        this.renderComponents()
     );
   }
 }

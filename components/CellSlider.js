@@ -20,6 +20,7 @@ class CellSlider extends React.Component {
         title={this.props.title}
         subtitle={this.props.subtitle}
         disclosure={this.props.disclosure}
+        selectable={false}
       >
         <View style={styles.container}>
           <Slider style={{ flex: 1 }} {...this.props} />

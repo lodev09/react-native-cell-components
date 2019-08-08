@@ -15,6 +15,10 @@ export const CellListItem = function(props) {
 
 class CellListProvider extends React.Component {
 
+  static propTypes = {
+    ...SelectList.propTypes
+  }
+
   constructor(props) {
     super(props);
 

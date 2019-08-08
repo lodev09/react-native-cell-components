@@ -270,9 +270,9 @@ class Cell extends React.Component {
 
   handleCellOnPress = () => {
     if (this.isSelecting()) {
-      this.props.onSelect();
+      this.props.onSelect && this.props.onSelect();
     } else {
-      this.props.onPress();
+      this.props.onPress && this.props.onPress();
     }
   }
 
@@ -338,7 +338,7 @@ class Cell extends React.Component {
     return (
         this.props.selectable ?
         <Touchable
-          background={theme.isAndroid && this.props.onPress ? ANDROID_BACKGROUND : null}
+          background={theme.isAndroid ? ANDROID_BACKGROUND : null}
           onPress={this.props.onPress || isSelecting ? this.handleCellOnPress : null}
           disabled={this.props.disabled}
           onLongPress={this.props.onLongPress}

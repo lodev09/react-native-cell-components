@@ -13,6 +13,11 @@ import {
 
 class CellSlider extends React.Component {
 
+  static propTypes = {
+    ...Cell.propTypes,
+    ...Slider.propTypes
+  }
+
   render() {
     return (
       <Cell

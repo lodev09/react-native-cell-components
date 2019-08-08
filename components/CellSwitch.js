@@ -9,6 +9,11 @@ import {
 
 class CellSwitch extends React.Component {
 
+  static propTypes = {
+    ...Cell.propTypes,
+    ...Switch.propTypes
+  }
+
   render() {
     return (
       <Cell
@@ -16,6 +21,8 @@ class CellSwitch extends React.Component {
         title={this.props.title}
         subtitle={this.props.subtitle}
         disclosure={this.props.disclosure}
+        selectable={theme.isAndroid}
+        onPress={theme.isAndroid ? this.props.onValueChange : null}
       >
         <Switch {...this.props} />
       </Cell>

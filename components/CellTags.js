@@ -25,7 +25,7 @@ class CellTags extends React.Component {
   }
 
   static propTypes = {
-    ...View.propTypes,
+    ...Cell.propTypes,
     tags: PropTypes.array,
     autoFocus: PropTypes.bool,
     onChangeText: PropTypes.func,

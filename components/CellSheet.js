@@ -10,9 +10,6 @@ import {
 } from 'react-native';
 
 class CellSheet extends React.Component {
-  static defaultProps = {
-    ...Cell.defaultProps
-  }
 
   static propTypes = {
     ...Cell.propTypes

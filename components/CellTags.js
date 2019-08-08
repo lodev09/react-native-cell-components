@@ -14,7 +14,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-class TagsInput extends React.Component {
+class CellTags extends React.Component {
   static defaultProps = {
     autoFocus: false,
     onChangeText: () => {},
@@ -260,4 +260,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TagsInput;
+export default CellTags;

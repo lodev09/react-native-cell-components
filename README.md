@@ -12,7 +12,7 @@ This package will only support RN 0.59 and lower at this time. Thank you!
 ```
 npm install react-native-cell-components --save
 ```
-Awesome react-native cell components! As the package name says, components that are built around a `Cell` component. Used for a simple `ActionSheet` to a more complex `TagsInput` + `SelectList`, and much more!
+Awesome react-native cell components! As the package name says, components that are built around a `Cell` component. Used for a simple `ActionSheet` to a more complex `CellTags` + `SelectList`, and much more!
 
 Tested with redux and on **RN >=0.40**
 
@@ -36,7 +36,7 @@ Tested with redux and on **RN >=0.40**
 - CellSheet
 - DatePicker
 - SelectList
-- TagsInput
+- CellTags
 - CellSlider
 - CellSwitch
 

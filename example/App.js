@@ -4,7 +4,7 @@ import {
   Cell,
   CellGroup,
   CellInput,
-  TagsInput,
+  CellTags,
   SelectList,
   CellSheet,
   ActionItem,
@@ -143,7 +143,7 @@ class App extends Component {
           barStyle="light-content"
         />
         <View style={styles.header} />
-        <TagsInput
+        <CellTags
           ref={component => this._tagsInput = component}
           icon="people"
           tags={this.state.selectedUsers}

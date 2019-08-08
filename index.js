@@ -1,4 +1,4 @@
-import TagsInput from './components/TagsInput';
+import CellTags from './components/CellTags';
 import SelectList from './components/SelectList';
 import Cell from './components/Cell';
 import CellInput from './components/CellInput';
@@ -13,7 +13,7 @@ import CellSwitch from './components/CellSwitch';
 import Icon from './lib/Icon';
 
 module.exports = {
-  TagsInput,
+  CellTags,
   SelectList,
   ActionSheet,
   ActionItem,

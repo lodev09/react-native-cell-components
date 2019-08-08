@@ -2,6 +2,13 @@
 [![npm version](https://badge.fury.io/js/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 [![npm](https://img.shields.io/npm/dt/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 
+## RN 0.60?
+Support for RN 0.60 is limited as the moment due to compatibility issues specially the deprecated `ListView`. Support for `FlatList` will come soon and this package might drop support for `realm` to accomodiate that.
+
+This package will only support RN 0.59 and lower at this time. Thank you!
+
+## Installation
+
 ```
 npm install react-native-cell-components --save
 ```
@@ -34,7 +41,7 @@ Tested with redux and on **RN >=0.40**
 - CellSwitch
 
 ## Dependencies
-- [react-native-vector-icons ^4.1.1](https://github.com/oblador/react-native-vector-icons)
+- [react-native-vector-icons: *](https://github.com/oblador/react-native-vector-icons)
 
 ## Usage & Props
 _coming soon, see [example](example) for now :)_

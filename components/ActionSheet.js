@@ -27,10 +27,13 @@ const BORDER_RADIUS = theme.value(theme.radius, 0);
 const MARGIN = theme.value(theme.margin, 0);
 const BOTTOM_OFFSET = theme.bottomOffset * 1.5;
 
+export const MODE_DEFAULT = 'default';
+export const MODE_LIST = 'list';
+
 class ActionSheet extends React.Component {
   static defaultProps = {
     animated: true,
-    mode: 'default',
+    mode: MODE_DEFAULT,
     cancelText: 'Cancel',
     destructive: false,
     separator: true
@@ -41,8 +44,8 @@ class ActionSheet extends React.Component {
     onOpen: PropTypes.func,
     animated: PropTypes.bool,
     mode: PropTypes.oneOf([
-      'default', // default
-      'list'
+      MODE_DEFAULT, // default
+      MODE_LIST
     ]),
     title: PropTypes.any,
     cancelText: PropTypes.string,
@@ -81,7 +84,7 @@ class ActionSheet extends React.Component {
   getActionsContainerStyle() {
     return [
       styles.actionsContainer,
-      this.props.mode !== 'default' && {
+      this.props.mode !== MODE_DEFAULT && {
         top: 0,
         bottom: 0,
         left: 0,
@@ -158,7 +161,7 @@ class ActionSheet extends React.Component {
 
     if (this.props.title) {
       const title = (
-        <View style={[ styles.titleContainer, this.props.mode === 'default' && styles.borderTopRadius ]} >
+        <View style={[ styles.titleContainer, this.props.mode === MODE_DEFAULT && styles.borderTopRadius ]} >
           <Text style={styles.title} >{this.props.title}</Text>
         </View>
       );
@@ -225,7 +228,7 @@ class ActionSheet extends React.Component {
   renderCancelCell() {
     return (
       <Cell
-        style={[ styles.cancelCell, this.props.mode === 'default' ? styles.borderBottomRadius : { paddingBottom: BOTTOM_OFFSET } ]}
+        style={[ styles.cancelCell, this.props.mode === MODE_DEFAULT ? styles.borderBottomRadius : { paddingBottom: BOTTOM_OFFSET } ]}
         onPress={this.handleCancelOnPress}
       >
         <Text style={styles.cancelText} >{this.props.cancelText.toUpperCase()}</Text>
@@ -236,7 +239,7 @@ class ActionSheet extends React.Component {
   renderActionContainer() {
     return (
       <Animated.View style={this.getActionsContainerStyle()} >
-        <View style={[ this.props.mode === 'default' ? styles.actionItemsDefault : this.props.cancelText && styles.actionItemsList, this.props.style ]} >
+        <View style={[ this.props.mode === MODE_DEFAULT ? styles.actionItemsDefault : this.props.cancelText && styles.actionItemsList, this.props.style ]} >
           {this.renderActionItems()}
         </View>
         {this.props.cancelText && this.renderCancelCell()}
@@ -260,7 +263,7 @@ class ActionSheet extends React.Component {
         </TouchableWithoutFeedback>
 
         {
-          this.props.mode === 'default' ?
+          this.props.mode === MODE_DEFAULT ?
           this.renderActionContainer() :
 
           <TouchableWithoutFeedback onPress={this.handleContainerOnPress}>

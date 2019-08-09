@@ -25,7 +25,8 @@ export const ActionItem = function(props) {
 
 const BORDER_RADIUS = theme.value(theme.radius, 0);
 const MARGIN = theme.value(theme.margin, 0);
-const BOTTOM_OFFSET = theme.bottomOffset * 1.5;
+const BOTTOM_OFFSET = theme.bottomOffset;
+const HEIGHT = Dimensions.get('window').height;
 
 export const MODE_DEFAULT = 'default';
 export const MODE_LIST = 'list';
@@ -57,7 +58,7 @@ class ActionSheet extends React.Component {
   constructor(props) {
     super(props);
 
-    this._windowHeight = Dimensions.get('window').height;
+    this._windowHeight = HEIGHT;
     this._onDismiss = () => null;
 
     this.state = {
@@ -239,7 +240,13 @@ class ActionSheet extends React.Component {
   renderActionContainer() {
     return (
       <Animated.View style={this.getActionsContainerStyle()} >
-        <View style={[ this.props.mode === MODE_DEFAULT ? styles.actionItemsDefault : this.props.cancelText && styles.actionItemsList, this.props.style ]} >
+        <View style={[
+          this.props.mode === MODE_DEFAULT ? styles.actionItemsDefault :
+          this.props.cancelText && {
+              marginTop: CELL_MIN_HEIGHT + theme.topOffset + BOTTOM_OFFSET
+          },
+          this.props.style
+        ]} >
           {this.renderActionItems()}
         </View>
         {this.props.cancelText && this.renderCancelCell()}
@@ -303,9 +310,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: BORDER_RADIUS,
     borderTopLeftRadius: BORDER_RADIUS,
     backgroundColor: theme.color.white
-  },
-  actionItemsList: {
-    marginTop: theme.value(CELL_MIN_HEIGHT + theme.topOffset, CELL_MIN_HEIGHT)
   },
   cancelText: {
     textAlign: 'center',

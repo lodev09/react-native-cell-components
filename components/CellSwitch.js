@@ -47,7 +47,7 @@ class CellSwitch extends React.Component {
         subtitle={this.props.subtitle}
         disclosure={this.props.disclosure}
         selectable={theme.isAndroid}
-        onPress={theme.isAndroid && this.props.disabled === false ? this.handleAndroidCellOnPress : null}
+        onPress={theme.isAndroid && !this.props.disabled ? this.handleAndroidCellOnPress : null}
       >
         <Switch {...this.props} value={this.state.value} />
       </Cell>

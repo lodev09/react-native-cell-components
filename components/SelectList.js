@@ -15,8 +15,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-DEFAULT_PLACEHOLDER = 'No data';
-BACKGROUND_COLOR = theme.color.light;
+const DEFAULT_PLACEHOLDER = 'No data';
+const BACKGROUND_COLOR = theme.color.light;
 
 class SelectList extends React.Component {
 

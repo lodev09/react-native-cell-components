@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import theme from '../lib/theme';
 import Cell from './Cell';
 
 import {

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import theme from '../lib/theme';
 import Cell from './Cell';
 
 import {
@@ -31,9 +30,7 @@ class CellGroup extends React.Component {
       return (
         <View key={'cell-group-child-' + i} >
           {component}
-          {
-            (i < this.props.children.length - 1 || this.props.bordered) && <View style={styles.separator} />
-          }
+          {this.props.bordered && (i < this.props.children.length - 1 && <View style={styles.separator} />)}
         </View>
       );
     });
@@ -81,6 +78,7 @@ class CellGroup extends React.Component {
         {this.renderHeader()}
         {this.props.bordered && <View style={styles.separator} />}
         {this.renderChildren()}
+        {this.props.bordered && <View style={styles.separator} />}
         {this.renderFooter()}
       </View>
     );

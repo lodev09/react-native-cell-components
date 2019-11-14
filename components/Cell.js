@@ -338,6 +338,7 @@ class Cell extends React.Component {
     return (
         this.props.selectable ?
         <Touchable
+          underlayColor={this.props.underlayColor || theme.color.black}
           background={theme.isAndroid ? ANDROID_BACKGROUND : null}
           onPress={this.props.onPress || isSelecting ? this.handleCellOnPress : null}
           disabled={this.props.disabled}

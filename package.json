@@ -1,5 +1,5 @@
 {
-  "name": "react-native-cell-components",
+  "name": "@sallar/react-native-cell-components",
   "version": "0.7.8",
   "description": "awesome react-native cell components",
   "main": "index.js",
@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "react": "16.8.3",
-    "react-native": "0.59",
+    "react": "^16.8.3",
+    "react-native": "^0.59",
     "react-native-vector-icons": "*",
     "prop-types": "*"
   },
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/lodev09/react-native-cell-components/issues"
   },
-  "homepage": "https://github.com/lodev09/react-native-cell-components#readme"
+  "homepage": "https://github.com/lodev09/react-native-cell-components#readme",
+  "dependencies": {
+    "deprecated-react-native-listview": "0.0.6"
+  }
 }

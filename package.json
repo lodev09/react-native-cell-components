@@ -8,7 +8,7 @@
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "0.59",
+    "react-native": "^0.59",
     "react-native-vector-icons": "*",
     "prop-types": "*"
   },
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/lodev09/react-native-cell-components/issues"
   },
-  "homepage": "https://github.com/lodev09/react-native-cell-components#readme"
+  "homepage": "https://github.com/lodev09/react-native-cell-components#readme",
+  "dependencies": {
+    "deprecated-react-native-listview": "0.0.6"
+  }
 }

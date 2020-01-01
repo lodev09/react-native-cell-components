@@ -2,6 +2,9 @@
 [![npm version](https://badge.fury.io/js/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 [![npm](https://img.shields.io/npm/dt/react-native-cell-components.svg)](https://www.npmjs.com/package/react-native-cell-components)
 
+## RN 0.60+ and up?
+Support for RN 0.60 is limited as the moment due to compatibility issues specially the deprecated `ListView`. Support for `FlatList` will come soon and this package might drop support for `realm` to accomodiate that.
+
 ## Installation
 
 ```
